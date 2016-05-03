@@ -1,0 +1,88 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;16.&nbsp; Instrumentation</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide.html" title="Part&nbsp;3.&nbsp;Reference Guide"><link rel="prev" href="ref_guide_optimization.html" title="Chapter&nbsp;15.&nbsp; Optimization Guidelines"><link rel="next" href="ref_guide_instrumentation_custom.html" title="2.&nbsp; Custom Providers and Instruments"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;16.&nbsp;
+        Instrumentation
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_optimization.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;3.&nbsp;Reference Guide</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ref_guide_instrumentation_custom.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;16.&nbsp; Instrumentation" id="ref_guide_instrumentation"><div class="titlepage"><div><div><h2 class="title">Chapter&nbsp;16.&nbsp;
+        Instrumentation
+    </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ref_guide_instrumentation.html#ref_guide_instrumentation_config">1. 
+            Configuration
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_instrumentation.html#ref_guide_instrumentation_config_jmx">1.1. 
+                JMX Platform MBean Enablement
+            </a></span></dt></dl></dd><dt><span class="section"><a href="ref_guide_instrumentation_custom.html">2. 
+            Custom Providers and Instruments
+        </a></span></dt></dl></div>
+    
+        <a class="indexterm" name="d5e17507"></a>
+    <p>
+	OpenJPA provides the ability to instrument various aspects of runtime 
+    operation.  Instrumentation involves an instrumentation provider for base instrumentation
+    capabilities and instruments for instrumenting various aspects of OpenJPA.  OpenJPA
+    includes a default instrumentation provider for JMX Platform MBeans.  MBean-based instruments
+    are provided for the data cache, query cache, and query SQL cache.  When enabled,
+    JMX-based remote monitoring tools such as 
+    <a class="ulink" href="http://download.oracle.com/javase/6/docs/technotes/tools/share/jconsole.html" target="_top"> 
+    <code class="classname">JConsole</code></a> can be used to monitor various
+    metrics tracked by OpenJPA's caches by accessing MBeans registered under domain 
+    <code class="classname">org.apache.openjpa</code>.  Additionally, custom applications can gather metrics by using the 
+    JMX API to query OpenJPA's MBeans.  The <code class="classname">openjpa-integration-jmx</code> 
+    integration module contains an example of how to access the cache MBeans within program code.
+    </p>
+    <div class="section" title="1.&nbsp; Configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_instrumentation_config">1.&nbsp;
+            Configuration
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_instrumentation.html#ref_guide_instrumentation_config_jmx">1.1. 
+                JMX Platform MBean Enablement
+            </a></span></dt></dl></div>
+        
+        <a class="indexterm" name="d5e17516"></a>
+        <p>
+        Instrumentation is enabled using the <a class="link" href="ref_guide_conf_openjpa.html#openjpa.Instrumentation" title="5.40.&nbsp; openjpa.Instrumentation"><code class="literal">openjpa.Instrumentation</code> </a>
+        configuration property.  The base value is the instrumentation provider.  The
+        alias "jmx" enables the JMX Platform MBean provider.  Instruments are specified 
+        on the <code class="literal">Instrument</code> attribute of the provider.  Multiple instruments can be specified
+        by enclosing the value in single quotes and specifying each instrument or instrument
+        alias as a comma separated list.  For example:
+        </p>
+        <pre class="programlisting">
+            &lt;!--  Enable caches and cache statistics --&gt;
+            &lt;property name="openjpa.DataCache" value="true(EnableStatistics=true)"/&gt;
+            &lt;property name="openjpa.QueryCache" value="true(EnableStatistics=true)"/&gt;
+            &lt;property name="openjpa.jdbc.QuerySQLCache" value="true(EnableStatistics=true)"/&gt;
+
+            &lt;!--  Enable jmx provider and instruments for Data, Query, and QuerySQL caches --&gt;
+            &lt;property name="openjpa.Instrumentation" value="jmx(Instrument='DataCache,QueryCache,QuerySQLCache')"/&gt;
+        </pre>
+        <div class="section" title="1.1.&nbsp; JMX Platform MBean Enablement"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_instrumentation_config_jmx">1.1.&nbsp;
+                JMX Platform MBean Enablement
+            </h3></div></div></div>
+            
+            <a class="indexterm" name="d5e17525"></a>
+            <p>
+            The built-in JMX Platform MBean provider can be used to monitor OpenJPA
+            runtime information out-of-band.  This provider is based upon the Platform MBean support included
+            in the JDK.  The JDK provides options for enabling secure connectivity and authentication.
+            These options require additional configuration options and may require encryption
+            keys to be installed on the local and remote systems.  To enable simple, non-secure, non-authenticated
+            monitoring of your application, specify the -Dcom.sun.management.jmxremote.authenticate=false and 
+            -Dcom.sun.management.jmxremote.ssl=false directives on the java command line invocation.  To enable
+            remote instrumentation on a specific port, specify which port to use on the directive 
+            -Dcom.sun.management.jmxremote.port=&lt;port&gt;.
+            For example:
+            </p><pre class="programlisting">
+            java -cp openjpa-all-2.2.0.jar:myApplication.jar -Dcom.sun.management.jmxremote.authenticate=false
+            -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=8888 com.my.app.Main
+            </pre><p>
+            </p>
+            <p>
+            Additional information regarding the use and configuration of JMX Platform MBeans
+            can be found in the 
+            <a class="ulink" href="http://download.oracle.com/javase/6/docs/technotes/guides/jmx/overview/JMXoverviewTOC.html" target="_top">
+            <code class="literal">Java Management Extensions (JMX) Technology Overview</code></a>.
+            </p>
+        </div>
+    </div>
+    
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_optimization.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ref_guide_instrumentation_custom.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;15.&nbsp;
+        Optimization Guidelines
+    &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;2.&nbsp;
+            Custom Providers and Instruments
+        </td></tr></table></div></body></html>

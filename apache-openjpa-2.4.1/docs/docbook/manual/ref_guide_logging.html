@@ -1,0 +1,193 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;3.&nbsp; Logging and Auditing</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide.html" title="Part&nbsp;3.&nbsp;Reference Guide"><link rel="prev" href="ref_guide_conf_jdbc.html" title="6.&nbsp; OpenJPA JDBC Properties"><link rel="next" href="ref_guide_logging_openjpa.html" title="2.&nbsp; OpenJPA Logging"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;3.&nbsp;
+        Logging and Auditing
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_conf_jdbc.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;3.&nbsp;Reference Guide</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ref_guide_logging_openjpa.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;3.&nbsp; Logging and Auditing" id="ref_guide_logging"><div class="titlepage"><div><div><h2 class="title">Chapter&nbsp;3.&nbsp;
+        Logging and Auditing
+    </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ref_guide_logging.html#ref_guide_logging_channels">1. 
+            Logging Channels
+        </a></span></dt><dt><span class="section"><a href="ref_guide_logging_openjpa.html">2. 
+            OpenJPA Logging
+        </a></span></dt><dt><span class="section"><a href="ref_guide_logging_noop.html">3. 
+            Disabling Logging
+        </a></span></dt><dt><span class="section"><a href="ref_guide_logging_log4j.html">4. 
+            Log4J
+        </a></span></dt><dt><span class="section"><a href="ref_guide_logging_commons.html">5. 
+            Apache Commons Logging
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_logging_commons.html#ref_guide_logging_jdk14">5.1. 
+                JDK java.util.logging
+            </a></span></dt></dl></dd><dt><span class="section"><a href="ref_guide_logging_slf4j.html">6. 
+            SLF4J
+        </a></span></dt><dt><span class="section"><a href="ref_guide_logging_custom.html">7. 
+            Custom Log
+        </a></span></dt><dt><span class="section"><a href="ref_guide_audit.html">8. OpenJPA Audit</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_audit.html#d5e9395">8.1. Configuration</a></span></dt><dt><span class="section"><a href="ref_guide_audit.html#d5e9417">8.2. Developing custom auditing</a></span></dt></dl></dd></dl></div>
+    
+    <a class="indexterm" name="d5e9155"></a>
+    <a class="indexterm" name="d5e9157"></a>
+    <p>
+Logging is an important means of gaining insight into your application's runtime
+behavior. OpenJPA provides a flexible logging system that integrates with many
+existing runtime systems, such as application servers and servlet runners.
+    </p>
+    <p>
+There are five built-in logging plugins: a
+<a class="link" href="ref_guide_logging_openjpa.html" title="2.&nbsp; OpenJPA Logging">default logging framework</a> that
+covers most needs, a <a class="link" href="ref_guide_logging_log4j.html" title="4.&nbsp; Log4J"> Log4J</a>
+delegate, a <a class="link" href="ref_guide_logging_slf4j.html" title="6.&nbsp; SLF4J"> SLF4J</a>
+delegate, an <a class="link" href="ref_guide_logging_commons.html" title="5.&nbsp; Apache Commons Logging"> Apache Commons Logging
+</a> delegate, and a <a class="link" href="ref_guide_logging_noop.html" title="3.&nbsp; Disabling Logging">no-op</a>
+implementation for disabling logging.
+    </p>
+    <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3>
+        <p>
+Logging can have a negative impact on performance. Disable verbose logging (such
+as logging of SQL statements) before running any performance tests. It is
+advisable to limit or disable logging for a production system. You can disable
+logging altogether by setting the <code class="literal">openjpa.Log</code> property to
+<code class="literal">none</code>.
+        </p>
+    </div>
+    <div class="section" title="1.&nbsp; Logging Channels"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_logging_channels">1.&nbsp;
+            Logging Channels
+        </h2></div></div></div>
+        
+        <a class="indexterm" name="d5e9172"></a>
+        <p>
+Logging is done over a number of <span class="emphasis"><em>logging channels</em></span>, each of
+which has a <span class="emphasis"><em>logging level</em></span> which controls the verbosity of
+log messages recorded for the channel. OpenJPA uses the following logging
+channels:
+        </p>
+        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+<code class="literal">openjpa.Tool</code>: Messages issued by the OpenJPA command line
+and Ant tools. Most messages are basic statements detailing which classes or
+files the tools are running on. Detailed output is only available via the
+logging category the tool belongs to, such as <code class="literal">openjpa.Enhance</code>
+for the enhancer (see <a class="xref" href="ref_guide_pc_enhance.html" title="2.&nbsp; Enhancement">Section&nbsp;2, &#8220;
+            Enhancement
+        &#8221;</a>) or <code class="literal">
+openjpa.MetaData</code> for the mapping tool (see
+<a class="xref" href="ref_guide_mapping.html#ref_guide_mapping_mappingtool" title="1.&nbsp; Forward Mapping">Section&nbsp;1, &#8220;
+            Forward Mapping
+        &#8221;</a>). This logging category
+is provided so that you can get a general idea of what a tool is doing without
+having to manipulate logging settings that might also affect runtime behavior.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9188"></a>
+<code class="literal">openjpa.Enhance</code>: Messages pertaining to enhancement and
+runtime class generation.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9194"></a>
+<code class="literal">openjpa.MetaData</code>: Details about the generation of metadata
+and object-relational mappings.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">openjpa.Runtime</code>: General OpenJPA runtime messages.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9203"></a>
+<code class="literal">openjpa.Query</code>: Messages about queries. Query strings and any
+parameter values, if applicable, will be logged to the <code class="literal">TRACE</code>
+level at execution time. Information about possible performance concerns will be
+logged to the <code class="literal">INFO</code> level.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9211"></a>
+<code class="literal">openjpa.DataCache</code>: Messages from the L2 data cache plugins.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9217"></a>
+<code class="literal">openjpa.jdbc.JDBC</code>: JDBC connection information. General JDBC
+information will be logged to the <code class="literal">TRACE</code> level. Information
+about possible performance concerns will be logged to the <code class="literal">INFO
+</code> level.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9225"></a>
+<code class="literal">openjpa.jdbc.SQL</code>: This is the most common logging channel to
+use. Detailed information about the execution of SQL statements will be sent to
+the <code class="literal">TRACE</code> level. It is useful to enable this channel if you
+are curious about the exact SQL that OpenJPA issues to the datastore.
+</p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+The SQL issued to the database may contain sensitive information. By default the
+parameter values used in the prepared statements generated by OpenJPA will not 
+be printed in the SQL log - instead you will see a ? for each value. The actual 
+values may be printed by adding <code class="literal">PrintParameters=True</code> to the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryProperties" title="5.15.&nbsp; openjpa.ConnectionFactoryProperties">
+<code class="literal">openjpa.ConnectionFactoryProperties</code></a> property. Also
+see <a class="link" href="ref_guide_dbsetup.html#ref_guide_dbsetup_builtin" title="1.&nbsp; Using the OpenJPA DataSource"><code class="literal">Using the OpenJPA
+DataSource</code></a>
+</div><p>
+                </p>
+                <p>
+When using the built-in OpenJPA logging facilities, you can enable SQL logging
+by adding <code class="literal">SQL=TRACE</code> to your <code class="literal">openjpa.Log</code>
+property.
+                </p>
+                <p>
+OpenJPA can optionally reformat the logged SQL to make it easier to read. To
+enable pretty-printing, add <code class="literal">PrettyPrint=true</code> to the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryProperties" title="5.15.&nbsp; openjpa.ConnectionFactoryProperties"><code class="literal">
+openjpa.ConnectionFactoryProperties</code></a> property. You can control
+how many columns wide the pretty-printed SQL will be with the <code class="literal">
+PrettyPrintLineLength</code> property. The default line length is 60 columns.
+                </p>
+                <p>
+While pretty printing makes things easier to read, it can make output harder to
+process with tools like grep.
+                </p>
+                <p>
+Pretty-printing properties configuration might look like so:
+                </p>
+<pre class="programlisting">
+&lt;property name="openjpa.Log" value="SQL=TRACE"/&gt;
+&lt;property name="openjpa.ConnectionFactoryProperties" 
+    value="PrettyPrint=true, PrettyPrintLineLength=72"/&gt;
+</pre>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9249"></a>
+<code class="literal">openjpa.jdbc.SQLDiag</code>: This logging channel provides additional
+information about entity actitvies such as create, find, update or delete, and eager 
+loading of relation or field properties. If you enable this channel, it is recommended
+that <code class="literal">openjpa.jdbc.SQL</code> channel is also enabled. 
+The additional trace can help you relate the entity activities to the execution of 
+SQL statements that OpenJPA issued to the datastore.
+                </p>
+                <p>
+When using the built-in OpenJPA logging facilities, you can enable SQLDiag logging
+by adding <code class="literal">SQLDiag=TRACE</code> to your <code class="literal">openjpa.Log</code>
+property.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9259"></a>
+<code class="literal">openjpa.jdbc.Schema</code>: Details about operations on the
+database schema.
+                </p>
+            </li></ul></div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_conf_jdbc.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ref_guide_logging_openjpa.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.&nbsp;
+            OpenJPA JDBC Properties
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;2.&nbsp;
+            OpenJPA Logging
+        </td></tr></table></div></body></html>

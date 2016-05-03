@@ -1,0 +1,252 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;4.&nbsp; JDBC</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide.html" title="Part&nbsp;3.&nbsp;Reference Guide"><link rel="prev" href="ref_guide_audit.html" title="8.&nbsp;OpenJPA Audit"><link rel="next" href="ref_guide_dbsetup_thirdparty.html" title="2.&nbsp; Using a Third-Party DataSource"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;4.&nbsp;
+        JDBC
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_audit.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;3.&nbsp;Reference Guide</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup_thirdparty.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;4.&nbsp; JDBC" id="ref_guide_dbsetup"><div class="titlepage"><div><div><h2 class="title">Chapter&nbsp;4.&nbsp;
+        JDBC
+    </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_builtin">1. 
+            Using the OpenJPA DataSource
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_auto">1.1. 
+                Optional Connection Pooling
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_config">1.2. 
+                Configuring the OpenJPA DataSource
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_dbcp">1.3. 
+                Configuring Apache Commons DBCP
+            </a></span></dt></dl></dd><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html">2. 
+            Using a Third-Party DataSource
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_thirdparty_enlist">2.1. 
+                Managed and XA DataSources
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSatRuntime">2.2. Setting the DataSource at runtime</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSPerEM">2.2.1. Using different DataSources for each EntityManager</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSBenefits">2.2.1.1. Benefits</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSLimitations">2.2.1.2. Limitations</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSError">2.2.1.3. Error handling</a></span></dt></dl></dd></dl></dd></dl></dd><dt><span class="section"><a href="ref_guide_dbsetup_sqlconn.html">3. 
+            Runtime Access to DataSource
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html">4. 
+            Database Support
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbdictprops">4.1. 
+                DBDictionary Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_firebird">4.2. 
+                FirebirdDictionary Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_mysql">4.3. 
+                MySQLDictionary Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_oracle">4.4. 
+                OracleDictionary Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_sybase">4.5. 
+                SybaseDictionary Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_db2">4.6. 
+                DB2 Properties
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_dbsupport.html#ref_guide_dbsetup_dbsupport_delim_id">4.7. 
+        		Delimited Identifiers Support
+        	</a></span></dt></dl></dd><dt><span class="section"><a href="ref_guide_dbsetup_isolation.html">5. 
+            Setting the Transaction Isolation
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_sql92.html">6. 
+            Setting the SQL Join Syntax
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_multidb.html">7. 
+            Accessing Multiple Databases
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_retain.html">8. 
+            Configuring the Use of JDBC Connections
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_stmtbatch.html">9. 
+            Statement Batching
+        </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_lrs.html">10. 
+            Large Result Sets
+        </a></span></dt><dt><span class="section"><a href="ref_guide_schema_def.html">11. 
+            Default Schema
+        </a></span></dt><dt><span class="section"><a href="ref_guide_schema_info.html">12. 
+            Schema Reflection
+        </a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_schema_info.html#ref_guide_schema_info_list">12.1. 
+                Schemas List
+            </a></span></dt><dt><span class="section"><a href="ref_guide_schema_info.html#ref_guide_schema_info_factory">12.2. 
+                Schema Factory
+            </a></span></dt></dl></dd><dt><span class="section"><a href="ref_guide_schema_schematool.html">13. 
+            Schema Tool
+        </a></span></dt><dt><span class="section"><a href="ref_guide_schema_xml.html">14. 
+            XML Schema Format
+        </a></span></dt></dl></div>
+    
+    <a class="indexterm" name="d5e9440"></a>
+    <p>
+OpenJPA uses a relational database for object persistence.
+It communicates with the database using the Java DataBase Connectivity (JDBC)
+APIs. This chapter describes how to configure OpenJPA to work with the JDBC
+driver for your database, and how to access JDBC functionality at runtime.
+    </p>
+    <div class="section" title="1.&nbsp; Using the OpenJPA DataSource"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_dbsetup_builtin">1.&nbsp;
+            Using the OpenJPA DataSource
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_auto">1.1. 
+                Optional Connection Pooling
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_config">1.2. 
+                Configuring the OpenJPA DataSource
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup.html#ref_guide_dbsetup_dbcp">1.3. 
+                Configuring Apache Commons DBCP
+            </a></span></dt></dl></div>
+        
+        <a class="indexterm" name="d5e9445"></a>
+        <a class="indexterm" name="d5e9448"></a>
+        <p>
+OpenJPA defines a <code class="classname">org.apache.openjpa.jdbc.schema.DriverDataSource</code> interface, which provides a simple <code class="classname">javax.sql.DataSource</code> wrapper implementation for the normal cases where <code class="literal">openjpa.ConnectionDriverName</code> refers to a <code class="classname">java.sql.Driver</code>.
+See <a class="link" href="ref_guide_conf_jdbc.html#openjpa.jdbc.DriverDataSource" title="6.3.&nbsp; openjpa.jdbc.DriverDataSource">
+<code class="literal">openjpa.jdbc.DriverDataSource</code></a> for the list of
+provided implementations.
+        </p>
+        <div class="section" title="1.1.&nbsp; Optional Connection Pooling"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_dbsetup_auto">1.1.&nbsp;
+                Optional Connection Pooling
+            </h3></div></div></div>
+            
+            <a class="indexterm" name="d5e9460"></a>
+            <a class="indexterm" name="d5e9463"></a>
+            <p>
+Starting with OpenJPA 2.1, a new <code class="classname">org.apache.openjpa.jdbc.schema.AutoDriverDataSource</code> is provided as the default, which will automatically
+select between the old <code class="classname">SimpleDriverDataSource</code> and a new
+<code class="classname">DBCPDriverDataSource</code> implementation based on if
+<a class="ulink" href="http://commons.apache.org/dbcp/" target="_top">Apache Commons DBCP</a>
+has been provided on the classpath and OpenJPA is not running in a container
+managed mode or with managed transactions.  Note, that only the
+<code class="literal">openjpa-all.jar</code> includes Commons DBCP, so you will need to
+include the <code class="literal">commons-dbcp.jar</code> from the OpenJPA binary
+distribution if you are using the normal <code class="literal">openjpa.jar</code>.
+            </p>
+            <p>
+To disable the automatic usage of Apache Commons DBCP when it is discovered
+on the classpath, set
+<code class="literal">openjpa.jdbc.DriverDataSource=simple</code>, which will revert
+OpenJPA to the prior behavior of using <code class="classname">org.apache.openjpa.jdbc.schema.SimpleDriverDataSource</code>
+            </p>
+            <p>
+To force usage of Apache Commons DBCP, which will cause a fatal exception to
+be thrown if it cannot be loaded from the classpath, set
+<code class="literal">openjpa.jdbc.DriverDataSource=dbcp</code>, which will cause
+OpenJPA to use <code class="classname">org.apache.openjpa.jdbc.schema.DBCPDriverDataSource</code>
+            </p>
+        </div>
+        <div class="section" title="1.2.&nbsp; Configuring the OpenJPA DataSource"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_dbsetup_config">1.2.&nbsp;
+                Configuring the OpenJPA DataSource
+            </h3></div></div></div>
+            
+            <a class="indexterm" name="d5e9482"></a>
+            <p>
+If you choose to use OpenJPA's <code class="classname">DataSource</code>,
+then you must specify the following properties:
+            </p>
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9490"></a>
+<code class="literal">openjpa.ConnectionUserName</code>: The JDBC user name for
+connecting to the database.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9495"></a>
+<code class="literal">openjpa.ConnectionPassword</code>: The JDBC password for the above
+user.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9500"></a>
+<code class="literal">openjpa.ConnectionURL</code>: The JDBC URL for the database.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9505"></a>
+<code class="literal">openjpa.ConnectionDriverName</code>: The JDBC driver class.
+                </p>
+              </li></ul></div>
+            <p>
+To configure advanced features, use the following optional
+properties. The syntax of these property strings follows the syntax of OpenJPA
+plugin parameters described in <a class="xref" href="ref_guide_conf_plugins.html" title="4.&nbsp; Plugin Configuration">Section&nbsp;4, &#8220;
+            Plugin Configuration
+        &#8221;</a>.
+            </p>
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9513"></a>
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionProperties" title="5.19.&nbsp; openjpa.ConnectionProperties">
+<code class="literal">openjpa.ConnectionProperties</code></a>: If the listed driver is an
+instance of <code class="classname">java.sql.Driver</code>, this string will be parsed
+into a <code class="classname">Properties</code> instance, which will then be used to
+obtain database connections through the <code class="methodname">Driver.connect(String url,
+Properties props)</code> method. If, on the other hand, the listed driver
+is a <code class="classname"> javax.sql.DataSource</code>, the string will be treated
+as a plugin properties string, and matched to the bean setter methods of the
+<code class="classname">DataSource</code> instance.
+                </p>
+              </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9524"></a>
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryProperties" title="5.15.&nbsp; openjpa.ConnectionFactoryProperties">
+<code class="literal">openjpa.ConnectionFactoryProperties</code></a>: OpenJPA's built-in
+<code class="classname">DataSource</code> allows you to set the following options via
+this plugin string:
+                </p>
+                <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                        <p>
+                        <a class="indexterm" name="d5e9532"></a>
+<code class="literal">QueryTimeout</code>: The maximum number of seconds the JDBC driver
+will wait for a statement to execute.
+                        </p>
+                    </li><li class="listitem">
+                        <p>
+                        <a class="indexterm" name="d5e9538"></a>
+<code class="literal">PrettyPrint</code>: Boolean indicating whether to pretty-print
+logged SQL statements.
+                        </p>
+                    </li><li class="listitem">
+                        <p>
+                        <a class="indexterm" name="d5e9544"></a>
+<code class="literal">PrettyPrintLineLength</code>: The maximum number of characters in
+each pretty-printed SQL line.
+                        </p>
+                    </li><li class="listitem">
+                        <p>
+                        <a class="indexterm" name="d5e9550"></a>
+<code class="literal">PrintParameters</code>: A boolean indicating whether SQL parameter 
+values will be included in exception text and when logging is enabled. Since 
+the parameter values may contain sensitive information the default value is 
+false. 
+                        </p>
+                    </li></ul></div>
+              </li></ul></div>
+            <div class="example"><a name="ref_guide_dbsetup_builtin_ex"></a><p class="title"><b>Example&nbsp;4.1.&nbsp;
+                Properties for the OpenJPA DataSource
+              </b></p><div class="example-contents">
+              
+<pre class="programlisting">
+&lt;property name="openjpa.ConnectionUserName" value="user"/&gt;
+&lt;property name="openjpa.ConnectionPassword" value="pass"/&gt;
+&lt;property name="openjpa.ConnectionURL" value="jdbc:hsqldb:db-hypersonic"/&gt;
+&lt;property name="openjpa.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/&gt;
+&lt;property name="openjpa.ConnectionFactoryProperties" 
+    value="PrettyPrint=true, PrettyPrintLineLength=80, PrintParameters=true"/&gt;
+</pre>
+            </div></div><br class="example-break">
+        </div>
+        <div class="section" title="1.3.&nbsp; Configuring Apache Commons DBCP"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_dbsetup_dbcp">1.3.&nbsp;
+                Configuring Apache Commons DBCP
+            </h3></div></div></div>
+            
+            <a class="indexterm" name="d5e9559"></a>
+            <p>
+Additional Commons DBCP arguments can be provided in
+<code class="literal">openjpa.connectionProperties</code>, such as:
+</p><pre class="programlisting">
+    MaxActive=10,MaxIdle=5,MinIdle=2,MaxWait=60000
+</pre><p>
+Please visit the Commons DBCP website for the entire list of
+<a class="ulink" href="http://commons.apache.org/dbcp/configuration.html" target="_top">configuration options</a> and explanations.
+            </p>
+        </div>
+    </div>
+
+    
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_audit.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup_thirdparty.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">8.&nbsp;OpenJPA Audit&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;2.&nbsp;
+            Using a Third-Party DataSource
+        </td></tr></table></div></body></html>

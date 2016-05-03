@@ -1,0 +1,103 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>8.&nbsp;OpenJPA Audit</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide_logging.html" title="Chapter&nbsp;3.&nbsp; Logging and Auditing"><link rel="prev" href="ref_guide_logging_custom.html" title="7.&nbsp; Custom Log"><link rel="next" href="ref_guide_dbsetup.html" title="Chapter&nbsp;4.&nbsp; JDBC"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">8.&nbsp;OpenJPA Audit</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_logging_custom.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;
+        Logging and Auditing
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup.html">Next</a></td></tr></table><hr></div><div class="section" title="8.&nbsp;OpenJPA Audit"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_audit">8.&nbsp;OpenJPA Audit</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_audit.html#d5e9395">8.1. Configuration</a></span></dt><dt><span class="section"><a href="ref_guide_audit.html#d5e9417">8.2. Developing custom auditing</a></span></dt></dl></div>
+   
+    Transactional applications often require to audit changes in persistent objects.
+    OpenJPA can enable audit facility for all persistent entities in few simple steps.
+    <div class="section" title="8.1.&nbsp;Configuration"><div class="titlepage"><div><div><h3 class="title" id="d5e9395">8.1.&nbsp;Configuration</h3></div></div></div>
+    
+    <p><span class="emphasis"><em>Annotate Persistent Entity</em></span>
+    Any persistence entity can be enabled for audit by annotating with 
+    <code class="literal">org.apache.openjpa.audit.Auditable</code>.
+    </p>
+    <pre class="programlisting">
+      @javax.persistence.Entity
+      @org.apache.openjpa.audit.Auditable
+      public class MyDomainObject { ...}
+    </pre>
+    <p>
+    This <code class="literal">Auditable</code> annotation enables auditing of creation, update or delete of 
+    <code class="literal">MyDomainObject</code> instances. The <code class="literal">Auditable</code> annotation accepts  
+    list of enumerated values <code class="literal">org.apache.openjpa.audit.AuditableOperation</code> namely
+    <code class="literal">CREATE</code>, <code class="literal">UPDATE</code> and <code class="literal">DELETE</code> to customize
+    only appropriate operations be audited. By deafult, all of the above operations are audited.
+    </p>
+    <p><span class="emphasis"><em>Configure Persistence Configuration</em></span>
+    The audit facility is invoked at runtime via configuration of <code class="literal">META-INF/persistence.xml</code>.
+    The following property configures auditing via a default auditor
+    </p>
+    <pre class="programlisting">&lt;property name="openjpa.Auditor" value="default"/&gt;</pre>
+    <p>
+    The default auditor does not do much. It simply prints each auditable instance with its latest and original
+    states on a standard console (or to a designated file).
+    </p>
+    <p>The <span class="emphasis"><em>latest</em></span> state of an instance designates the state which is commited to the
+    database.
+    The <span class="emphasis"><em>original</em></span>state designates the state when the instance entered the managed persistent
+    context. For example, when a new instance is persisted or a existing instance is loaded from the database.
+    </p>
+    </div>  
+    <div class="section" title="8.2.&nbsp;Developing custom auditing"><div class="titlepage"><div><div><h3 class="title" id="d5e9417">8.2.&nbsp;Developing custom auditing</h3></div></div></div>
+    
+          
+    <p>
+    For real use case, an application will prefer more than printing the changed instances. The application, in
+    such case, needs to implement <code class="literal">org.apache.openjpa.audit.Auditor</code> interface.
+    This simple interface has the following method:
+    </p>
+    <pre class="programlisting">
+    /**
+	 * OpenJPA runtime will invoke this method with the given parameters
+	 * within a transaction.
+	 * 
+	 * @param broker the active persistence context.
+	 * @param newObjects the set of auditable objects being created. Can be empty, but never null.
+	 * @param updates the set of auditable objects being updated. Can be empty, but never null.
+	 * @param deletes the set of auditable objects being deleted. Can be empty, but never null.
+	 */
+	public void audit(Broker broker, Collection&lt;Audited&gt; newObjects, Collection&lt;Audited&gt; updates,
+			Collection&lt;Audited&gt; deletes);
+    </pre> 
+    <p>
+    OpenJPA runtime will invoke this method <span class="emphasis"><em>before</em></span> database commit. Via this callback method,
+    the application receives 
+    the auditable instances in three separate collections of <code class="literal">org.apache.openjpa.audit.Auditable</code>.
+    An <code class="literal">Auditable</code> instance provides the latest and original state of a persistent object. 
+    The latest object is
+    the same persistent instance to be committed. The original instance is a transient instance holding the 
+    original state of the instance when it entered the managed context. The active persistence context
+    is also supplied in this callback method, so that an application may decide to persist the audit log
+    in the same database. 
+    </p>
+    <p>
+    It is important to note that the original object can not be persisted in the same transaction, because
+    it has the same persistent identity of the latest object.
+    </p>
+    <p>
+    A single instance of implemented <code class="literal">org.apache.openjpa.audit.Auditor</code> interface
+    is available for a persistence unit. However, an application's own implementation of this interface
+    need not be thread-safe, because OpenJPA runtime guards against concurrent invocation of the
+    callback method. 
+    </p>
+    <p>
+    The <code class="literal">org.apache.openjpa.audit.Auditor</code> interface is configurable. Hence any bean style
+    getter and setter method on its implementation will be populated as usual for any other OpenJPA plugin.
+    In the following example,
+    </p>
+    <pre class="programlisting">
+    &lt;property name="openjpa.Auditor" value="com.acme.Auditor(param2=10,param2='hello')"/&gt;
+    </pre>
+    <p>
+    An instance of <code class="literal">com.acme.Auditor</code> will be instantiated and if it has been style getter and
+    setter methods for <code class="literal">param1</code> and <code class="literal">param2</code>, then the respective setters 
+    will be called with <code class="literal">10</code> and <code class="literal">"hello"</code> before the instance being used.
+    </p>
+    </div>
+	
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_logging_custom.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide_logging.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.&nbsp;
+            Custom Log
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;4.&nbsp;
+        JDBC
+    </td></tr></table></div></body></html>

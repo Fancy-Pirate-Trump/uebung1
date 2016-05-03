@@ -1,0 +1,88 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>5.&nbsp; Cache Management</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="jpa_overview_em.html" title="Chapter&nbsp;8.&nbsp; EntityManager"><link rel="prev" href="jpa_overview_em_identity.html" title="4.&nbsp; Entity Identity Management"><link rel="next" href="jpa_overview_em_query.html" title="6.&nbsp; Query Factory"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.&nbsp;
+            Cache Management
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="jpa_overview_em_identity.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;
+        EntityManager
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="jpa_overview_em_query.html">Next</a></td></tr></table><hr></div><div class="section" title="5.&nbsp; Cache Management"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="jpa_overview_em_cache">5.&nbsp;
+            Cache Management
+        </h2></div></div></div>
+        
+        <a class="indexterm" name="d5e2615"></a>
+<pre class="programlisting">
+public void flush();
+</pre>
+        <p>
+        <a class="indexterm" name="d5e2620"></a>
+        <a class="indexterm" name="d5e2623"></a>
+        <a class="indexterm" name="d5e2626"></a>
+The <code class="methodname">flush</code> method writes any changes that have been made
+in the current transaction to the datastore. If the <code class="classname">EntityManager
+</code> does not already have a connection to the datastore, it obtains one
+for the flush and retains it for the duration of the transaction. Any exceptions
+during flush cause the transaction to be marked for rollback. See
+<a class="xref" href="jpa_overview_trans.html" title="Chapter&nbsp;9.&nbsp; Transaction">Chapter&nbsp;9, <i>
+        Transaction
+    </i></a>.
+        </p>
+        <p>
+Flushing requires an active transaction. If there isn't a transaction in
+progress, the <code class="methodname">flush</code> method throws a <code class="classname">
+TransactionRequiredException</code>.
+        </p>
+<pre class="programlisting">
+public FlushModeType getFlushMode();
+public void setFlushMode(FlushModeType flushMode);
+</pre>
+        <p>
+        <a class="indexterm" name="d5e2637"></a>
+        <a class="indexterm" name="d5e2640"></a>
+The <code class="classname">EntityManager</code>'s <code class="literal">FlushMode</code> property
+controls whether to flush transactional changes before executing queries. This
+allows the query results to take into account changes you have made during the
+current transaction. Available
+<a class="ulink" href="http://download.oracle.com/javaee/6/api/javax/persistence/FlushModeType.html" target="_top">
+<code class="classname">javax.persistence.FlushModeType</code></a> constants are:
+        </p>
+        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+<code class="literal">COMMIT</code>: Only flush when committing, or when told to do so
+through the <code class="methodname">flush</code> method. Query results may not take
+into account changes made in the current transaction.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">AUTO</code>: The implementation is permitted to flush before
+queries to ensure that the results reflect the most recent object state.
+                </p>
+            </li></ul></div>
+        <p>
+You can also set the flush mode on individual
+<a class="link" href="jpa_overview_query.html" title="Chapter&nbsp;10.&nbsp; JPA Query"><code class="classname">Query</code></a>
+instances.
+        </p>
+        <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+            <p>
+OpenJPA only flushes before a query if the query might be affected by data
+changed in the current transaction. Additionally, OpenJPA allows fine-grained
+control over flushing behavior. See the Reference Guide's
+<a class="xref" href="ref_guide_dbsetup_retain.html" title="8.&nbsp; Configuring the Use of JDBC Connections">Section&nbsp;8, &#8220;
+            Configuring the Use of JDBC Connections
+        &#8221;</a>.
+            </p>
+        </div>
+<pre class="programlisting">
+public void clear();
+</pre>
+        <p>
+        <a class="indexterm" name="d5e2662"></a>
+        <a class="indexterm" name="d5e2665"></a>
+Clearing the <code class="classname">EntityManager</code> effectively ends the
+persistence context. All entities managed by the <code class="classname">EntityManager
+</code> become detached.
+        </p>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="jpa_overview_em_identity.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="jpa_overview_em.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="jpa_overview_em_query.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.&nbsp;
+            Entity Identity Management
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;6.&nbsp;
+            Query Factory
+        </td></tr></table></div></body></html>
