@@ -1,0 +1,177 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>3.&nbsp;Usage</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide_slice.html" title="Chapter&nbsp;13.&nbsp; Slice: Distributed Persistence"><link rel="prev" href="features_and_limitations.html" title="2.&nbsp;Salient Features"><link rel="next" href="ch29s04.html" title="4.&nbsp;Configuration Properties"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.&nbsp;Usage</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="features_and_limitations.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;13.&nbsp;
+    Slice: Distributed Persistence
+  </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch29s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.&nbsp;Usage"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="slice_configuration">3.&nbsp;Usage</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="slice_configuration.html#d5e16912">3.1. How to activate Slice Runtime?</a></span></dt><dt><span class="section"><a href="slice_configuration.html#d5e16916">3.2. How to configure each database slice?</a></span></dt><dt><span class="section"><a href="slice_configuration.html#distribution_policy">3.3. Implement DistributionPolicy interface</a></span></dt><dt><span class="section"><a href="slice_configuration.html#replication_policy">3.4. Implement ReplicationPolicy interface</a></span></dt></dl></div>
+    
+    <p>
+     Slice is activated via the following property settings:
+    </p>
+    <div class="section" title="3.1.&nbsp;How to activate Slice Runtime?"><div class="titlepage"><div><div><h3 class="title" id="d5e16912">3.1.&nbsp;How to activate Slice Runtime?</h3></div></div></div>
+      
+      <p>
+       The basic configuration property is 
+       </p><pre class="programlisting"> 
+         &lt;property name="openjpa.BrokerFactory" value="slice"/&gt;
+       </pre><p> 
+       This critical configuration activates a specialized object management 
+	   kernel that can work against multiple databases.  
+      </p>
+    </div> 
+    
+    <div class="section" title="3.2.&nbsp;How to configure each database slice?"><div class="titlepage"><div><div><h3 class="title" id="d5e16916">3.2.&nbsp;How to configure each database slice?</h3></div></div></div>
+      
+      <p>
+      Each database slice is identified by a logical name unique within a
+      persistent unit. The list of the slices is specified by 
+      <code class="classname">openjpa.slice.Names</code> property.
+      For example, specify three slices named <code class="classname">"One"</code>, 
+      <code class="classname">"Two"</code> and <code class="classname">"Three"</code> as follows:
+      </p><pre class="programlisting">
+       &lt;property name="openjpa.slice.Names" value="One, Two, Three"/&gt;
+      </pre><p>
+      </p>
+      <p>
+      This property is not mandatory. If this property is not specified then
+      the configuration is scanned for logical slice names. Any property
+      <code class="classname">"abc"</code> of the form <code class="classname">openjpa.slice.XYZ.abc</code> will 
+      register a slice with logical
+      name <code class="classname">"XYZ"</code>.
+      </p>
+      <p>
+      The order of the names is significant when no <code class="classname">openjpa.slice.Master</code> 
+      property is not specified. The persistence unit is then scanned to find
+      all configured slice names and they are ordered alphabetically.  
+      </p>
+      
+      <p>
+       Each database slice properties can be configured independently. 
+       For example, the
+       following configuration will register two slices with logical name 
+       <code class="classname">One</code> and <code class="classname">Two</code>.
+       </p><pre class="programlisting"> 
+        &lt;property name="openjpa.slice.One.ConnectionURL" value="jdbc:mysql:localhost//slice1"/&gt;
+        &lt;property name="openjpa.slice.Two.ConnectionURL" value="jdbc:mysql:localhost//slice2"/&gt;
+       </pre><p> 
+      </p>
+      
+      <p>
+       Any OpenJPA specific property can be configured per slice basis. 
+       For example, the following configuration will use two different JDBC 
+       drivers for slice <code class="classname">One</code> and <code class="classname">Two</code>.
+       </p><pre class="programlisting"> 
+        &lt;property name="openjpa.slice.One.ConnectionDriverName" value="com.mysql.jdbc.Driver"/&gt;
+        &lt;property name="openjpa.slice.Two.ConnectionDriverName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/&gt;
+       </pre><p> 
+      </p>
+      
+      <p>
+        Any property if unspecified for a particular slice will be defaulted by
+        corresponding OpenJPA property. For example, consider following three slices
+        </p><pre class="programlisting"> 
+         &lt;property name="openjpa.slice.One.ConnectionURL"          value="jdbc:mysql:localhost//slice1"/&gt;
+         &lt;property name="openjpa.slice.Two.ConnectionURL"          value="jdbc:mysql:localhost//slice2"/&gt;
+         &lt;property name="openjpa.slice.Three.ConnectionURL"        value="jdbc:oracle:localhost//slice3"/&gt;
+
+         &lt;property name="openjpa.ConnectionDriverName"     value="com.mysql.jdbc.Driver"/&gt;
+         &lt;property name="openjpa.slice.Three.ConnectionDriverName" value="oracle.jdbc.Driver"/&gt;
+        </pre><p> 
+        In this example, <code class="classname">Three</code> will use slice-specific
+        <code class="classname">oracle.jdbc.Driver</code> driver while slice
+        <code class="classname">One</code> and <code class="classname">Two</code> will use
+        the driver <code class="classname">com.mysql.jdbc.Driver</code> as 
+        specified by <code class="classname">openjpa.ConnectionDriverName</code> 
+        property value.
+    </p>
+
+        <p>
+            A connection pool may also be used with Slice by using the <code class="literal">openjpa.ConnectionProperties</code> property.
+            For example to use commons-dbcp with Derby you might use the following properties : 
+            </p><pre class="programlisting"> 
+                &lt;property name="openjpa.BrokerFactory" value="slice"/&gt;
+                &lt;property name="openjpa.ConnectionDriverName" value="org.apache.commons.dbcp.BasicDataSource"/&gt;
+                &lt;property name="openjpa.slice.Names" value="One,Two"/&gt;
+                &lt;property name="openjpa.slice.Master" value="Two"/&gt;
+ 
+                &lt;property name="openjpa.slice.One.ConnectionProperties" value="Url=jdbc:derby:target/database/openjpa-slice1;create=true, DriverClassName=org.apache.derby.jdbc.EmbeddedDriver"/&gt;
+                &lt;property name="openjpa.slice.Two.ConnectionProperties" value="Url=jdbc:derby:target/database/openjpa-slice2;create=true, DriverClassName=org.apache.derby.jdbc.EmbeddedDriver"/&gt;
+ 
+                &lt;property name="openjpa.jdbc.DBDictionary" value="derby"/&gt;
+            </pre><p>
+            </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+                <p>
+                    Be aware that you need to set the DBDictionary when using commons-dbcp.
+                </p>
+            </div><p>
+        </p>
+    </div>
+     
+    <div class="section" title="3.3.&nbsp;Implement DistributionPolicy interface"><div class="titlepage"><div><div><h3 class="title" id="distribution_policy">3.3.&nbsp;Implement DistributionPolicy interface</h3></div></div></div>
+       
+       <p>
+        Slice needs to determine which slice will persist a new instance. 
+        The application can only decide this policy (for example, 
+        all PurchaseOrders before April 30 goes to slice <code class="classname">One</code>,
+        all the rest goes to slice <code class="classname">Two</code>). This is why
+        the application has to implement 
+        <code class="classname">org.apache.openjpa.slice.DistributionPolicy</code> and
+        specify the implementation class in configuration
+        </p><pre class="programlisting"> 
+          &lt;property name="openjpa.slice.DistributionPolicy" value="com.acme.foo.MyOptimialDistributionPolicy"/&gt;
+        </pre><p>
+       </p>
+       
+       <p>
+        The interface <code class="classname">org.apache.openjpa.slice.DistributionPolicy</code>
+        is simple with a single method. The complete listing of the
+        documented interface follows:
+       </p><pre class="programlisting"> 
+        
+public interface DistributionPolicy {
+    /**
+     * Gets the name of the slice where a given instance will be stored.
+     *  
+     * @param pc The newly persistent or to-be-merged object. 
+     * @param slices name of the configured slices.
+     * @param context persistence context managing the given instance.
+     * 
+     * @return identifier of the slice. This name must match one of the
+     * configured slice names. 
+     * @see DistributedConfiguration#getSliceNames()
+     */
+    String distribute(Object pc, List&lt;String&gt; slices, Object context);
+}
+
+       </pre><p>
+        </p>
+        
+        <p>
+        While implementing a distribution policy the most important thing to
+        remember is <a class="link" href="features_and_limitations.html#collocation_constraint" title="2.8.&nbsp;Collocation Constraint">collocation constraint</a>.
+        Because Slice can not establish or query any cross-database relationship, all the
+        related instances must be stored in the same database slice. 
+ 
+        Slice can determine the closure of a root object by traversal of 
+        cascaded relationships. Hence user-defined policy has to only decide the
+        database for the root instance that is the explicit argument to 
+        <code class="methodname">EntityManager.persist()</code> call.
+        Slice will ensure that all other related instances that get persisted by cascade
+        are assigned to the same database slice as that of the root instance.
+        However, the user-defined distribution policy must return the
+        same slice identifier for the instances that are logically related but
+        not cascaded for persist. 
+        </p>
+    </div>
+    
+    <div class="section" title="3.4.&nbsp;Implement ReplicationPolicy interface"><div class="titlepage"><div><div><h3 class="title" id="replication_policy">3.4.&nbsp;Implement ReplicationPolicy interface</h3></div></div></div>
+       
+		<p>
+			The entities that are enumerated in <code class="classname">openjpa.slice.ReplicatedTypes</code>
+			property can be stored in multiple slices as identical copies.
+        Specify the implementation class of <code class="classname">ReplicationPolicy</code> in configuration as
+        </p><pre class="programlisting"> 
+          &lt;property name="openjpa.slice.ReplicationPolicy" value="com.acme.foo.MyReplicationPolicy"/&gt;
+        </pre><p>
+		</p>
+    </div>
+  </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="features_and_limitations.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide_slice.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch29s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.&nbsp;Salient Features&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;4.&nbsp;Configuration Properties</td></tr></table></div></body></html>

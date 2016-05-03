@@ -1,0 +1,99 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>17.&nbsp; Microsoft SQL Server</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="supported_databases.html" title="Appendix&nbsp;2.&nbsp; Supported Databases"><link rel="prev" href="dbsupport_access.html" title="16.&nbsp; Microsoft Access"><link rel="next" href="dbsupport_foxpro.html" title="18.&nbsp; Microsoft FoxPro"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">17.&nbsp;
+            Microsoft SQL Server
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="dbsupport_access.html">Prev</a>&nbsp;</td><th width="60%" align="center">Appendix&nbsp;2.&nbsp;
+        Supported Databases
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="dbsupport_foxpro.html">Next</a></td></tr></table><hr></div><div class="section" title="17.&nbsp; Microsoft SQL Server"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="dbsupport_sqlserver">17.&nbsp;
+            Microsoft SQL Server
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="dbsupport_sqlserver.html#dbsupport_sqlserver_issues">17.1. 
+                Known issues with SQL Server
+            </a></span></dt></dl></div>
+        
+        <div class="example"><a name="example_props_sqlserver"></a><p class="title"><b>Example&nbsp;2.13.&nbsp;
+                Example properties for Microsoft SQL Server
+            </b></p><div class="example-contents">
+            
+<pre class="programlisting">
+openjpa.ConnectionDriverName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+openjpa.ConnectionURL: \
+    jdbc:sqlserver://SERVER_NAME:1433;DatabaseName=DB_NAME;selectMethod=cursor;sendStringParametersAsUnicode=false
+</pre>
+        </div></div><br class="example-break">
+        <div class="section" title="17.1.&nbsp; Known issues with SQL Server"><div class="titlepage"><div><div><h3 class="title" id="dbsupport_sqlserver_issues">17.1.&nbsp;
+                Known issues with SQL Server
+            </h3></div></div></div>
+            
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                    <p>
+When using a Microsoft SQL Server JDBC Driver v1.2 or earlier, the 
+ConnectionURL must always contain the <code class="literal">selectMethod=cursor
+</code> string, which is necessary for the driver to properly 
+support large result sets.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+When using a Microsoft SQL Server JDBC Driver v1.2 or earlier, the 
+JDBC driver has bugs that manifest themselves when prepared statements 
+are pooled.  Please disable prepared statement pooling by including the 
+<code class="literal">MaxCachedStatements=0</code> configuration property 
+in your org.apache.openjpa.ConnectionFactoryProperties.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+SQL Server date fields are accurate only to the nearest 3 milliseconds, 
+possibly resulting in precision loss in stored dates.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+Adding <code class="literal">sendStringParametersAsUnicode=false</code> to the
+ConnectionURL may significantly increase performance.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+The Microsoft SQL Server driver only emulates batch updates. The DataDirect JDBC
+driver has true support for batch updates, and may result in a significant
+performance gain.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+Floats and doubles may lose precision when stored.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+<code class="literal">TEXT</code> columns cannot be used in queries.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+When using a SQL Server instance that has been configured to be case-sensitive
+in schema names, you need to set the "schemaCase=preserve" parameter in the 
+<a class="link" href="ref_guide_conf_jdbc.html#openjpa.jdbc.DBDictionary" title="6.2.&nbsp; openjpa.jdbc.DBDictionary">openjpa.jdbc.DBDictionary</a>
+property.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+SQL Server 2005 does not support native sequences. If you would like to use 
+generated values with SQL Server you should use GenerationType.IDENTITY, 
+GenerationType.TABLE, or GenerationType.AUTO.
+                    </p> 
+                </li><li class="listitem">
+                    <p>
+The use of <a class="link" href="ref_guide_mapping_jpa.html#ref_guide_streamsupport" title="7.11.&nbsp; LOB Streaming">LOB streaming</a> is limited.
+When reading LOB data from the database, the Microsoft SQL Server driver will
+actually load all the data into memory at the same time.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+The SQL Server 2008 DATETIME2 data type supports 7 digits sub-second precision.
+When DataDirect JDBC driver is used with SQL Server 2008, setTimestamp method call with
+a java.sql.Timestamp argument of more than 3 digits precision in a prepared statement
+will result in truncation. This may cause loss of data precision or
+optimistic lock exception if an entity uses Timestamp type as version field.
+                    </p>
+                </li></ul></div>
+        </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="dbsupport_access.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="supported_databases.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="dbsupport_foxpro.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">16.&nbsp;
+            Microsoft Access
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;18.&nbsp;
+            Microsoft FoxPro
+        </td></tr></table></div></body></html>

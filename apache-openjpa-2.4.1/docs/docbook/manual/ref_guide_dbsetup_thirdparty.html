@@ -1,0 +1,237 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>2.&nbsp; Using a Third-Party DataSource</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide_dbsetup.html" title="Chapter&nbsp;4.&nbsp; JDBC"><link rel="prev" href="ref_guide_dbsetup.html" title="Chapter&nbsp;4.&nbsp; JDBC"><link rel="next" href="ref_guide_dbsetup_sqlconn.html" title="3.&nbsp; Runtime Access to DataSource"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.&nbsp;
+            Using a Third-Party DataSource
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_dbsetup.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;
+        JDBC
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup_sqlconn.html">Next</a></td></tr></table><hr></div><div class="section" title="2.&nbsp; Using a Third-Party DataSource"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_dbsetup_thirdparty">2.&nbsp;
+            Using a Third-Party DataSource
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_thirdparty_enlist">2.1. 
+                Managed and XA DataSources
+            </a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSatRuntime">2.2. Setting the DataSource at runtime</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSPerEM">2.2.1. Using different DataSources for each EntityManager</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSBenefits">2.2.1.1. Benefits</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSLimitations">2.2.1.2. Limitations</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSError">2.2.1.3. Error handling</a></span></dt></dl></dd></dl></dd></dl></div>
+        
+        <a class="indexterm" name="d5e9568"></a>
+        <p>
+You can use OpenJPA with any third-party <code class="classname">javax.sql.DataSource
+</code>. There are multiple ways of telling OpenJPA about a <code class="classname">
+DataSource</code>:
+        </p>
+        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9577"></a>
+Set the <code class="classname">DataSource</code> into the map passed to <code class="methodname">
+Persistence.createEntityManagerFactory</code> under the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactory" title="5.10.&nbsp; openjpa.ConnectionFactory"><code class="literal">openjpa.ConnectionFactory
+</code></a> key.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9585"></a>
+Bind the <code class="classname">DataSource</code> into JNDI, and then specify its
+location in the <code class="literal">jta-data-source</code> or 
+<code class="literal">non-jta-data-source</code> element of the
+<a class="link" href="jpa_overview_persistence.html#jpa_overview_persistence_xml" title="1.&nbsp; persistence.xml">JPA XML format</a> (depending on
+whether the <code class="classname">DataSource</code> is managed by JTA), or in the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryName" title="5.12.&nbsp; openjpa.ConnectionFactoryName">
+<code class="literal">openjpa.ConnectionFactoryName</code></a> property.
+                </p>
+            </li><li class="listitem">
+                <p>
+                <a class="indexterm" name="d5e9596"></a>
+Specify the full class name of the <code class="classname">DataSource</code>
+implementation in the <a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionDriverName" title="5.8.&nbsp; openjpa.ConnectionDriverName">
+<code class="literal">openjpa.ConnectionDriverName</code></a> property in place of a JDBC
+driver. In this configuration OpenJPA will instantiate an instance of the named
+class via reflection. It will then configure the <code class="classname">DataSource
+</code> with the properties in the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionProperties" title="5.19.&nbsp; openjpa.ConnectionProperties">
+<code class="literal">openjpa.ConnectionProperties</code></a> setting.
+                </p>
+            </li></ul></div>
+        <p>
+The features of OpenJPA's own <code class="classname">DataSource</code> can
+also be used with third-party implementations. OpenJPA layers on top of the
+third-party <code class="classname">DataSource</code> to provide the extra
+functionality. To configure these features use the 
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryProperties" title="5.15.&nbsp; openjpa.ConnectionFactoryProperties">
+<code class="literal">openjpa.ConnectionFactoryProperties</code></a> property described
+in the previous section.
+        </p>
+        <div class="example"><a name="ref_guide_dbsetup_thirdparty_ex"></a><p class="title"><b>Example&nbsp;4.2.&nbsp;
+                Properties File for a Third-Party DataSource
+            </b></p><div class="example-contents">
+            
+<pre class="programlisting">
+&lt;property name="openjpa.ConnectionDriverName" value="oracle.jdbc.pool.OracleDataSource"/&gt;
+&lt;property name="openjpa.ConnectionProperties" 
+    value="PortNumber=1521, ServerName=saturn, DatabaseName=solarsid, DriverType=thin"/&gt;
+&lt;property name="openjpa.ConnectionFactoryProperties" value="QueryTimeout=5000"/&gt;
+</pre>
+            <p>
+You can also force the Apache Commons DBCP BasicDataSource to be used for
+connection pooling when provided on the classpath by substituting it as the
+<code class="literal">ConnectionDriverName</code> and setting 
+<code class="literal">ConnectionProperties=DriverClassName</code> to the actual JDBC
+driver value -
+            </p>
+<pre class="programlisting">
+&lt;property name="openjpa.ConnectionDriverName" value="org.apache.commons.dbcp.BasicDataSource"/&gt;
+&lt;property name="openjpa.ConnectionProperties" 
+    value="DriverClassName=oracle.jdbc.pool.OracleDataSource, PortNumber=1521, ServerName=saturn, DatabaseName=solarsid, DriverType=thin, MaxIdle=0"/&gt;
+&lt;property name="openjpa.ConnectionFactoryProperties" value="QueryTimeout=5000"/&gt;
+</pre>
+        </div></div><br class="example-break">
+        <div class="section" title="2.1.&nbsp; Managed and XA DataSources"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_dbsetup_thirdparty_enlist">2.1.&nbsp;
+                Managed and XA DataSources
+            </h3></div></div></div>
+            
+            <a class="indexterm" name="d5e9618"></a>
+            <a class="indexterm" name="d5e9621"></a>
+            <p>
+            <a class="indexterm" name="d5e9625"></a>
+Certain application servers automatically enlist their <code class="classname"> DataSource
+</code>s in global transactions. When this is the case, OpenJPA should not
+attempt to commit the underlying connection, leaving JDBC transaction completion
+to the application server. To notify OpenJPA that your third-party <code class="classname">
+DataSource</code> is managed by the application server, use the 
+<code class="literal">jta-data-source</code> element of your <code class="filename">
+persistence.xml</code> file or set the
+<a class="link" href="ref_guide_conf_openjpa.html#openjpa.ConnectionFactoryMode" title="5.14.&nbsp; openjpa.ConnectionFactoryMode">
+<code class="literal">openjpa.ConnectionFactoryMode</code></a> property to 
+<code class="literal">managed</code>.
+            </p>
+            <p>
+Note that OpenJPA can only use managed <code class="classname">DataSource</code>s when
+it is also integrating with the application server's managed transactions. Also
+note that all XA <code class="classname">DataSource</code>s are enlisted, and you must
+set this property when using any XA <code class="classname"> DataSource</code>.
+            </p>
+            <p>
+When using a managed <code class="classname">DataSource</code>, you should also
+configure a second unmanaged <code class="classname">DataSource</code> that OpenJPA can
+use to perform tasks that are independent of the global transaction. The most
+common of these tasks is updating the sequence table OpenJPA uses to generate
+unique primary key values for your datastore identity objects. Configure the
+second <code class="classname">DataSource</code> using the <code class="literal">non-jta-data-source
+</code> <code class="filename">persistence.xml</code> element, or OpenJPA's various
+"2" connection properties, such as <code class="literal">openjpa.ConnectionFactory2Name
+</code> or <code class="literal">openjpa.Connection2DriverName</code>. These
+properties are outlined in <a class="xref" href="ref_guide_conf.html" title="Chapter&nbsp;2.&nbsp; Configuration">Chapter&nbsp;2, <i>
+        Configuration
+    </i></a>.
+            </p>
+            <div class="example"><a name="ref_guide_enterprise_xa_conf_ex"></a><p class="title"><b>Example&nbsp;4.3.&nbsp;
+                    Managed DataSource Configuration
+                </b></p><div class="example-contents">
+                
+<pre class="programlisting">
+&lt;!-- managed DataSource --&gt;
+&lt;jta-data-source&gt;java:/OracleXASource&lt;/jta-data-source&gt;
+&lt;properties&gt;
+    &lt;!-- use OpenJPA's built-in DataSource for unmanaged connections --&gt;
+    &lt;property name="openjpa.Connection2UserName" value="scott"/&gt;
+    &lt;property name="openjpa.Connection2Password" value="tiger"/&gt;
+    &lt;property name="openjpa.Connection2URL" value="jdbc:oracle:thin:@CROM:1521:OpenJPADB"/&gt;
+    &lt;property name="openjpa.Connection2DriverName" value="oracle.jdbc.driver.OracleDriver"/&gt;
+&lt;/properties&gt;
+</pre>
+            </div></div><br class="example-break">
+        </div>
+        <div class="section" title="2.2.&nbsp;Setting the DataSource at runtime"><div class="titlepage"><div><div><h3 class="title" id="ref_guide_dbsetup_setDSatRuntime">2.2.&nbsp;Setting the DataSource at runtime</h3></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSPerEM">2.2.1. Using different DataSources for each EntityManager</a></span></dt><dd><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSBenefits">2.2.1.1. Benefits</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSLimitations">2.2.1.2. Limitations</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSError">2.2.1.3. Error handling</a></span></dt></dl></dd></dl></div>
+            
+            <a class="indexterm" name="d5e9652"></a>
+            <p> 
+As mentioned above, the JTA and Non-JTA DataSources may be passed in as configuration properties
+at EntityManagerFactory creation. Either the JPA standard properties (
+<code class="literal">javax.persistence.jtaDataSource</code>, <code class="literal">java.persistence.nonJtaDataSource</code>) 
+or their OpenJPA specific equivalents (<code class="literal">openjpa.ConnectionFactoryName</code>, 
+<code class="literal">openjpa.ConnectionFactory2Name</code>) may be used. One use case for this function is to 
+store production connection information in configuration files but override the value when testing. 
+            </p>
+            <p>
+            </p><div class="example"><a name="d5e9661"></a><p class="title"><b>Example&nbsp;4.4.&nbsp;
+                    Setting DataSource at Runtime
+                </b></p><div class="example-contents">
+                
+                <pre class="programlisting">Map&lt;Object,Object&gt; props = new HashMap&lt;Object,Object&gt;();
+props.put("javax.persistence.jtaDataSource", "jdbc/myDataSource");
+props.put("javax.persistence.nonJtaDataSource", "jdbc/myNonJTADataSource");
+emf = Persistence.createEntityManagerFactory("example", props);</pre>
+            </div></div><p><br class="example-break">
+            </p>
+                <div class="section" title="2.2.1.&nbsp;Using different DataSources for each EntityManager"><div class="titlepage"><div><div><h4 class="title" id="ref_guide_dbsetup_setDSPerEM">2.2.1.&nbsp;Using different DataSources for each EntityManager</h4></div></div></div><div class="toc"><dl><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSBenefits">2.2.1.1. Benefits</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSLimitations">2.2.1.2. Limitations</a></span></dt><dt><span class="section"><a href="ref_guide_dbsetup_thirdparty.html#ref_guide_dbsetup_setDSError">2.2.1.3. Error handling</a></span></dt></dl></div>
+                 
+                <p>
+The JPA specification allows the DataSource (ConnectionFactory) to be specified on the 
+EntityManagerFactory. OpenJPA extends this support and allows each EntityManager to override the 
+DataSource from the EntityManagerFactory. It's expected that the EntityManagerFactory will also be 
+configured with a valid JTA / Non-JTA DataSource. The DataSource configured on the 
+EntityManagerFactory will be used to obtain a DBDictionary and (rarely) to gather some information
+about the database in use (e.g. version, JDBC driver version). 
+                </p>
+                <p>
+                    If the EntityManagerFactory is not configured with a valid DataSource there are
+                    a few additional caveats. 
+                    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>The <code class="literal">openjpa.DBDictionary</code> property must be
+                        used to ensure the correct DBDictionary is used.</p></li><li class="listitem"><p>OpenJPA will always attempt to obtain a DataSource from JNDI
+                        based on the configuration for the EntityManagerFactory. When a JNDI name is
+                        specified on the EntityManager this lookup happens slightly earlier than 
+                        normal. If the lookup fails the JNDI name provided at EntityManager creation
+                        will be set into the EntityManagerFactory's configuration and used in
+                        subsequent attempts. </p></li></ul></div><p>
+                </p>
+                <div class="section" title="2.2.1.1.&nbsp;Benefits"><div class="titlepage"><div><div><h5 class="title" id="ref_guide_dbsetup_setDSBenefits">2.2.1.1.&nbsp;Benefits</h5></div></div></div>
+                    
+                    <p>
+                    In effect this option allows a single set of entity definitions to be shared 
+                    between multiple database instances or schemas within an instance. This can be
+                    highly beneficial when there are a large number of entity definitions (e.g. &gt;
+                    200), or a large number of databases / schemas in use.
+                    </p> 
+                </div>
+                <div class="section" title="2.2.1.2.&nbsp;Limitations"><div class="titlepage"><div><div><h5 class="title" id="ref_guide_dbsetup_setDSLimitations">2.2.1.2.&nbsp;Limitations</h5></div></div></div>
+                    
+                    <p>
+                        </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                <p>The same database type and version must be used by each 
+                                EntityManager. OpenJPA will use the same DBDictionary for each
+                                EntityManager and will make no attempt to alter SQL syntax 
+                                between EntityManager instances. 
+                            </p>
+                            </li><li class="listitem"><p>It is the application's responsibility to ensure 
+                            that the schema is identical on each database.</p></li><li class="listitem"><p>The application may not specify schema names for 
+                            individual entities.</p></li><li class="listitem">
+                                <p>The DataSource (ConnectionFactory) name may only be 
+                                specified when the EntityManager is created. The DataSource 
+                                may not be switched while an EntityManager is in use.
+                                </p>
+                            </li><li class="listitem"><p>The L2 cache (DataCache) should not be used if 
+                            different DataSources are specified for each EntityManager</p>
+                            </li><li class="listitem"><p>SynchronizeMappings should not be used with this 
+                            feature.</p></li><li class="listitem"><p>Table and Sequence generators should not be used 
+                            with this feature.</p></li><li class="listitem"><p>It is not required, but is recommended that the 
+                            <code class="literal">openjpa.DBDictionary</code> property be specified when 
+                            using this feature</p></li></ul></div><p>
+                    </p> 
+                </div>
+                <div class="section" title="2.2.1.3.&nbsp;Error handling"><div class="titlepage"><div><div><h5 class="title" id="ref_guide_dbsetup_setDSError">2.2.1.3.&nbsp;Error handling</h5></div></div></div>
+                    
+                    <p>
+                    If a JTA DataSource is not available when the EntityManager is created, an 
+                    <code class="literal">IllegalArgumentException</code> will be thrown.
+                    The EntityManager will not fall back to the JTA DataSource defined in the 
+                    configuration. 
+                    </p> 
+                    <p>
+                    The same logic applies if a Non-JTA DataSource is not available when the 
+                    EntityManager is created. OpenJPA will not fall back to the configured 
+                    Non-JTA DataSource.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_dbsetup.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide_dbsetup.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ref_guide_dbsetup_sqlconn.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;4.&nbsp;
+        JDBC
+    &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;3.&nbsp;
+            Runtime Access to DataSource
+        </td></tr></table></div></body></html>

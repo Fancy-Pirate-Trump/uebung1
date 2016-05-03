@@ -1,0 +1,53 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>2.&nbsp; Custom Providers and Instruments</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="ref_guide_instrumentation.html" title="Chapter&nbsp;16.&nbsp; Instrumentation"><link rel="prev" href="ref_guide_instrumentation.html" title="Chapter&nbsp;16.&nbsp; Instrumentation"><link rel="next" href="appendices.html" title="Part&nbsp;4.&nbsp;Appendices"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.&nbsp;
+            Custom Providers and Instruments
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ref_guide_instrumentation.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;16.&nbsp;
+        Instrumentation
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="appendices.html">Next</a></td></tr></table><hr></div><div class="section" title="2.&nbsp; Custom Providers and Instruments"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="ref_guide_instrumentation_custom">2.&nbsp;
+            Custom Providers and Instruments
+        </h2></div></div></div>
+        
+        <a class="indexterm" name="d5e17535"></a>
+        <p>
+        OpenJPA includes built-in support for a JMX Platform MBean provider, but a custom instrumentation
+        providers can be created by implementing the 
+        <a class="ulink" href="../javadoc/org/apache/openjpa/lib/instrumentation/InstrumentationProvider.html" target="_top">
+        <code class="classname">InstrumentationProvider</code></a> interface or more simply by extending
+        <a class="ulink" href="../javadoc/org/apache/openjpa/lib/instrumentation/AbstractInstrumentationProvider.html" target="_top">
+        <code class="classname">AbstractInstrumentationProvider</code></a>.  To use the custom instrumentation provider,
+        include the class in your classpath and specify the class name as the base value on the 
+        <a class="link" href="ref_guide_conf_openjpa.html#openjpa.Instrumentation" title="5.40.&nbsp; openjpa.Instrumentation"><code class="literal">openjpa.Instrumentation</code></a> configuration property.
+        </p>
+        <p>
+        OpenJPA includes instruments for various caches, but you can also create your own instruments.  To
+        create a custom instrument you need to implement the
+        <a class="ulink" href="../javadoc/org/apache/openjpa/lib/instrumentation/Instrument.html" target="_top">
+        <code class="classname">Instrument</code></a> interface or more simply extend
+        <a class="ulink" href="../javadoc/org/apache/openjpa/lib/instrumentation/AbstractInstrument.html" target="_top">
+        <code class="classname">AbstractInstrument</code></a>.  If you are building a Platform MBean JMX-based
+        instrument this effort can be simplified by extending
+        <a class="ulink" href="../javadoc/org/apache/openjpa/instrumentation/jmx/JMXInstrument.html" target="_top">
+        <code class="classname">JMXInstrument</code></a>.  If you create your own custom
+        provider, class name aliases can be registered within the provider to simplify configuration.  For example,
+        the instrument <code class="classname">com.my.app.MySQLInstrument</code> could be aliased as 
+        <code class="classname">MySQLInstrument</code> within custom provider 
+        <code class="classname">com.my.app.InstrumentationProvider</code>.
+        </p>
+        <p>
+        OpenJPA provides the ability to plug in custom instruments and gives instruments direct access to the 
+        configuration, but it is up to the creator of the instrument to add the internal monitoring.  This often
+        requires modifying or extending base OpenJPA classes (such as the Broker) or using a byte-code weaving 
+        tool such as AspectJ to produce aspect-based instruments.
+        </p>
+        <p>
+        Here is an example of how a custom instrumentation provider could be enabled with an instrument class
+        aliased by the provider as <code class="classname">MySQLInstrument</code>.
+        </p>
+        <pre class="programlisting">
+            &lt;!--  Enable custom provider and instrument --&gt;
+            &lt;property name="openjpa.Instrumentation" value="com.my.app.InstrumentationProvider(Instrument='MySQLInstrument')"/&gt;
+        </pre>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ref_guide_instrumentation.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ref_guide_instrumentation.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="appendices.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;16.&nbsp;
+        Instrumentation
+    &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Part&nbsp;4.&nbsp;Appendices</td></tr></table></div></body></html>

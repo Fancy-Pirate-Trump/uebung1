@@ -1,0 +1,50 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>22.&nbsp; PostgreSQL</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="supported_databases.html" title="Appendix&nbsp;2.&nbsp; Supported Databases"><link rel="prev" href="dbsupport_pointbase.html" title="21.&nbsp; Pointbase"><link rel="next" href="dbsupport_soliddb.html" title="23.&nbsp; IBM solidDB"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">22.&nbsp;
+            PostgreSQL
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="dbsupport_pointbase.html">Prev</a>&nbsp;</td><th width="60%" align="center">Appendix&nbsp;2.&nbsp;
+        Supported Databases
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="dbsupport_soliddb.html">Next</a></td></tr></table><hr></div><div class="section" title="22.&nbsp; PostgreSQL"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="dbsupport_postgresql">22.&nbsp;
+            PostgreSQL
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="dbsupport_postgresql.html#dbsupport_postgresql_issues">22.1. 
+                Known issues with PostgreSQL
+            </a></span></dt></dl></div>
+        
+        <div class="example"><a name="example_props_postgresql"></a><p class="title"><b>Example&nbsp;2.22.&nbsp;
+                Example properties for PostgreSQL
+            </b></p><div class="example-contents">
+            
+<pre class="programlisting">
+openjpa.ConnectionDriverName: org.postgresql.Driver
+openjpa.ConnectionURL: jdbc:postgresql://SERVER_NAME:5432/DB_NAME
+</pre>
+        </div></div><br class="example-break">
+        <div class="section" title="22.1.&nbsp; Known issues with PostgreSQL"><div class="titlepage"><div><div><h3 class="title" id="dbsupport_postgresql_issues">22.1.&nbsp;
+                Known issues with PostgreSQL
+            </h3></div></div></div>
+            
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                    <p>
+Floats and doubles may lose precision when stored.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+PostgreSQL cannot store very low and very high dates.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+Empty string/char values are stored as NULL.
+                    </p>
+                </li><li class="listitem">
+                    <p>
+Persistent fields of type <code class="classname">java.io.Reader</code> are not
+supported when using
+<a class="link" href="ref_guide_mapping_jpa.html#ref_guide_streamsupport" title="7.11.&nbsp; LOB Streaming">LOB streaming</a>.
+                    </p>
+                </li></ul></div>
+        </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="dbsupport_pointbase.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="supported_databases.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="dbsupport_soliddb.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">21.&nbsp;
+            Pointbase
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;23.&nbsp;
+            IBM solidDB
+        </td></tr></table></div></body></html>

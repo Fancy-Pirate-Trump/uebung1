@@ -1,0 +1,104 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>7.&nbsp; Entity Locking</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="jpa_overview_em.html" title="Chapter&nbsp;8.&nbsp; EntityManager"><link rel="prev" href="jpa_overview_em_query.html" title="6.&nbsp; Query Factory"><link rel="next" href="jpa_overview_em_properties.html" title="8.&nbsp; Retrieving Properties Information"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7.&nbsp;
+            Entity Locking
+        </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="jpa_overview_em_query.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;
+        EntityManager
+    </th><td width="20%" align="right">&nbsp;<a accesskey="n" href="jpa_overview_em_properties.html">Next</a></td></tr></table><hr></div><div class="section" title="7.&nbsp; Entity Locking"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="jpa_overview_em_locking">7.&nbsp;
+            Entity Locking
+        </h2></div></div></div>
+        
+        <a class="indexterm" name="d5e2694"></a>
+        <p>
+In the area of concurrency control, the JPA specification supports
+optimistic and pessimistic locking.
+        </p>
+<pre class="programlisting">
+public void lock(Object entity, LockModeType mode);
+</pre>
+        <p>
+        <a class="indexterm" name="d5e2700"></a>
+        <a class="indexterm" name="d5e2703"></a>
+This method locks the given entity using the named mode. The
+<a class="ulink" href="http://download.oracle.com/javaee/6/api/javax/persistence/LockModeType.html" target="_top">
+<code class="classname">javax.persistence.LockModeType</code></a> enum defines eight
+modes:
+        </p>
+        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+<code class="literal">OPTIMISTIC</code>: Optimistic locking.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">OPTIMISTIC_FORCE_INCREMENT</code>: Optimistic locking.
+When a transaction is committed, the entity's version column
+will be incremented even if the entity's state did not change in the transaction.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">PESSIMISTIC_READ</code>: Pessimistic locking. Other transactions
+may concurrently read the entity, but cannot concurrently update it.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">PESSIMISTIC_WRITE</code>: Pessimistic locking. Other transactions
+cannot concurrently read or write the entity.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">PESSIMISTIC_FORCE_INCREMENT</code>: Pessimistic locking. Other transactions
+cannot concurrently read or write the entity. 
+When a transaction is committed, the entity's version column
+will be incremented even if the entity's state did not change in the transaction.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">READ</code>: A synonym for <code class="literal">OPTIMISTIC</code>.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">WRITE</code>: A synonym for <code class="literal">OPTIMISTIC_FORCE_INCREMENT</code>.
+                </p>
+            </li><li class="listitem">
+                <p>
+<code class="literal">NONE</code>: No locking is performed.
+                </p>
+            </li></ul></div>
+        <p>
+Entities can also be locked at the time when entity state gets loaded from the datastore.
+This is achieved by supplying a lock mode to the respective versions of
+<code class="methodname">find</code> and <code class="methodname">refresh</code> methods.
+If an entity state is to be loaded by a query, a lock mode can be passed to the
+<code class="methodname">Query.setLockMode</code> and <code class="methodname">TypedQuery.setLockMode</code>
+methods.
+        </p>
+<pre class="programlisting">
+public LockModeType getLockMode(Object entity);
+</pre>
+        <p>
+Returns the lock mode currently held by the given entity.
+        </p>
+        <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                <p>
+OpenJPA differentiates between <code class="literal">PESSIMISTIC_READ</code> and
+<code class="literal">PESSIMISTIC_WRITE</code> lock modes only with DB2 databases.
+While running with other databases, there is no distinction between these
+two modes because
+<code class="literal">PESSIMISTIC_READ</code> lock mode
+is upgraded to <code class="literal">PESSIMISTIC_WRITE</code>.
+                </p>
+            </li><li class="listitem">
+                <p>
+OpenJPA has additional APIs for controlling entity locking. See
+<a class="xref" href="ref_guide_locking.html" title="3.&nbsp; Object Locking">Section&nbsp;3, &#8220;
+            Object Locking
+        &#8221;</a> in the Reference Guide for details.
+                </p>
+            </li></ul></div>
+        </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="jpa_overview_em_query.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="jpa_overview_em.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="jpa_overview_em_properties.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.&nbsp;
+            Query Factory
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;8.&nbsp;
+			Retrieving Properties Information
+		</td></tr></table></div></body></html>

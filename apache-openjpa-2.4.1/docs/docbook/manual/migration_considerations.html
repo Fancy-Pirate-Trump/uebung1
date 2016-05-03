@@ -1,0 +1,425 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Appendix&nbsp;3.&nbsp; Migration Considerations</title><base href="display"><link rel="stylesheet" type="text/css" href="css/docbook.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="manual.html" title="Apache OpenJPA 2.4 User's Guide"><link rel="up" href="appendices.html" title="Part&nbsp;4.&nbsp;Appendices"><link rel="prev" href="dbsupport_sybase.html" title="24.&nbsp; Sybase Adaptive Server"><link rel="next" href="jpa_2.2.html" title="2.&nbsp; OpenJPA 2.2.0"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;3.&nbsp;
+        Migration Considerations
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="dbsupport_sybase.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;4.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="jpa_2.2.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;3.&nbsp; Migration Considerations" id="migration_considerations"><div class="titlepage"><div><div><h2 class="title">Appendix&nbsp;3.&nbsp;
+        Migration Considerations
+    </h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="migration_considerations.html#jpa_2.0">1. 
+            OpenJPA 2.0.0
+        </a></span></dt><dd><dl><dt><span class="section"><a href="migration_considerations.html#jpa_2.0_incompatibilities">1.1. 
+                Incompatibilities
+            </a></span></dt><dd><dl><dt><span class="section"><a href="migration_considerations.html#getProperties">1.1.1. 
+                    getProperties()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#migration_detach_behavior">1.1.2. 
+                    Detach Behavior
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#private_persistent_properties">1.1.3. 
+                    Use of private persistent properties
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#setParameter">1.1.4. 
+                    Query.setParameter()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#serialization">1.1.5. 
+                    Serialization of Entities
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#QuerySQLCache">1.1.6. 
+                    openjpa.jdbc.QuerySQLCache
+                </a></span></dt></dl></dd><dt><span class="section"><a href="migration_considerations.html#Disabling AutoOff Collection Tracking">1.2. 
+                Disabling AutoOff Collection Tracking
+            </a></span></dt><dt><span class="section"><a href="migration_considerations.html#internal_differences">1.3. 
+                Internal Behavioral Differences
+            </a></span></dt><dd><dl><dt><span class="section"><a href="migration_considerations.html#prePostUpdate">1.3.1. 
+                    PreUpdate/PostUpdate Life Cycle Callbacks
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#createemf">1.3.2. 
+                    createEntityManagerFactory Exceptions
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#querycache">1.3.3. 
+                    openjpa.QueryCache default
+                </a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="jpa_2.2.html">2. 
+            OpenJPA 2.2.0
+        </a></span></dt><dd><dl><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_incompatibilities">2.1. Incompatibilities</a></span></dt><dd><dl><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_allocationSize">2.1.1. 
+                    allocationSize Property of Sequence Generator
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_metamodelArrays">2.1.2. 
+                    MetaModel Attributes for Arrays  
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_SupportsSetClob">2.1.3. 
+                    supportsSetClob Property.  
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_UseNativeSequenceCache">2.1.4. 
+                    useNativeSequenceCache Property.  
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_cascadePersist">2.1.5. 
+                    Cascade persist behavior
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_LifecycleEventManager">2.1.6. 
+                    Life Cycle Event Manager Callback Behavior 
+                </a></span></dt><dt><span class="section"><a href="jpa_2.2.html#jpa_2.2_sharedCacheMode">2.1.7. 
+                    shared-cache-mode Property
+                </a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="jpa_2.3.html">3. 
+            OpenJPA 2.3.0
+        </a></span></dt><dd><dl><dt><span class="section"><a href="jpa_2.3.html#jpa_2.3_incompatibilities">3.1. Incompatibilities</a></span></dt><dd><dl><dt><span class="section"><a href="jpa_2.3.html#jpa_2.3_MappingTool">3.1.1. 
+                    MappingTool Behavior for DB2 and Derby
+                </a></span></dt><dt><span class="section"><a href="jpa_2.3.html#jpa_2.3_RequiresSearchStringEscapeForLike">3.1.2. 
+                    RequiresSearchStringEscapeForLike DBDictionary Property
+                </a></span></dt><dt><span class="section"><a href="jpa_2.3.html#ReturnNullOnEmptyAggregateResult">3.1.3. 
+                    Return value of aggregate functions in SELECT clause 
+                </a></span></dt></dl></dd></dl></dd></dl></div>
+    
+    <div class="section" title="1.&nbsp; OpenJPA 2.0.0"><div class="titlepage"><div><div><h2 class="title" style="clear: both" id="jpa_2.0">1.&nbsp;
+            OpenJPA 2.0.0
+        </h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="migration_considerations.html#jpa_2.0_incompatibilities">1.1. 
+                Incompatibilities
+            </a></span></dt><dd><dl><dt><span class="section"><a href="migration_considerations.html#getProperties">1.1.1. 
+                    getProperties()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#migration_detach_behavior">1.1.2. 
+                    Detach Behavior
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#private_persistent_properties">1.1.3. 
+                    Use of private persistent properties
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#setParameter">1.1.4. 
+                    Query.setParameter()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#serialization">1.1.5. 
+                    Serialization of Entities
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#QuerySQLCache">1.1.6. 
+                    openjpa.jdbc.QuerySQLCache
+                </a></span></dt></dl></dd><dt><span class="section"><a href="migration_considerations.html#Disabling AutoOff Collection Tracking">1.2. 
+                Disabling AutoOff Collection Tracking
+            </a></span></dt><dt><span class="section"><a href="migration_considerations.html#internal_differences">1.3. 
+                Internal Behavioral Differences
+            </a></span></dt><dd><dl><dt><span class="section"><a href="migration_considerations.html#prePostUpdate">1.3.1. 
+                    PreUpdate/PostUpdate Life Cycle Callbacks
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#createemf">1.3.2. 
+                    createEntityManagerFactory Exceptions
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#querycache">1.3.3. 
+                    openjpa.QueryCache default
+                </a></span></dt></dl></dd></dl></div>
+        
+        <div class="section" title="1.1.&nbsp; Incompatibilities"><div class="titlepage"><div><div><h3 class="title" id="jpa_2.0_incompatibilities">1.1.&nbsp;
+                Incompatibilities
+            </h3></div></div></div><div class="toc"><dl><dt><span class="section"><a href="migration_considerations.html#getProperties">1.1.1. 
+                    getProperties()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#migration_detach_behavior">1.1.2. 
+                    Detach Behavior
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#private_persistent_properties">1.1.3. 
+                    Use of private persistent properties
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#setParameter">1.1.4. 
+                    Query.setParameter()
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#serialization">1.1.5. 
+                    Serialization of Entities
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#QuerySQLCache">1.1.6. 
+                    openjpa.jdbc.QuerySQLCache
+                </a></span></dt></dl></div>
+            
+            
+            <p>
+                The following sections indicate changes that are incompatible
+                between OpenJPA 1.x.x releases and the 2.0 release. Some may
+                require application changes. Others can be remedied through the
+                use of compatibility options.  If your application uses a
+                version 1.0 persistence.xml, compatibility options will be set
+                appropriately to maintain backward compatibility.  OpenJPA 2.0
+                applications using a version 2.0 persistence.xml and requiring
+                OpenJPA 1.x.x compatibility may need to configure the
+                appropriate compatibility options to get the desired behavior.
+            </p>
+            <div class="section" title="1.1.1.&nbsp; getProperties()"><div class="titlepage"><div><div><h4 class="title" id="getProperties">1.1.1.&nbsp;
+                    getProperties()
+                </h4></div></div></div>
+                
+                
+                <p>
+                    The OpenJPAEntityManagerFactory interface getProperties()
+                    method was changed to return a Map instead of a
+                    Properties object. This change was made in order to
+                    support the getProperties() method defined in the
+                    JPA 2.0 specification.
+                </p>
+            </div>
+            <div class="section" title="1.1.2.&nbsp; Detach Behavior"><div class="titlepage"><div><div><h4 class="title" id="migration_detach_behavior">1.1.2.&nbsp;
+                    Detach Behavior
+                </h4></div></div></div>
+                
+                
+                <p>
+                    The detach behavior has changed in several ways:
+                    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                            <p>
+                                In the 1.x.x release, managed entities
+                                were flushed to the database as part of the
+                                detach operation. This is no longer done in
+                                2.0.
+                            </p>
+                        </li><li class="listitem">
+                            <p>
+                                In the 1.x.x release, entities were copied
+                                and returned. In 2.0, for those methods
+                                that have return values, the original
+                                entities are returned.
+                            </p>
+                        </li><li class="listitem">
+                            <p>
+                                In the 1.x.x release, managed entities still
+                                exist in the persistent context. In 2.0,
+                                they are removed.
+                            </p>
+                        </li><li class="listitem">
+                            <p>
+                                In the 1.x.x release, the detach operation
+                                is recursively cascaded to all referenced
+                                entities. In 2.0, the detach operation is
+                                only cascaded to those entities for which
+                                Cascade=detach has been specified.
+                            </p>
+                        </li></ul></div><p>
+                </p>
+                <p>
+                    Applications that use a 1.0 persistence.xml will
+                    automatically maintain OpenJPA 1.x.x behavior.  It is
+                    possible for a version 2.0 application to revert back to
+                    the 1.x.x behavior for some of these items by setting the
+                    openjpa.Compatibility property as follows:
+                    </p><table border="0" summary="Simple list" class="simplelist"><tr><td>CopyOnDetach=true</td></tr><tr><td>FlushBeforeDetach=true</td></tr><tr><td>CascadeWithDetach=true</td></tr></table><p>
+                </p>
+                <p>
+                    In addition, a new method has been provided on the
+                    <a class="ulink" href="../javadoc/org/apache/openjpa/persistence/OpenJPAEntityManager.html" target="_top">
+                    <code class="classname">OpenJPAEntityManager</code></a>
+                    interface to return a copy of the entity:
+                    </p><pre class="programlisting">
+    public &lt;T&gt; T detachCopy(T pc):
+                    </pre><p>
+                </p>
+            </div>
+            <div class="section" title="1.1.3.&nbsp; Use of private persistent properties"><div class="titlepage"><div><div><h4 class="title" id="private_persistent_properties">1.1.3.&nbsp;
+                    Use of private persistent properties
+                </h4></div></div></div>
+                
+                
+                <p>
+                    In 1.x.x releases of OpenJPA, if property access was used,
+                    private properties were considered persistent. This is 
+                    contrary to the JPA specification, which states that 
+                    persistent properties must be public or protected.  In
+                    OpenJPA 2.0 and later, private properties will not be 
+                    persistent by default.
+                </p>
+                <p>
+                    Applications that use a 1.0 persistence.xml will
+                    automatically maintain OpenJPA 1.x.x behavior. It is
+                    possible for a version 2.0 application to revert back to
+                    the 1.x.x behavior by setting the value of the
+                    <code class="literal">openjpa.Compatibility</code> 
+                    property <code class="literal">PrivatePersistentProperties</code> to 
+                    <code class="literal">true</code>.  If compile time enhancement is 
+                    used, this property must be specified at the time of 
+                    enhancement and at runtime.
+                </p>
+            </div>
+            <div class="section" title="1.1.4.&nbsp; Query.setParameter()"><div class="titlepage"><div><div><h4 class="title" id="setParameter">1.1.4.&nbsp;
+                    Query.setParameter()
+                </h4></div></div></div>
+                
+                
+                <p>
+                    The Query interface setParameter() method behavior has
+                    changed to throw an IllegalArgumentException (as required 
+                    by the JPA specification) if more parameter substitutions 
+                    are supplied than defined in the createQuery(), 
+                    createNamedQuery(), or createNativeQuery() invocation.
+                    OpenJPA 1.2.x and prior versions silently ignored these
+                    extraneous parameter substitutions and allowed the Query
+                    to be processed.
+                </p>
+            </div>
+            <div class="section" title="1.1.5.&nbsp; Serialization of Entities"><div class="titlepage"><div><div><h4 class="title" id="serialization">1.1.5.&nbsp;
+                    Serialization of Entities
+                </h4></div></div></div>
+                
+                
+                <p>
+                    In 1.x.x releases of OpenJPA, when an entity was serialized
+                    after calling EntityManager.find(), detach() or detachAll()
+                    then all <a class="xref" href="ref_guide_pc_scos.html#ref_guide_pc_scos_proxy" title="6.4.&nbsp; Proxies">Section&nbsp;6.4, &#8220;
+                Proxies
+            &#8221;</a>
+                    references were removed as expected, but when the same
+                    entity instance was serialized after calling
+                    EntityManager.clear() the proxy classes were not removed.
+                </p>
+                <p>
+                    This has two side-effects:
+                    when entities are remoted across JVM boundaries (RPC)
+                    or deserialized the OpenJPA runtime must be available
+                    on the classpath (both client and server containers);
+                    when entities are deserialized the OpenJPA runtime must
+                    be the exact same revision as used to serialize the
+                    entities due to the proxy classes using dynamically
+                    generated serialVersionUID values.
+                </p>
+                <p>
+                    Starting with OpenJPA 2.0, this behavior has been
+                    modified, so that by default all proxies will be removed
+                    during serialization.  See 
+                    <a class="xref" href="ref_guide_pc_scos.html#ref_guide_pc_scos_proxy_serial" title="6.4.4.&nbsp; Serialization">Section&nbsp;6.4.4, &#8220;
+                    Serialization
+                &#8221;</a> 
+                    on how the behavior changes based on the 
+                    <code class="literal">DetachedStateField</code> setting along with 
+                    <a class="xref" href="ref_guide_remote.html#ref_guide_detach_state" title="1.3.1.&nbsp; Detached State">Section&nbsp;1.3.1, &#8220;
+                    Detached State
+                &#8221;</a> 
+                    for more details on how to override the default
+                    <code class="literal">DetachedStateField</code> setting.
+                </p>
+                <p>
+                    Applications that use a 1.0 persistence.xml will
+                    automatically maintain the old behavior.  It is
+                    possible for a version 2.0 application to revert back to
+                    the prior 1.x.x behavior by setting the following
+                    openjpa.Compatibility property as follows:
+                    </p><table border="0" summary="Simple list" class="simplelist"><tr><td>IgnoreDetachedStateFieldForProxySerialization=true</td></tr></table><p>
+                </p>
+            </div>
+            <div class="section" title="1.1.6.&nbsp; openjpa.jdbc.QuerySQLCache"><div class="titlepage"><div><div><h4 class="title" id="QuerySQLCache">1.1.6.&nbsp;
+                    openjpa.jdbc.QuerySQLCache
+                </h4></div></div></div>
+                
+                
+                <p>
+                    In prior 1.x.x releases, the openjpa.jdbc.QuerySQLCache
+                    configuration property for Prepared SQL Cache accepted
+                    value <code class="literal">all</code> to never drop items from the
+                    cache, but this option is no longer supported and will cause
+                    a PersistenceException with a root cause of a ParseException
+                    to be thrown.  See 
+                    <a class="xref" href="ref_guide_cache_querysql.html" title="3.&nbsp;Prepared SQL Cache">Section&nbsp;3, &#8220;Prepared SQL Cache&#8221;</a>
+                    for details on the available configuration values.
+                </p>
+            </div>
+        </div>
+        <div class="section" title="1.2.&nbsp; Disabling AutoOff Collection Tracking"><div class="titlepage"><div><div><h3 class="title" id="Disabling AutoOff Collection Tracking">1.2.&nbsp;
+                Disabling AutoOff Collection Tracking
+            </h3></div></div></div>
+            
+            
+            <p>
+                The default behavior of OpenJPA in tracking collections is that
+                if the number of modifications to the collection exceeds the
+                current number of elements in collection then OpenJPA will
+                disable tracking the collections. OpenJPA 2.0 added a compatibility
+                property to disable turning off the collection tracking.
+            </p>
+            <p>
+                The behavior of Auto disabling of collection tracking can be
+                avoided by setting the value of the
+                <code class="literal">openjpa.Compatibility</code> property
+                <code class="literal">autoOff</code> to  <code class="literal">false</code>.
+                The default behavior of auto disabling the collection tracking
+                is not changed. But when the above property is set then the
+                collection tracking will not be disabled automatically.
+            </p>
+        </div>
+        <div class="section" title="1.3.&nbsp; Internal Behavioral Differences"><div class="titlepage"><div><div><h3 class="title" id="internal_differences">1.3.&nbsp;
+                Internal Behavioral Differences
+            </h3></div></div></div><div class="toc"><dl><dt><span class="section"><a href="migration_considerations.html#prePostUpdate">1.3.1. 
+                    PreUpdate/PostUpdate Life Cycle Callbacks
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#createemf">1.3.2. 
+                    createEntityManagerFactory Exceptions
+                </a></span></dt><dt><span class="section"><a href="migration_considerations.html#querycache">1.3.3. 
+                    openjpa.QueryCache default
+                </a></span></dt></dl></div>
+            
+            <p>
+                The following sections indicate internal changes between
+                OpenJPA 1.x.x releases and the 2.0 release. As these are
+                internal implementation specific behaviors not covered by
+                the JPA specification, no changes should be required for
+                applications that did not use or depend upon OpenJPA specific
+                APIs or behavior.
+            </p>
+            
+            <div class="section" title="1.3.1.&nbsp; PreUpdate/PostUpdate Life Cycle Callbacks"><div class="titlepage"><div><div><h4 class="title" id="prePostUpdate">1.3.1.&nbsp;
+                    PreUpdate/PostUpdate Life Cycle Callbacks
+                </h4></div></div></div>
+                
+                
+                <p>
+                    If an entity was updated between the persist()
+                    and commit() operations in OpenJPA 1.x, then 
+                    any PreUpdate and PostUpdate life cycle callback
+                    methods would be executed.  Starting in OpenJPA
+                    1.3 and 2.0, these callbacks will not get executed.
+                </p>
+                <p>
+                    The JPA 2.0 specification section on "Semantics
+                    of the Life Cycle Callback Methods for Entities"
+                    has been updated to include a Note that the
+                    callback behavior for updating an entity after
+                    the persist operation is implementation specific
+                    and should not be relied upon.
+                </p>
+            </div>
+            <div class="section" title="1.3.2.&nbsp; createEntityManagerFactory Exceptions"><div class="titlepage"><div><div><h4 class="title" id="createemf">1.3.2.&nbsp;
+                    createEntityManagerFactory Exceptions
+                </h4></div></div></div>
+                
+                
+                <p>
+                    The JPA 2.0 specification section on
+                    "Bootstrapping in Java SE Environments" states
+                    that persistence providers must return null
+                    if they are not a qualified provider for the 
+                    given persistence unit.
+                </p>
+                <p>
+                    However, OpenJPA may throw a RuntimeException
+                    if an error occurs while trying to create a
+                    qualified persistence unit, like for invalid
+                    openjpa.* specific configuration settings or
+                    for schema validation failures.
+                </p>
+                <p>
+                    If the Apache Geronimo JPA 2.0 Spec APIs are
+                    used, then any exceptions returned by a
+                    persistence provider will be wrapped within
+                    a PersistenceException.  When the JPA 2.0 API
+                    reference implementation is used, any
+                    RuntimeExceptions will be returned to the
+                    calling application without being wrapped.
+                    Other JPA 2.0 API and implementation providers
+                    or versions may behave differently.
+                </p>
+            </div>
+            <div class="section" title="1.3.3.&nbsp; openjpa.QueryCache default"><div class="titlepage"><div><div><h4 class="title" id="querycache">1.3.3.&nbsp;
+                    openjpa.QueryCache default
+                </h4></div></div></div>
+                
+                
+                <p>
+                    In previous releases, the default value for the
+                    openjpa.QueryCache property was <code class="literal">true</code>
+                    when the openjpa.DataCache was enabled.  Depending on
+                    application characteristics, this default QueryCache
+                    enablement actually could negate much of the potential
+                    gains achieved by using the DataCache.  Thus, the default
+                    value for the openjpa.QueryCache property is now
+                    <span class="emphasis"><em><code class="literal">false</code></em></span>.
+                </p>
+                <p>
+                    To re-enable the default QueryCache behavior, you need to
+                    include the following property in your persistence.xml
+                    configuration.
+                    </p><pre class="programlisting">
+    &lt;property name="openjpa.QueryCache" value="true"/&gt;
+                    </pre><p>
+                </p>
+                <p>
+                    If your configuration had previously enabled the QueryCache
+                    explicitly, then you might have to include the
+                    <code class="literal">true</code> value into your configuration
+                    (if you relied on the previous default).  Otherwise, your
+                    current QueryCache enablement will continue to work.
+                    </p><pre class="programlisting">
+    &lt;property name="openjpa.QueryCache" value="true(CacheSize=1000, SoftReferenceSize=100)"/&gt;
+                    </pre><p>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="dbsupport_sybase.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="jpa_2.2.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">24.&nbsp;
+            Sybase Adaptive Server
+        &nbsp;</td><td width="20%" align="center"><a accesskey="h" href="manual.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;2.&nbsp;
+            OpenJPA 2.2.0
+        </td></tr></table></div></body></html>
