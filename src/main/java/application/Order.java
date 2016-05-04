@@ -13,8 +13,8 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 
 	@Override
 	public Iterator<Product> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Manuel-generated method stub, kann sein dass das nicht funzt
+		return super.iterator();
 	}
 
 	@Override
@@ -24,8 +24,7 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 
 	@Override
 	public boolean delete(Product p) {
-		// TODO ayyyy
-		return false;
+		return super.remove(p);
 	}
 
 	@Override
@@ -35,13 +34,21 @@ public class Order extends ArrayList<Product> implements fpt.com.Order {
 
 	@Override
 	public Product findProductById(long id) {
-		// TODO Auto-generated method stub
+		for(Product i: this){
+			if(i.getId() == id){
+				return i;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Product findProductByName(String name) {
-		// TODO Auto-generated method stub
+		for(Product i: this){
+			if(i.getName().equals(name)){
+				return i;
+			}
+		}
 		return null;
 	}
 
