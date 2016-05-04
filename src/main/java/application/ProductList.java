@@ -15,37 +15,41 @@ public class ProductList extends ArrayList<Product> implements fpt.com.ProductLi
 
 	@Override
 	public Iterator<Product> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.iterator();
 	}
 
 	@Override
 	public boolean add(Product e) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.add(e);
 	}
 
 	@Override
 	public boolean delete(Product product) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.remove(product);
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.size();
 	}
 
 	@Override
 	public Product findProductById(long id) {
-		// TODO Auto-generated method stub
+		for(Product i: this){
+			if(i.getId() == id){
+				return i;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Product findProductByName(String name) {
-		// TODO Auto-generated method stub
+		for(Product i: this){
+			if(i.getName().equals(name)){
+				return i;
+			}
+		}
 		return null;
 	}
 
