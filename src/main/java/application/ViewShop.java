@@ -1,15 +1,20 @@
 package application;
 
+import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import fpt.com.Product;
 
 public class ViewShop {
+	
+	VBox root = new VBox();
+	
 	private ListView<Product> products = new ListView<Product>();
 	public void bindData(ModelShop model) {
 		products.setItems(model);
 	}
-
+	
 
 	public ViewShop(){
 	products.setCellFactory(e->
@@ -26,6 +31,12 @@ public class ViewShop {
 		  };
 		  return cell;
 		});
+	root.getChildren().addAll(products);
+	root.setVisible(true);
 	}
-
+	
+	public Node getRoot(){
+		return root;
+	}
+	
 }
