@@ -1,37 +1,36 @@
 package application;
 
+import fpt.com.Product;
 import javafx.collections.ModifiableObservableListBase;
 
-public class ModelShop extends ModifiableObservableListBase<Product> {
+public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
+
+	ProductList productList = new ProductList();
 
 	@Override
-	protected void doAdd(int arg0, Product arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected Product doRemove(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected Product doSet(int arg0, Product arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Product get(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product get(int index) {
+		return productList.get(index);
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return productList.size();
+	}
+
+	@Override
+	protected void doAdd(int index, Product element) {
+		productList.add(index, element);
+
+	}
+
+	@Override
+	protected Product doSet(int index, Product element) {
+		return productList.set(index, element);
+	}
+
+	@Override
+	protected Product doRemove(int index) {
+		return productList.remove(index);
 	}
 
 }
