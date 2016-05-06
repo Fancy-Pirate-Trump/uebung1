@@ -2,7 +2,6 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -11,13 +10,21 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ViewCustomer view = new ViewCustomer();
-			GridPane root = new GridPane();
-			root.getChildren().add(view.getRoot());
-			Scene scene = new Scene(root,500,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
+			ViewShop     viewShop     = new ViewShop();
+			ViewCustomer viewCustomer = new ViewCustomer();
+
+			Scene sceneShop     = new Scene(viewShop);
+			Scene sceneCustomer = new Scene(viewCustomer);
+
+			primaryStage.setScene(sceneShop);
 			primaryStage.show();
+
+			primaryStage.setScene(sceneShop);
+			primaryStage.show();
+
+			Stage secondaryStage = new Stage();
+			secondaryStage.setScene(sceneCustomer);
+			secondaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
