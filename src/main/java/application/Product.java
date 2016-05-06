@@ -1,18 +1,27 @@
 package application;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Product implements fpt.com.Product {
 	private long id;
-	private double price;
-	private String name;
-	private int quantity;
+	private SimpleStringProperty name = new SimpleStringProperty();
+	private SimpleDoubleProperty price = new SimpleDoubleProperty();
+	private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
 
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1546282835533874184L;
+
+	public Product(){
+
+	}
+
+	public Product(String name, double price, int quantity){
+		setPrice(price);
+		setName(name);
+		setQuantity(quantity);
+	}
 
 	@Override
 	public long getId() {
@@ -26,50 +35,47 @@ public class Product implements fpt.com.Product {
 
 	@Override
 	public double getPrice() {
-		return price;
+		return price.get();
 	}
 
 	@Override
 	public void setPrice(double price) {
-		this.price = price;
+		this.price.set(price);
 	}
 
 	@Override
 	public int getQuantity() {
-		return quantity;
+		return quantity.get();
 	}
 
 	@Override
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.quantity.set(quantity);
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return name.get();
 	}
 
 	@Override
 	public void setName(String name) {
-		this.name = name;
+		this.name.set(name);
 	}
 
 	@Override
-	public ObservableValue<String> nameProperty() {
-		// TODO Auto-generated method stub
-		return null;
+	public SimpleStringProperty nameProperty() {
+		return name;
 	}
 
 	@Override
-	public ObservableValue<Number> priceProperty() {
-		// TODO Auto-generated method stub
-		return null;
+	public SimpleDoubleProperty priceProperty() {
+		return price;
 	}
 
 	@Override
-	public ObservableValue<Number> quantityProperty() {
-		// TODO Auto-generated method stub
-		return null;
+	public SimpleIntegerProperty quantityProperty() {
+		return quantity;
 	}
 
 }
