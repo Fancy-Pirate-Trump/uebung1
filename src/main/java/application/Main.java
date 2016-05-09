@@ -15,16 +15,14 @@ public class Main extends Application {
 
 			Scene sceneShop     = new Scene(viewShop);
 			Scene sceneCustomer = new Scene(viewCustomer);
-
-			primaryStage.setScene(sceneShop);
-			primaryStage.show();
-
-			primaryStage.setScene(sceneShop);
-			primaryStage.show();
-
 			Stage secondaryStage = new Stage();
+			
+			primaryStage.setScene(sceneShop);
+			primaryStage.show();
+			
 			secondaryStage.setScene(sceneCustomer);
 			secondaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
