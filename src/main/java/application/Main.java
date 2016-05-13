@@ -12,17 +12,21 @@ public class Main extends Application {
 		try {
 			ViewShop     viewShop     = new ViewShop();
 			ViewCustomer viewCustomer = new ViewCustomer();
+			ControllerShop controllerShop = new ControllerShop();
+			ModelShop modelShop = new ModelShop();
+			
+			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop     = new Scene(viewShop);
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
-			
+
 			primaryStage.setScene(sceneShop);
 			primaryStage.show();
-			
+
 			secondaryStage.setScene(sceneCustomer);
 			secondaryStage.show();
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

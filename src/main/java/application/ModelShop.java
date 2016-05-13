@@ -20,7 +20,6 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	@Override
 	protected void doAdd(int index, Product element) {
 		productList.add(index, element);
-
 	}
 
 	@Override
