@@ -84,13 +84,19 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
-		// TODO Auto-generated method stub
+		out.writeLong(getId());
+		out.writeObject(getName());
+		out.writeDouble(getPrice());
+		out.writeInt(getQuantity());
 
 	}
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+		setId(in.readLong());
+		setName((String)in.readObject());
+		setPrice(in.readDouble());
+		setQuantity(in.readInt());
 
 	}
 
