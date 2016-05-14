@@ -1,4 +1,6 @@
-package application;
+package gui;
+
+import application.Product;
 
 public class ControllerShop {
 

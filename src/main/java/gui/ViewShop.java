@@ -1,4 +1,4 @@
-package application;
+package gui;
 
 import fpt.com.Product;
 import javafx.event.ActionEvent;

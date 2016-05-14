@@ -1,4 +1,4 @@
-package application;
+package serialization;
 
 public class IDOverflowException extends Exception {
 

@@ -1,5 +1,9 @@
 package application;
 
+import gui.ControllerShop;
+import gui.ModelShop;
+import gui.ViewCustomer;
+import gui.ViewShop;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

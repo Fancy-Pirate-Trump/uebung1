@@ -1,5 +1,6 @@
-package application;
+package gui;
 
+import application.ProductList;
 import fpt.com.Product;
 import javafx.collections.ModifiableObservableListBase;
 
