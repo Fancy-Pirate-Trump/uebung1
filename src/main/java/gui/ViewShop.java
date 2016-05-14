@@ -1,10 +1,12 @@
 package gui;
 
 import fpt.com.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -18,7 +20,8 @@ public class ViewShop extends HBox {
 	private Label nameLabel, priceLabel, countlabel;
 	private TextField nameField, priceField, countField;
 	private HBox buttonRow;
-	private Button add, delete;
+	private Button add, delete, save, load;
+	private ComboBox strategySelection;
 	private ControllerShop cs;
 
 	public ViewShop() {
@@ -34,10 +37,15 @@ public class ViewShop extends HBox {
 		buttonRow = new HBox();
 		add = new Button("Add");
 		delete = new Button("Delete");
+		save = new Button("Save");
+		load = new Button("Load");
+		strategySelection = new ComboBox();
 
 		this.getChildren().addAll(products, vBox);
-		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow);
+		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow, strategySelection, save, load);
 		buttonRow.getChildren().addAll(add, delete);
+		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream");
+		strategySelection.setItems(strategies);
 
 		products.setCellFactory(e -> {
 			ListCell<Product> cell = new ListCell<Product>() {
