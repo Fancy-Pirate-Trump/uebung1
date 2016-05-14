@@ -14,7 +14,7 @@ public class ControllerShop {
 		this.ms = ms;
 	}
 
-	public void add() {
+	public void add() throws Exception{
 		Product product = new Product(vs.getNameField(), vs.getPriceField(), vs.getCountField());
 		ms.add(product);
 

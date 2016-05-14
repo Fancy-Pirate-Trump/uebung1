@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -19,9 +20,10 @@ public class ViewShop extends HBox {
 	private VBox vBox;
 	private Label nameLabel, priceLabel, countlabel;
 	private TextField nameField, priceField, countField;
-	private HBox buttonRow;
+	private HBox buttonRow, optionRow;
 	private Button add, delete, save, load;
 	private ComboBox strategySelection;
+	private BorderPane borderPane;
 	private ControllerShop cs;
 
 	public ViewShop() {
@@ -32,18 +34,25 @@ public class ViewShop extends HBox {
 		priceLabel = new Label("Price:");
 		countlabel = new Label("Count:");
 		nameField = new TextField();
-		priceField = new TextField();
-		countField = new TextField();
+		priceField = new DoubleTextField();
+		countField = new NumberTextField();
 		buttonRow = new HBox();
 		add = new Button("Add");
 		delete = new Button("Delete");
 		save = new Button("Save");
 		load = new Button("Load");
+		optionRow = new HBox();
 		strategySelection = new ComboBox();
-
-		this.getChildren().addAll(products, vBox);
-		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow, strategySelection, save, load);
+		borderPane = new BorderPane();
+		
+		borderPane.setTop(optionRow);
+		borderPane.setLeft(products);
+		borderPane.setRight(vBox);
+		this.getChildren().addAll(borderPane);
+		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow);
 		buttonRow.getChildren().addAll(add, delete);
+		optionRow.getChildren().addAll( save, load, strategySelection);
+
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream");
 		strategySelection.setItems(strategies);
 
@@ -66,7 +75,10 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
+				try{
 				cs.add();
+				}
+				catch (Exception e){};
 			}
 
 		});
@@ -88,15 +100,15 @@ public class ViewShop extends HBox {
 		products.setItems(model);
 	}
 
-	public String getNameField() {
+	public String getNameField() throws Exception{
 		return nameField.getText();
 	}
 
-	public Double getPriceField() {
+	public Double getPriceField() throws Exception{
 		return Double.parseDouble(priceField.getText());
 	}
 
-	public Integer getCountField() {
+	public Integer getCountField() throws Exception{
 		return Integer.parseInt(countField.getText());
 	}
 
