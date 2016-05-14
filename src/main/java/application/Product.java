@@ -1,10 +1,14 @@
 package application;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Product implements fpt.com.Product {
+public class Product implements fpt.com.Product, java.io.Externalizable {
 	private long id;
 	private SimpleStringProperty name = new SimpleStringProperty();
 	private SimpleDoubleProperty price = new SimpleDoubleProperty();
@@ -76,6 +80,24 @@ public class Product implements fpt.com.Product {
 	@Override
 	public SimpleIntegerProperty quantityProperty() {
 		return quantity;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeLong(getId());
+		out.writeObject(getName());
+		out.writeDouble(getPrice());
+		out.writeInt(getQuantity());
+
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		setId(in.readLong());
+		setName((String)in.readObject());
+		setPrice(in.readDouble());
+		setQuantity(in.readInt());
+
 	}
 
 }

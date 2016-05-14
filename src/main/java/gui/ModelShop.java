@@ -1,5 +1,6 @@
-package application;
+package gui;
 
+import application.ProductList;
 import fpt.com.Product;
 import javafx.collections.ModifiableObservableListBase;
 
@@ -20,7 +21,6 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	@Override
 	protected void doAdd(int index, Product element) {
 		productList.add(index, element);
-
 	}
 
 	@Override

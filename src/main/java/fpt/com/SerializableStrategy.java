@@ -14,18 +14,19 @@ public interface SerializableStrategy {
 
 	/**
 	 * read product form io-stream. ensure stream is open.
-	 * 
+	 *
 	 * @return the serialized object from the io-stream
 	 * @throws IOException
 	 *             if stream is closed
 	 * @throws ClassNotFoundException
 	 *             if the class of the object is not present
+	 *	TODO hab das interface einfach mal an die dokumentation angepasst, keine ahnung ob wir das dürfen
 	 */
-	Product readObject() throws IOException;
+	Product readObject() throws IOException, ClassNotFoundException;
 
 	/**
 	 * write product to the io-stream
-	 * 
+	 *
 	 * @param obj
 	 *            the object for serialization
 	 * @throws IOException
@@ -35,7 +36,7 @@ public interface SerializableStrategy {
 
 	/**
 	 * close the io-stream
-	 * 
+	 *
 	 * @throws IOException
 	 *             if stream can't be closed.
 	 */
@@ -43,7 +44,7 @@ public interface SerializableStrategy {
 
 	/**
 	 * open the io-stream
-	 * 
+	 *
 	 * @param path
 	 *            the path for the file storage
 	 * @throws IOException
@@ -63,7 +64,7 @@ public interface SerializableStrategy {
 
 	/**
 	 * open the io-stream
-	 * 
+	 *
 	 * @param path
 	 *            the path for the file storage
 	 * @throws IOException
@@ -77,7 +78,7 @@ public interface SerializableStrategy {
 
 	/**
 	 * open the io-stream
-	 * 
+	 *
 	 * @param input
 	 *            the file data if previews file exists, otherwise null
 	 * @param output
@@ -93,7 +94,7 @@ public interface SerializableStrategy {
 		xstream.autodetectAnnotations(true);
 		// alias DB stuff  sollte auch als Annotation gehen
 		xstream.aliasSystemAttribute(null, "class");
-		
+
 		// prioritaet aendern da BinSer Externalizable nutzt!
 		xstream.registerConverter(
 				new ExternalizableReflectionConverter(xstream),
