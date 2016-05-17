@@ -2,6 +2,7 @@ package gui;
 
 import application.ProductList;
 import fpt.com.Product;
+import fpt.com.SerializableStrategy;
 import javafx.collections.ModifiableObservableListBase;
 import serialization.IDGenerator;
 import serialization.IDOverflowException;
@@ -10,6 +11,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
 	IDGenerator idGenerator = new IDGenerator();
+	SerializableStrategy strategy;
 
 	@Override
 	public Product get(int index) {
@@ -41,6 +43,20 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	@Override
 	protected Product doRemove(int index) {
 		return productList.remove(index);
+	}
+
+	public void setSerializableStrategy(SerializableStrategy strategy){
+		this.strategy = strategy;
+	}
+
+	public void save() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void load() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

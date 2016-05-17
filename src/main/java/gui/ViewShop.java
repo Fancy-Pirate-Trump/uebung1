@@ -44,7 +44,7 @@ public class ViewShop extends HBox {
 		optionRow = new HBox();
 		strategySelection = new ComboBox();
 		borderPane = new BorderPane();
-		
+
 		borderPane.setTop(optionRow);
 		borderPane.setLeft(products);
 		borderPane.setRight(vBox);
@@ -94,6 +94,30 @@ public class ViewShop extends HBox {
 			}
 
 		});
+
+		save.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				int selected = products.getSelectionModel().getSelectedIndex();
+				if (selected > -1) {
+					cs.save();
+				}
+			}
+
+		});
+
+		load.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				int selected = products.getSelectionModel().getSelectedIndex();
+				if (selected > -1) {
+					cs.load();
+				}
+			}
+
+		});
 	}
 
 	public void bindData(ModelShop model) {
@@ -118,6 +142,10 @@ public class ViewShop extends HBox {
 
 	public void setCs(ControllerShop cs) {
 		this.cs = cs;
+	}
+
+	public String getSelectedStrategy(){
+		return strategySelection.getSelectionModel().toString();
 	}
 
 }
