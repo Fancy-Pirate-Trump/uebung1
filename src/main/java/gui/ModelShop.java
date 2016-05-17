@@ -3,10 +3,13 @@ package gui;
 import application.ProductList;
 import fpt.com.Product;
 import javafx.collections.ModifiableObservableListBase;
+import serialization.IDGenerator;
+import serialization.IDOverflowException;
 
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
+	IDGenerator idGenerator = new IDGenerator();
 
 	@Override
 	public Product get(int index) {
@@ -20,6 +23,13 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	@Override
 	protected void doAdd(int index, Product element) {
+		try{
+			element.setId(idGenerator.nextID());
+		} catch(IDOverflowException e) {
+			System.out.println("Anzahl Produkte überschreitet Anzahl IDs");
+			e.printStackTrace();
+		}
+
 		productList.add(index, element);
 	}
 

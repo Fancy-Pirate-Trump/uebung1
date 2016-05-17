@@ -18,7 +18,7 @@ public class Main extends Application {
 			ViewCustomer viewCustomer = new ViewCustomer();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
-			
+
 			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop     = new Scene(viewShop);
@@ -30,6 +30,7 @@ public class Main extends Application {
 
 			secondaryStage.setScene(sceneCustomer);
 			secondaryStage.show();
+			secondaryStage.setX(primaryStage.getX()+400);
 
 		} catch(Exception e) {
 			e.printStackTrace();
