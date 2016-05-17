@@ -50,7 +50,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	}
 
 	public void save() {
-		// TODO Auto-generated method stub
+		System.out.println("Strategie: " + strategy);
 
 	}
 

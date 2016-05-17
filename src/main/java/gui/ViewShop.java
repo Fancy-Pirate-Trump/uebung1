@@ -42,7 +42,7 @@ public class ViewShop extends HBox {
 		save = new Button("Save");
 		load = new Button("Load");
 		optionRow = new HBox();
-		strategySelection = new ComboBox();
+		strategySelection = new ComboBox<String>();
 		borderPane = new BorderPane();
 
 		borderPane.setTop(optionRow);
@@ -99,10 +99,7 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
-				int selected = products.getSelectionModel().getSelectedIndex();
-				if (selected > -1) {
-					cs.save();
-				}
+				cs.save();
 			}
 
 		});
@@ -111,10 +108,8 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
-				int selected = products.getSelectionModel().getSelectedIndex();
-				if (selected > -1) {
-					cs.load();
-				}
+
+				cs.load();
 			}
 
 		});
@@ -145,7 +140,7 @@ public class ViewShop extends HBox {
 	}
 
 	public String getSelectedStrategy(){
-		return strategySelection.getSelectionModel().toString();
+		return (String) strategySelection.getValue();
 	}
 
 }

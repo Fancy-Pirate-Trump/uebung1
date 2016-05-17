@@ -41,6 +41,7 @@ public class ControllerShop {
 
 	private void setModelSerializableStrategy(){
 		String strategyName = vs.getSelectedStrategy();
+
 		SerializableStrategy strategy = stringToSerializableStrategy(strategyName);
 		ms.setSerializableStrategy(strategy);
 	}
