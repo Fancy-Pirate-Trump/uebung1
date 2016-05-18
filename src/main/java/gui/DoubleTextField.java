@@ -8,7 +8,7 @@ public class DoubleTextField extends TextField
     @Override
     public void replaceText(int start, int end, String text)
     {
-        if (validate1(text)||validate2(text))
+        if (isNumber(text)||isDot(text))
         {
             super.replaceText(start, end, text);
         }
@@ -17,17 +17,17 @@ public class DoubleTextField extends TextField
 	@Override
     public void replaceSelection(String text)
     {
-        if (validate1(text)||validate2(text))
+        if (isNumber(text)||isDot(text))
         {
             super.replaceSelection(text);
         }
     }
 
-    private boolean validate1(String text)
+    private boolean isNumber(String text)
     {
         return text.matches("[0-9]*");
     }
-    private boolean validate2(String text)
+    private boolean isDot(String text)
     {
         return text.equals(".");
     }

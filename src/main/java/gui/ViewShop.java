@@ -99,8 +99,11 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
+				try{
 				cs.save();
+				} catch(Exception e){}
 			}
+		
 
 		});
 
@@ -108,10 +111,11 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				try{
 				cs.load();
+				} catch(Exception e){}
 			}
-
+			
 		});
 	}
 

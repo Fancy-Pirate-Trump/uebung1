@@ -64,9 +64,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			strategy.open(fis, null);
 			while(add(strategy.readObject()));
 			strategy.close();
-		} catch (Exception e) {
-			System.out.println("oh nein eine exception... D:");;
-		}
+		} catch (Exception e) {}
 	}
 
 	public void save() {
@@ -76,9 +74,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			strategy.open(null, fos);
 			for(Product prod: this) strategy.writeObject(prod);;
 			strategy.close();
-		} catch (Exception e) {
-			System.out.println(" oh nein eine exception... D: hilfe");;
-		}
+		} catch (Exception e) {}
 
 	}
 
