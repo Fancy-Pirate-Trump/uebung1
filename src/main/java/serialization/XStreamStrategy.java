@@ -18,14 +18,14 @@ public class XStreamStrategy extends SerializableStrategyClass {
 
 	@Override
 	public Product readObject() throws IOException, ClassNotFoundException {
-		xStream = this.createXStream(null);
+		xStream = this.createXStream(Product.class);
 		Object product = xStream.fromXML(input);
 		return (Product) product;
 	}
 
 	@Override
 	public void writeObject(Product obj) throws IOException {
-		xStream = this.createXStream(null);
+		xStream = this.createXStream(Product.class);
 		xStream.toXML(obj,output);
 	}
 
@@ -39,9 +39,7 @@ public class XStreamStrategy extends SerializableStrategyClass {
 
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
-		/* TODO Ich bin mir nicht sicher ob das so sein soll,
-		 * Aufgabenstellung und Interface sind hier ziemlich vage.
-		*/
+
 		this.input = input;
 		this.output = output;
 	}

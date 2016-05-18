@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public interface SerializableStrategy {
 
@@ -89,7 +90,7 @@ public interface SerializableStrategy {
 	void open(InputStream input, OutputStream output) throws IOException;
 
 	default XStream createXStream(Class<? extends Product> clazz) {
-		XStream xstream = new XStream();
+		XStream xstream = new XStream(new DomDriver());
 		xstream.processAnnotations(clazz);
 		xstream.autodetectAnnotations(true);
 		// alias DB stuff  sollte auch als Annotation gehen

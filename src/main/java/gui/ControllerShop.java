@@ -4,6 +4,7 @@ import application.Product;
 import serialization.BinaryStrategy;
 import serialization.SerializableStrategyClass;
 import serialization.XMLStrategy;
+import serialization.XStreamStrategy;
 
 public class ControllerShop {
 
@@ -50,6 +51,7 @@ public class ControllerShop {
 		switch(s){
 		case "Binary": return new BinaryStrategy();
 		case "XML": return new XMLStrategy();
+		case "XStream" : return new XStreamStrategy();
 		default: return null;
 		}
 	}

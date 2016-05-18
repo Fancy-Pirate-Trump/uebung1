@@ -5,12 +5,12 @@
    <long>1</long>
   </void>
   <void property="name">
-   <string>123</string>
+   <string>1</string>
   </void>
   <void property="price">
-   <double>123.0</double>
+   <double>1.0</double>
   </void>
   <void property="quantity">
-   <int>123</int>
+   <int>1</int>
   </void>
  </object>
