@@ -1,9 +1,10 @@
 package gui;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import application.ProductList;
 import fpt.com.Product;
@@ -11,12 +12,13 @@ import fpt.com.SerializableStrategy;
 import javafx.collections.ModifiableObservableListBase;
 import serialization.IDGenerator;
 import serialization.IDOverflowException;
+import serialization.SerializableStrategyClass;
 
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
 	IDGenerator idGenerator = new IDGenerator(1,999999);
-	SerializableStrategy strategy;
+	SerializableStrategyClass strategy;
 
 	@Override
 	public Product get(int index) {
@@ -50,49 +52,32 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		return productList.remove(index);
 	}
 
-	public void setSerializableStrategy(SerializableStrategy strategy){
+	public void setSerializableStrategy(SerializableStrategyClass strategy){
 		this.strategy = strategy;
 	}
 
 	@SuppressWarnings("null")
 	public void load() {
-		FileInputStream input = null;
-		FileOutputStream output = null;
-		try{
-			strategy.open(input, output);
-			System.out.println("fip nach open" + input);
-			System.out.println("fop nach open" + output);
-			while(add(strategy.readObject())){
-				;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				strategy.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		File file = new File(strategy.getFilename());
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			strategy.open(fis, null);
+			while(add(strategy.readObject()));
+			strategy.close();
+		} catch (Exception e) {
+			System.out.println("oh nein eine exception... D:");;
 		}
-
 	}
 
 	public void save() {
-		FileOutputStream output = null;
-		try{
-			strategy.open((OutputStream)output);
-
-			for(Product product : this){
-				strategy.writeObject(product);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try {
-				strategy.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		File file = new File(strategy.getFilename());
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			strategy.open(null, fos);
+			for(Product prod: this) strategy.writeObject(prod);;
+			strategy.close();
+		} catch (Exception e) {
+			System.out.println(" oh nein eine exception... D: hilfe");;
 		}
 
 	}

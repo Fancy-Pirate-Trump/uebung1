@@ -1,8 +1,8 @@
 package gui;
 
 import application.Product;
-import fpt.com.SerializableStrategy;
 import serialization.BinaryStrategy;
+import serialization.SerializableStrategyClass;
 import serialization.XMLStrategy;
 
 public class ControllerShop {
@@ -42,11 +42,11 @@ public class ControllerShop {
 	private void setModelSerializableStrategy(){
 		String strategyName = vs.getSelectedStrategy();
 
-		SerializableStrategy strategy = stringToSerializableStrategy(strategyName);
+		SerializableStrategyClass strategy = stringToSerializableStrategy(strategyName);
 		ms.setSerializableStrategy(strategy);
 	}
 
-	private SerializableStrategy stringToSerializableStrategy(String s){
+	private SerializableStrategyClass stringToSerializableStrategy(String s){
 		switch(s){
 		case "Binary": return new BinaryStrategy();
 		case "XML": return new XMLStrategy();

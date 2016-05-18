@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
 
-public class XMLStrategy implements SerializableStrategy {
+public class XMLStrategy extends SerializableStrategyClass {
 	InputStream input;
 	OutputStream output;
 
@@ -46,6 +46,11 @@ public class XMLStrategy implements SerializableStrategy {
 		*/
 		this.input = input;
 		this.output = output;
+	}
+
+	@Override
+	public String getFilename() {
+		return "products.xml";
 	}
 
 }

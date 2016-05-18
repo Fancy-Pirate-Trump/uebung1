@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
 
-public class BinaryStrategy implements SerializableStrategy {
+public class BinaryStrategy extends SerializableStrategyClass {
 	InputStream input;
 	OutputStream output;
 
@@ -43,24 +43,15 @@ public class BinaryStrategy implements SerializableStrategy {
 
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
-		open(input);
-		open(output);
-
+		this.input=input;
+		this.output=output;
 	}
-	public void open(InputStream input) throws IOException {
-		File file = new File("Binary.ser");
-		if (file.isFile()) {
-			input = new FileInputStream(file);
-		}
-		this.input = input;
 
+	@Override
+	public String getFilename() {
+		return "products.ser";
 	}
-	public void open(OutputStream output) throws IOException {
-		File file = new File("Binary.ser");
-		output = new FileOutputStream(file);
-		this.output = output;
 
-	}
 
 
 }
