@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
 
-public class XMLStrategy implements SerializableStrategy {
+public class XMLStrategy extends SerializableStrategyClass {
 	InputStream input;
 	OutputStream output;
 
@@ -23,12 +23,9 @@ public class XMLStrategy implements SerializableStrategy {
 	@Override
 	public void writeObject(Product obj) throws IOException {
 		XMLEncoder xmlEncoder = new XMLEncoder(output);
-		while(output != null){
-			/* TODO Ich glaube nicht, dass product hier externalizable aufruft, macl sehen wie man das einstellen kann
-			 * update: internet sagt das geht automatisch
-			*/
+		
 			xmlEncoder.writeObject(obj);
-		}
+			xmlEncoder.flush();
 
 	}
 
@@ -46,6 +43,11 @@ public class XMLStrategy implements SerializableStrategy {
 		*/
 		this.input = input;
 		this.output = output;
+	}
+
+	@Override
+	public String getFilename() {
+		return "products.xml";
 	}
 
 }

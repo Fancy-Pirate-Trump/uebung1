@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.XStream;
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
 
-public class XStreamStrategy implements SerializableStrategy {
+public class XStreamStrategy extends SerializableStrategyClass {
 	XStream xStream;
 	InputStream input;
 	OutputStream output;
@@ -44,6 +44,11 @@ public class XStreamStrategy implements SerializableStrategy {
 		*/
 		this.input = input;
 		this.output = output;
+	}
+
+	@Override
+	public String getFilename() {
+		return "Xstream.xml";
 	}
 
 }
