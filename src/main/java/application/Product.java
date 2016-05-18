@@ -89,6 +89,15 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 		out.writeDouble(getPrice());
 		out.writeInt(getQuantity());
 
+
+	}
+
+	public void writeObject(ObjectOutput out) throws IOException{
+		writeExternal(out);
+	}
+
+	public void readObject(ObjectInput in) throws IOException, ClassNotFoundException{
+		readExternal(in);
 	}
 
 	@Override

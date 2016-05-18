@@ -1,18 +1,12 @@
 package serialization;
 
 public class IDGenerator {
-	private int lastID = 0;
-	private int maxID = 9999;
+	private int lastID;
+	private int maxID;
 
 	public IDGenerator(int firstID, int maxID){
 		lastID = firstID;
 		this.maxID = maxID;
-	}
-	public IDGenerator(int maxID){
-		this(0, maxID);
-	}
-	public IDGenerator(){
-
 	}
 
 	public int nextID() throws IDOverflowException{

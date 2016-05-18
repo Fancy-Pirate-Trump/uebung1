@@ -1,5 +1,10 @@
 package gui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import application.ProductList;
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
@@ -10,7 +15,7 @@ import serialization.IDOverflowException;
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
-	IDGenerator idGenerator = new IDGenerator();
+	IDGenerator idGenerator = new IDGenerator(1,999999);
 	SerializableStrategy strategy;
 
 	@Override
@@ -49,13 +54,46 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		this.strategy = strategy;
 	}
 
-	public void save() {
-		System.out.println("Strategie: " + strategy);
+	@SuppressWarnings("null")
+	public void load() {
+		FileInputStream input = null;
+		FileOutputStream output = null;
+		try{
+			strategy.open(input, output);
+			System.out.println("fip nach open" + input);
+			System.out.println("fop nach open" + output);
+			while(add(strategy.readObject())){
+				;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				strategy.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
-	public void load() {
-		// TODO Auto-generated method stub
+	public void save() {
+		FileOutputStream output = null;
+		try{
+			strategy.open((OutputStream)output);
+
+			for(Product product : this){
+				strategy.writeObject(product);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				strategy.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
