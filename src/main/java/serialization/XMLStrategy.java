@@ -23,12 +23,9 @@ public class XMLStrategy extends SerializableStrategyClass {
 	@Override
 	public void writeObject(Product obj) throws IOException {
 		XMLEncoder xmlEncoder = new XMLEncoder(output);
-		while(output != null){
-			/* TODO Ich glaube nicht, dass product hier externalizable aufruft, macl sehen wie man das einstellen kann
-			 * update: internet sagt das geht automatisch
-			*/
+		
 			xmlEncoder.writeObject(obj);
-		}
+			xmlEncoder.flush();
 
 	}
 
