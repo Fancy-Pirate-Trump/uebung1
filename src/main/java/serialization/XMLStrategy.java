@@ -12,27 +12,29 @@ import fpt.com.SerializableStrategy;
 public class XMLStrategy extends SerializableStrategyClass {
 	InputStream input;
 	OutputStream output;
+	XMLEncoder xmlEncoder;
+	XMLDecoder xmlDecoder;
 
 	@Override
 	public Product readObject() throws IOException, ClassNotFoundException{
-		XMLDecoder xmlDecoder = new XMLDecoder(input);
+
 		Object product = xmlDecoder.readObject();
 		return (Product) product;
 	}
 
 	@Override
 	public void writeObject(Product obj) throws IOException {
-		XMLEncoder xmlEncoder = new XMLEncoder(output);
-		
+
 			xmlEncoder.writeObject(obj);
-			xmlEncoder.flush();
 
 	}
 
 	@Override
 	public void close() throws IOException {
-		input.close();
-		output.close();
+		xmlEncoder.flush();
+
+		if(input != null) input.close();
+		if(output != null) output.close();
 
 	}
 
@@ -43,6 +45,8 @@ public class XMLStrategy extends SerializableStrategyClass {
 		*/
 		this.input = input;
 		this.output = output;
+		if(output != null) xmlEncoder = new XMLEncoder(output);
+		if(input != null) xmlDecoder = new XMLDecoder(input);
 	}
 
 	@Override
