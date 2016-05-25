@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,19 +57,36 @@ public class JDBCConnector {
 
 
 	public long insert(String name, double price, int quantity){
-		long id;
+		long id = 0;
 		return id;
 	}
 //	Achten Sie beim erstellen des Statements auf das Vorhandensein des Parameters
 //	Statement.RETURN_GENERATED_KEYS.
 //	INSERT INTO products(name,price,quantity) VALUES (?,?,?)
 	public void insert(Product product){
+		try(PreparedStatement statement = connection.prepareStatement(
+				"INSERT INTO products (name, price, quantity) VALUES(?)"
+				);) {
+			statement.setObject(1, product);
+			statement.executeUpdate();
+		}
+		catch(SQLException e){
 
+		}
 	}
 //	Nach dem erfolgreichen Einfügen in die Datenbank soll das Produkt die von der Datenbank
 //	generierte Id übernehmen
 	public Product read(long productId){
-		try(PreparedStatement statement = connection.createStatement())
+		Product product = null;
+		try(PreparedStatement statement = connection.prepareStatement(
+				"SELECT * FROM Product WHERE id=?"
+				)) {
+			statement.setLong(1, productId);
+			ResultSet result = statement.executeQuery();
+			product = (Product) result.getObject(1);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return 	product;
 	}
 //	SELECT id,name,price,quantity FROM products WHERE id=?
