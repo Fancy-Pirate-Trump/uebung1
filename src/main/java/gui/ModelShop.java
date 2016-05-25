@@ -48,7 +48,6 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		this.strategy = strategy;
 	}
 
-	@SuppressWarnings("null")
 	public void load() {
 		File file = new File(strategy.getFilename());
 		try {
