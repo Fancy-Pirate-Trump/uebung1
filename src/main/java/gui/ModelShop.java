@@ -17,7 +17,6 @@ import serialization.SerializableStrategyClass;
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
-	IDGenerator idGenerator = new IDGenerator(1,999999);
 	SerializableStrategyClass strategy;
 
 	@Override
@@ -32,13 +31,6 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	@Override
 	protected void doAdd(int index, Product element) {
-		try{
-			element.setId(idGenerator.nextID());
-		} catch(IDOverflowException e) {
-			System.out.println("Anzahl Produkte überschreitet Anzahl IDs");
-			e.printStackTrace();
-		}
-
 		productList.add(index, element);
 	}
 
