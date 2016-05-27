@@ -57,7 +57,13 @@ public class JDBCConnector {
 
 
 	public long insert(String name, double price, int quantity){
+		String sql = "";
 		long id = 0;
+		try(PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)){
+			id = statement.executeUpdate();
+		}catch(SQLException e){
+			
+		}
 		return id;
 	}
 //	Achten Sie beim erstellen des Statements auf das Vorhandensein des Parameters
