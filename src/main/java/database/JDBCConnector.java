@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -12,7 +13,25 @@ import application.Product;
 public class JDBCConnector {
 	private DatabaseMetaData metaData;
 	private Connection connection;
-
+	private String userName = "ws1011";
+	private String url = "jdbc:postgresql://java.is.uni-due.de/ws1011";
+	private String password = "ftpw10";
+	
+	public JDBCConnector(){
+		try {
+			
+			Class.forName("org.postgresql.Driver");
+			connection = DriverManager.getConnection(url, userName ,password);
+			metaData = connection.getMetaData();
+		}
+		catch(ClassNotFoundException e){
+			System.out.println("Klasse nicht gefunden!");
+		}
+		catch(SQLException e){
+			System.out.println("SQLException");
+		}
+	}
+	
 	public String getConnectionURL() {
 		try {
 			return metaData.getURL();
@@ -36,7 +55,6 @@ public class JDBCConnector {
 	}
 
 	public String getConnectionTableNames() {
-
 		String tableNameQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'; ";
 		String names = "";
 		try (Statement statement = connection.createStatement();
