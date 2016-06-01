@@ -1,5 +1,6 @@
 package application;
 
+import database.JDBCConnector;
 import gui.ControllerShop;
 import gui.ModelShop;
 import gui.ViewCustomer;
@@ -18,7 +19,7 @@ public class Main extends Application {
 			ViewCustomer viewCustomer = new ViewCustomer();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
-
+			
 			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop     = new Scene(viewShop);
