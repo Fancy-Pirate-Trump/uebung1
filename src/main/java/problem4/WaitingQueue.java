@@ -106,11 +106,11 @@ public class WaitingQueue {
 
 	public boolean dequeue() {
 		if((getOpenCashpoints().isEmpty() || isAnyCashpointAtCapacity(6)) && !(areAllCashpointsOpen() && cashpoints.size() > 1 )){
-			//offne eine kasse wenn es keine offene gibt oder alle voll sind aber nicht wenn schon alle voll sind
+			//offne eine kasse wenn es keine offene gibt oder eine voll ist aber nicht wenn schon alle voll sind
 			getLowestClosedCashpoint().open();
 		}
 
-		if(isAnyCashpointAtCapacity(8)){
+		if(isAnyCashpointAtCapacity(8)){ //Keine Kunden mehr nehmen, wenn eine Kasse bei 8 ist
 			acceptsCustomers = false;
 		}
 
