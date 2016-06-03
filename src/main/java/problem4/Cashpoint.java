@@ -12,7 +12,7 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 	private boolean isOpen;
 
 
-	public Cashpoint(int id, WaitingQueue q) {
+	public Cashpoint(int id) {
 		this.id = id;
 	}
 
