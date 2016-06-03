@@ -17,9 +17,9 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	}
 
 	@Override
-	public void writeObject(Product obj) throws IOException {
+	public void writeObject(Product obj) {
 		// TODO Auto-generated method stub
-
+		
 		jcon.insert((application.Product) obj);
 	}
 
@@ -30,15 +30,15 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	}
 
 	@Override
-	public void open(InputStream input, OutputStream output) throws IOException {
+	public void open(InputStream input, OutputStream output) {
 		// TODO Auto-generated method stub
-	new JDBCConnector();
+		jcon = new JDBCConnector();
 	}
 
 	@Override
 	public String getFilename() {
 		// TODO Auto-generated method stub
-		return null;
+		return "database";
 	}
 
 }

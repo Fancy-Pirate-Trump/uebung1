@@ -63,9 +63,11 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			strategy.open(null, fos);
-			for(Product prod: this) strategy.writeObject(prod);;
+			for(Product prod: this) strategy.writeObject(prod);
 			strategy.close();
-		} catch (Exception e) {}
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 
 	}
 

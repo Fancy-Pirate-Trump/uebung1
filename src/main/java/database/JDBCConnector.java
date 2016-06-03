@@ -16,10 +16,10 @@ public class JDBCConnector {
 	private String userName = "ws1011";
 	private String url = "jdbc:postgresql://java.is.uni-due.de/ws1011";
 	private String password = "ftpw10";
-	
+
 	public JDBCConnector(){
 		try {
-			
+
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(url, userName ,password);
 			metaData = connection.getMetaData();
@@ -31,7 +31,7 @@ public class JDBCConnector {
 			System.out.println("SQLException");
 		}
 	}
-	
+
 	public String getConnectionURL() {
 		try {
 			return metaData.getURL();
@@ -73,46 +73,49 @@ public class JDBCConnector {
 
 	}
 
-
 	public long insert(String name, double price, int quantity){
-		String sql = "";
 		long id = 0;
-		try(PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)){
-			id = statement.executeUpdate();
-		}catch(SQLException e){
-			
-		}
+		
+			try(PreparedStatement statement = connection.prepareStatement(
+						"INSERT INTO products (name, price, quantity) VALUES(?, ?, ?)",
+						PreparedStatement.RETURN_GENERATED_KEYS);) {
+					statement.setString(1, name);
+					statement.setDouble(2, price);
+					statement.setInt(3, quantity);
+					id =statement.executeUpdate();
+						if(id !=0){
+						ResultSet result = statement.getGeneratedKeys();
+							if(result.next()){
+								id = result.getLong("id");
+							}
+						}
+				}
+				catch(SQLException e){
+					System.out.println("Hier ist ne SQLException");
+				}
+
 		return id;
 	}
-//	Achten Sie beim erstellen des Statements auf das Vorhandensein des Parameters
-//	Statement.RETURN_GENERATED_KEYS.
-//	INSERT INTO products(name,price,quantity) VALUES (?,?,?)
-	public void insert(Product product){
-		try(PreparedStatement statement = connection.prepareStatement(
-				"INSERT INTO products (name, price, quantity) VALUES(?)"
-				);) {
-			statement.setObject(1, product);
-			statement.executeUpdate();
-		}
-		catch(SQLException e){
 
-		}
+	public void insert(Product product){
+		insert(product.getName(), product.getPrice(), product.getQuantity());
 	}
-//	Nach dem erfolgreichen Einfügen in die Datenbank soll das Produkt die von der Datenbank
-//	generierte Id übernehmen
+
+
 	public Product read(long productId){
-		Product product = null;
+		Product product =null;
 		try(PreparedStatement statement = connection.prepareStatement(
-				"SELECT * FROM Product WHERE id=?"
+				"SELECT * FROM products ORDER BY id desc LIMIT 10"
 				)) {
-			statement.setLong(1, productId);
 			ResultSet result = statement.executeQuery();
-			product = (Product) result.getObject(1);
+			if(result.next()){
+				//hier aus der Tabelle name price und quantity übergeben.
+			//Product product = new Product(name,price,quantity);
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return 	product;
+		return product;
 	}
-//	SELECT id,name,price,quantity FROM products WHERE id=?
 
 }
