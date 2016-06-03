@@ -13,7 +13,8 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	@Override
 	public Product readObject() throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-		return jcon.read(0);
+		System.out.println("hier im readobject");
+		return jcon.read(1);
 	}
 
 	@Override

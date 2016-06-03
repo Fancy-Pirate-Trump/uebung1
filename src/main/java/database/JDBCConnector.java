@@ -105,10 +105,12 @@ public class JDBCConnector {
 	public Product read(long productId){
 		Product product =null;
 		try(PreparedStatement statement = connection.prepareStatement(
-				"SELECT * FROM products ORDER BY id desc LIMIT 10"
-				)) {
+				"SELECT * FROM products WHERE id = "+ productId)) {
 			ResultSet result = statement.executeQuery();
 			if(result.next()){
+				product = new Product(result.getString("name"),
+								      result.getDouble("price"),
+								      result.getInt("quantity"));
 				//hier aus der Tabelle name price und quantity übergeben.
 			//Product product = new Product(name,price,quantity);
 			}
