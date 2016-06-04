@@ -18,6 +18,8 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 
 	ProductList productList = new ProductList();
 	SerializableStrategyClass strategy;
+	private long productValue;
+	private long savedId;
 
 	@Override
 	public Product get(int index) {
@@ -47,28 +49,57 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	public void setSerializableStrategy(SerializableStrategyClass strategy){
 		this.strategy = strategy;
 	}
-
+	
+	/* Für JDBC übergibt die Methode die Anzal der Produkte und die 
+	 * höchste Id, damit ein Zähler läuft und nur die Produkte
+	 * hinzugefügt werden, die vorher eingegeben wurden
+	 */
 	public void load() {
 		File file = new File(strategy.getFilename());
 		try {
+			Product temp = null;
 			FileInputStream fis = new FileInputStream(file);
 			strategy.open(fis, null);
-			while(add(strategy.readObject()));
+			strategy.giveValue(productValue, savedId);
+			
+			//solange das Produkt aus readObject nicht null ist wird hinzugefügt
+			
+			while((temp = strategy.readObject()) != null){
+				add(temp);
+				};
 			strategy.close();
 		} catch (Exception e) {}
 	}
-
+	
+	/*Für JDBC speichert hier die Methode sowohl die Anzahl der Produkte,
+	 * als auch die höchste Id, damit man die Liste vorher leeren kann.
+	 */
 	public void save() {
 		File file = new File(strategy.getFilename());
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			strategy.open(null, fos);
 			for(Product prod: this) strategy.writeObject(prod);
+			savedId = this.saveId(strategy.giveId());
+			productValue = this.productValue();
 			strategy.close();
 		} catch(IOException e){
 			e.printStackTrace();
 		}
 
+	}
+	//speichert die Anzahl der Produkte die gesaved wurden
+	public long productValue(){
+		long value = 0;
+		for(Product prod: this) value++;
+		return value;
+	}
+	/*speichert die Id aus der Strategy. Musste damit es allgemein bleibt(strategy.//) 
+	 * in jede Strategy die Methode einbauen
+	 */
+	public long saveId(long id){
+		long savedId = id;
+		return savedId;
 	}
 
 }

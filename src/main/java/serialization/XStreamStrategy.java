@@ -49,4 +49,16 @@ public class XStreamStrategy extends SerializableStrategyClass {
 		return "Xstream.xml";
 	}
 
+	@Override
+	public void giveValue(long value, long savedId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long giveId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

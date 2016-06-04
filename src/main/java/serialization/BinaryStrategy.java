@@ -52,6 +52,18 @@ public class BinaryStrategy extends SerializableStrategyClass {
 		return "products.ser";
 	}
 
+	@Override
+	public void giveValue(long value, long savedId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long giveId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 }

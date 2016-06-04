@@ -16,7 +16,8 @@ public class JDBCConnector {
 	private String userName = "ws1011";
 	private String url = "jdbc:postgresql://java.is.uni-due.de/ws1011";
 	private String password = "ftpw10";
-
+	private long id;
+	
 	public JDBCConnector(){
 		try {
 
@@ -74,7 +75,6 @@ public class JDBCConnector {
 	}
 
 	public long insert(String name, double price, int quantity){
-		long id = 0;
 		
 			try(PreparedStatement statement = connection.prepareStatement(
 						"INSERT INTO products (name, price, quantity) VALUES(?, ?, ?)",
@@ -98,12 +98,12 @@ public class JDBCConnector {
 	}
 
 	public void insert(Product product){
-		insert(product.getName(), product.getPrice(), product.getQuantity());
+		this.id = insert(product.getName(), product.getPrice(), product.getQuantity());
 	}
 
 
 	public Product read(long productId){
-		Product product =null;
+		Product product = null;
 		try(PreparedStatement statement = connection.prepareStatement(
 				"SELECT * FROM products WHERE id = "+ productId)) {
 			ResultSet result = statement.executeQuery();
@@ -111,13 +111,16 @@ public class JDBCConnector {
 				product = new Product(result.getString("name"),
 								      result.getDouble("price"),
 								      result.getInt("quantity"));
-				//hier aus der Tabelle name price und quantity übergeben.
-			//Product product = new Product(name,price,quantity);
+
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return product;
+	}
+	
+	public long getHighestId(){
+		return this.id;
 	}
 
 }

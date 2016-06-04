@@ -54,4 +54,16 @@ public class XMLStrategy extends SerializableStrategyClass {
 		return "products.xml";
 	}
 
+	@Override
+	public void giveValue(long value,long savedId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long giveId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
