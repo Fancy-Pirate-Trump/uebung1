@@ -21,7 +21,7 @@ public class ViewShop extends HBox {
 	private Label nameLabel, priceLabel, countlabel;
 	private TextField nameField, priceField, countField;
 	private HBox buttonRow, optionRow;
-	private Button add, delete, save, load;
+	private Button add, delete, save, load, clear;
 	private ComboBox strategySelection;
 	private BorderPane borderPane;
 	private ControllerShop cs;
@@ -41,6 +41,7 @@ public class ViewShop extends HBox {
 		delete = new Button("Delete");
 		save = new Button("Save");
 		load = new Button("Load");
+		clear = new Button("Clear");
 		optionRow = new HBox();
 		strategySelection = new ComboBox<String>();
 		borderPane = new BorderPane();
@@ -50,7 +51,7 @@ public class ViewShop extends HBox {
 		borderPane.setRight(vBox);
 		this.getChildren().addAll(borderPane);
 		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow);
-		buttonRow.getChildren().addAll(add, delete);
+		buttonRow.getChildren().addAll(add, delete, clear);
 		optionRow.getChildren().addAll( save, load, strategySelection);
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase");
@@ -78,7 +79,9 @@ public class ViewShop extends HBox {
 				try{
 				cs.add();
 				}
-				catch (Exception e){};
+				catch (Exception e){
+					e.printStackTrace();
+				};
 			}
 
 		});
@@ -94,6 +97,18 @@ public class ViewShop extends HBox {
 			}
 
 		});
+		
+		clear.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				int size = products.getItems().size();
+				for(int i = size-1; i >= 0; i--){
+					cs.delete(i);
+				}
+			}
+		});
 
 		save.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -101,7 +116,9 @@ public class ViewShop extends HBox {
 			public void handle(ActionEvent event) {
 				try{
 				cs.save();
-				} catch(Exception e){}
+				} catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		
 
@@ -113,7 +130,9 @@ public class ViewShop extends HBox {
 			public void handle(ActionEvent event) {
 				try{
 				cs.load();
-				} catch(Exception e){}
+				} catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 			
 		});
