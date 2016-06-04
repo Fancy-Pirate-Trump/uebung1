@@ -9,7 +9,7 @@ public class Main {
 		Cashpoint[] cashpoints = new Cashpoint[7];
 		int id = 1;
 		for(Cashpoint cp : cashpoints){
-			cp = new Cashpoint(id++, queue);
+			cp = new Cashpoint(id++);
 			queue.addCashpoint(cp);
 			cp.setTotal(balance);
 		}
