@@ -80,7 +80,7 @@ public class ViewShop extends HBox {
 				cs.add();
 				}
 				catch (Exception e){
-					e.printStackTrace();
+					System.out.println("Vergessen etwas einzutragen?");
 				};
 			}
 
@@ -97,7 +97,7 @@ public class ViewShop extends HBox {
 			}
 
 		});
-		
+
 		clear.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
@@ -117,10 +117,10 @@ public class ViewShop extends HBox {
 				try{
 				cs.save();
 				} catch(Exception e){
-					e.printStackTrace();
+					System.out.println("Nichts zum Speichern vorhanden");
 				}
 			}
-		
+
 
 		});
 
@@ -131,10 +131,10 @@ public class ViewShop extends HBox {
 				try{
 				cs.load();
 				} catch(Exception e){
-					e.printStackTrace();
+					System.out.println("Nichts zum Laden vorhanden");
 				}
 			}
-			
+
 		});
 	}
 
