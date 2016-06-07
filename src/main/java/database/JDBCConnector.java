@@ -17,7 +17,7 @@ public class JDBCConnector {
 	private String url = "jdbc:postgresql://java.is.uni-due.de/ws1011";
 	private String password = "ftpw10";
 	private long id;
-	
+
 	public JDBCConnector(){
 		try {
 
@@ -75,7 +75,7 @@ public class JDBCConnector {
 	}
 
 	public long insert(String name, double price, int quantity){
-		
+
 			try(PreparedStatement statement = connection.prepareStatement(
 						"INSERT INTO products (name, price, quantity) VALUES(?, ?, ?)",
 						PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -118,9 +118,18 @@ public class JDBCConnector {
 		}
 		return product;
 	}
-	
+
 	public long getHighestId(){
 		return this.id;
+	}
+
+	public void close(){
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Verbindung konnte nicht geschlossen werden");
+		}
 	}
 
 }

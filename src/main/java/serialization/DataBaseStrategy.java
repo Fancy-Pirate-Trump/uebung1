@@ -12,18 +12,18 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	private JDBCConnector jcon;
 	private long id;
 	private long count;
-	
+
 	public DataBaseStrategy(){
-		
+
 		jcon = new JDBCConnector();
-		
+
 	}
-	
-	/* wenn die höchste Id noch nicht erreicht ist wird ein neues 
+
+	/* wenn die höchste Id noch nicht erreicht ist wird ein neues
 	 * Produkt hinzugefügt und der Zähler einen höher gesetzt
 	 * sonst wird null ausgegeben, dann stoppt das Hinzufügen
 	 */
-	
+
 	@Override
 	public Product readObject() throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
@@ -36,14 +36,14 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	@Override
 	public void writeObject(Product obj) {
 		// TODO Auto-generated method stub
-		
+
 		jcon.insert((application.Product) obj);
 	}
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
-		
+		jcon.close();
+
 	}
 
 	@Override
@@ -56,11 +56,11 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 		// TODO Auto-generated method stub
 		return "database";
 	}
-	
+
 	/* Übergabe der höchsten Id und der Anzahl der Produkte
 	 * somit kann der Zähler laufen, der die Produkte einfügt
 	 */
-	
+
 	@Override
 	public void giveValue(long value, long savedId) {
 		// TODO Auto-generated method stub
@@ -69,7 +69,7 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 	}
 
 	//übergabe der höchsten Id vom JDBC Connector
-	
+
 	@Override
 	public long giveId() {
 		// TODO Auto-generated method stub
