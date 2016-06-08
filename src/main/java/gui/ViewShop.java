@@ -63,7 +63,7 @@ public class ViewShop extends HBox {
 				protected void updateItem(Product myObject, boolean b) {
 					super.updateItem(myObject, myObject == null || b);
 					if (myObject != null) {
-						setText(myObject.getName() + " | " + myObject.getPrice() + " €  | " + myObject.getQuantity());
+						setText(myObject.getName() + " | " + myObject.getPrice() + " â‚¬ | " + myObject.getQuantity());
 					} else {
 						setText("");
 					}
