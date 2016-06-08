@@ -7,7 +7,9 @@ import java.io.ObjectOutput;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javax.persistence.*;
 
+@Entity()
 public class Product implements fpt.com.Product, java.io.Externalizable {
 	private long id;
 	private SimpleStringProperty name = new SimpleStringProperty();
