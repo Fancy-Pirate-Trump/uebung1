@@ -80,21 +80,11 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			FileOutputStream fos = new FileOutputStream(file);
 			strategy.open(null, fos);
 			for(Product prod: this) strategy.writeObject(prod);
-			savedId = this.saveId(strategy.giveId());
+			savedId = strategy.giveId();
 			sizeOfLastSave = this.size();
 			strategy.close();
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-
 	}
-
-	/*speichert die Id aus der Strategy. Musste damit es allgemein bleibt(strategy.//)
-	 * in jede Strategy die Methode einbauen
-	 */
-	public long saveId(long id){
-		long savedId = id;
-		return savedId;
-	}
-
 }
