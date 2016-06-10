@@ -50,9 +50,9 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		this.strategy = strategy;
 	}
 
-	/* Für JDBC übergibt die Methode die Anzal der Produkte und die
-	 * höchste Id, damit ein Zähler läuft und nur die Produkte
-	 * hinzugefügt werden, die vorher eingegeben wurden
+	/* Fï¿½r JDBC ï¿½bergibt die Methode die Anzal der Produkte und die
+	 * hï¿½chste Id, damit ein Zï¿½hler lï¿½uft und nur die Produkte
+	 * hinzugefï¿½gt werden, die vorher eingegeben wurden
 	 */
 	public void load() {
 		File file = new File(strategy.getFilename());
@@ -62,7 +62,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			strategy.open(fis, null);
 			strategy.giveValue(sizeOfLastSave, savedId);
 
-			//solange das Produkt aus readObject nicht null ist wird hinzugefügt
+			//solange das Produkt aus readObject nicht null ist wird hinzugefï¿½gt
 
 			while((temp = strategy.readObject()) != null){
 				add(temp);
@@ -71,8 +71,8 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		} catch (Exception e) {}
 	}
 
-	/*Für JDBC speichert hier die Methode sowohl die Anzahl der Produkte,
-	 * als auch die höchste Id, damit man die Liste vorher leeren kann.
+	/*Fï¿½r JDBC speichert hier die Methode sowohl die Anzahl der Produkte,
+	 * als auch die hï¿½chste Id, damit man die Liste vorher leeren kann.
 	 */
 	public void save() {
 		File file = new File(strategy.getFilename());

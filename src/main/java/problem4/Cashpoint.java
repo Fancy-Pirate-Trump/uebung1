@@ -36,17 +36,20 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 
 	@Override
 	public void run() {
+
 		try {
-			isOpen = true; //Die Kasse Ist vor dem Warten schon offen, damit sich Kunden anstellen können
-			Thread.sleep(6000);  //Das öffnen einer Kasse dauert 6 Sekunden
+			isOpen = true; //Die Kasse Ist vor dem Warten schon offen, damit sich Kunden anstellen kï¿½nnen
+			System.out.println("Kasse " + id + " wird geï¿½ffnet...");
+			Thread.sleep(6000);  //Das ï¿½ffnen einer Kasse dauert 6 Sekunden
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
 
-		System.out.println("Kasse " + id + " geöffnet.");
+		System.out.println("Kasse " + id + " ist geÃ¶ffnet.");
 		while(customers.size() > 0) {
 			try {
 				Thread.sleep(rand.nextInt(4000)+6000);
+
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -56,9 +59,9 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 			synchronized(total) {
 				System.out.println(total);
 			}
-			System.out.println("Kasse" + id + " Hat Kunden " + currentInLine +" bedient. " + getQueueLength() + " Kunden übrig.");
+			System.out.println("Kasse" + id + " Hat Kunden " + currentInLine +" bedient. " + getQueueLength() + " Kunden ï¿½brig.");
 		}
-		System.out.println("Kasse " + id + " schließt.");
+		System.out.println("Kasse " + id + " schlieï¿½t.");
 		isOpen = false;
 	}
 
@@ -72,7 +75,7 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 
 	public String toString(){
 		String status = isOpen?"(offen)":"(geschlossen)";
-		return "Kasse " + getId() + " " + status +" hat " + balance + "€ eingenommen.";
+		return "Kasse " + getId() + " " + status +" hat " + balance + "ï¿½ eingenommen.";
 	}
 
 	public int getBalance(){

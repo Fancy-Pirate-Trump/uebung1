@@ -22,7 +22,7 @@ public class WaitingQueue {
 			}
 		}
 		if(minimum == null) { //keine kasse offen
-			minimum = getLowestClosedCashpoint(); //öffne kasse 1
+			minimum = getLowestClosedCashpoint(); //ï¿½ffne kasse 1
 		}
 		return minimum;
 	}
@@ -72,12 +72,12 @@ public class WaitingQueue {
 			if(cashpoint.getQueueLength() >= n)
 				return true;
 		}
-		//Keine kontrollierte Kasse kratzt an Kapazität
+		//Keine kontrollierte Kasse kratzt an Kapazitï¿½t
 		return false;
 	}
 
 	private boolean areAllCashpointsOpen(){
-		return getOpenCashpoints().equals(cashpoints);
+		return getOpenCashpoints().size() == cashpoints.size() && cashpoints.size() > 0;
 	}
 
 	public void addCashpoint(Cashpoint cp) {
@@ -105,8 +105,8 @@ public class WaitingQueue {
 	}
 
 	public boolean dequeue() {
-		if((getOpenCashpoints().isEmpty() || isAnyCashpointAtCapacity(6)) && !(areAllCashpointsOpen() && cashpoints.size() > 1 )){
-			//offne eine kasse wenn es keine offene gibt oder eine voll ist aber nicht wenn schon alle voll sind
+		if((getOpenCashpoints().isEmpty() || isAnyCashpointAtCapacity(6)) && !(areAllCashpointsOpen())){
+			//offne eine kasse wenn es keine offene gibt oder eine voll ist aber nicht wenn schon alle offwn und voll sind
 			getLowestClosedCashpoint().open();
 		}
 

@@ -9,11 +9,22 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javax.persistence.*;
 
+import org.apache.openjpa.persistence.*;
+import org.apache.openjpa.persistence.jdbc.*;
+
+
 @Entity()
+@Table(name = "products")
 public class Product implements fpt.com.Product, java.io.Externalizable {
 	private long id;
+	@Persistent
+	@Strategy ("fpt.com.db.StringPropertyValueHandler")
 	private SimpleStringProperty name = new SimpleStringProperty();
+	@Persistent
+	@Strategy ("fpt.com.db.DoublePropertyValueHandler")
 	private SimpleDoubleProperty price = new SimpleDoubleProperty();
+	@Persistent
+	@Strategy ("fpt.com.db.IntegerPropertyValueHandler")
 	private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
 
 
@@ -28,8 +39,10 @@ public class Product implements fpt.com.Product, java.io.Externalizable {
 		setName(name);
 		setQuantity(quantity);
 	}
-
+	
 	@Override
+	@Id
+	@GeneratedValue
 	public long getId() {
 		return id;
 	}

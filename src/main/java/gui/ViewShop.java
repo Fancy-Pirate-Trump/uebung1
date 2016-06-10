@@ -54,7 +54,7 @@ public class ViewShop extends HBox {
 		buttonRow.getChildren().addAll(add, delete, clear);
 		optionRow.getChildren().addAll( save, load, strategySelection);
 
-		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase");
+		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
 
 		products.setCellFactory(e -> {

@@ -3,6 +3,7 @@ package gui;
 import application.Product;
 import serialization.BinaryStrategy;
 import serialization.DataBaseStrategy;
+import serialization.JPAStrategy;
 import serialization.SerializableStrategyClass;
 import serialization.XMLStrategy;
 import serialization.XStreamStrategy;
@@ -54,6 +55,7 @@ public class ControllerShop {
 		case "XML": return new XMLStrategy();
 		case "XStream" : return new XStreamStrategy();
 		case "DataBase" : return new DataBaseStrategy();
+		case "JPAStrategy" : return new JPAStrategy();
 		default: return null;
 		}
 	}

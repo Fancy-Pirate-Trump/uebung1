@@ -82,7 +82,7 @@ public class JDBCConnector {
 					statement.setString(1, name);
 					statement.setDouble(2, price);
 					statement.setInt(3, quantity);
-					id =statement.executeUpdate();
+					id = statement.executeUpdate();
 						if(id !=0){
 						ResultSet result = statement.getGeneratedKeys();
 							if(result.next()){
