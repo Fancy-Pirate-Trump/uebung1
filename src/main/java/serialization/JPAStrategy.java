@@ -21,16 +21,17 @@ public class JPAStrategy extends SerializableStrategyClass{
 	private long count;
 
 	public JPAStrategy(){
-		//entityManagerFac = Persistence.createEntityManagerFactory("openjpa", System.getProperties());
-		entityManagerFac = getWithoutConfig();
-		entityManager = entityManagerFac.createEntityManager();
-		entityTransaction = entityManager.getTransaction();
+		
 	}
 	@Override
 	public Product readObject() throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		if(count <= id){
-			Product product = (Product) entityManager.createQuery("SELECT * FROM products WHERE id = " + count);
+			entityTransaction.begin();
+			Product product = (Product) entityManager.createQuery("SELECT p FROM Product p WHERE p.id = " + count)
+																	.getSingleResult();
+			count++;
+			entityTransaction.commit();
 			return product;
 		}else
 			return null;
@@ -56,7 +57,10 @@ public class JPAStrategy extends SerializableStrategyClass{
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
 		// TODO Auto-generated method stub
-
+		//entityManagerFac = Persistence.createEntityManagerFactory("openjpa", System.getProperties());
+		entityManagerFac = getWithoutConfig();
+		entityManager = entityManagerFac.createEntityManager();
+		entityTransaction = entityManager.getTransaction();
 	}
 
 	@Override
@@ -76,8 +80,10 @@ public class JPAStrategy extends SerializableStrategyClass{
 	public long giveId() {
 		// TODO Auto-generated method stub
 		entityTransaction.begin();
-		Product p = (Product) entityManager.createQuery("SELECT * FROM products ORDER BY id DESC LIMIT 1");
-		return p.getId();
+		long l = (long) entityManager.createQuery("SELECT MAX(p.id) FROM Product p")
+													.getSingleResult();
+		entityTransaction.commit();
+		return l;
 	}
 	
 	public static EntityManagerFactory getWithoutConfig() {
@@ -91,22 +97,8 @@ public class JPAStrategy extends SerializableStrategyClass{
 		map.put("openjpa.ConnectionPassword", "ftpw10");
 		map.put("openjpa.RuntimeUnenhancedClasses", "supported");
 		map.put("openjpa.jdbc.SynchronizeMappings", "false");
+		map.put("openjpa.MetaDataFactory", "jpa(Types=" + application.Product.class.getName() + ")");
 
-		// find all classes to registrate them
-		List<Class<?>> types = new ArrayList<Class<?>>();
-		types.add(Product.class);
-
-		if (!types.isEmpty()) {
-			StringBuffer buf = new StringBuffer();
-			for (Class<?> c : types) {
-				if (buf.length() > 0)
-					buf.append(";");
-				buf.append(c.getName());
-			}
-			// <class>Producer</class>
-			map.put("openjpa.MetaDataFactory", "jpa(Types=" + buf.toString()
-					+ ")");
-		}
 
 		return OpenJPAPersistence.getEntityManagerFactory(map);
 

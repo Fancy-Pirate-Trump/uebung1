@@ -2,7 +2,10 @@ package fpt.com;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
 import javafx.beans.value.ObservableValue;
+import javax.persistence.*;
 
 /**
  * This interface is used in exercise one.
@@ -10,6 +13,7 @@ import javafx.beans.value.ObservableValue;
  * @author Jens Kapitza
  * 
  */
+@Entity()
 public interface Product extends Serializable {
 
 	/**

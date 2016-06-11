@@ -114,11 +114,7 @@ public class ViewShop extends HBox {
 
 			@Override
 			public void handle(ActionEvent event) {
-				try{
 				cs.save();
-				} catch(Exception e){
-					System.out.println("Nichts zum Speichern vorhanden");
-				}
 			}
 
 
@@ -129,7 +125,7 @@ public class ViewShop extends HBox {
 			@Override
 			public void handle(ActionEvent event) {
 				try{
-				cs.load();
+					cs.load();
 				} catch(Exception e){
 					System.out.println("Nichts zum Laden vorhanden");
 				}

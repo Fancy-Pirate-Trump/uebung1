@@ -63,12 +63,13 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			strategy.giveValue(sizeOfLastSave, savedId);
 
 			//solange das Produkt aus readObject nicht null ist wird hinzugef�gt
-
 			while((temp = strategy.readObject()) != null){
 				add(temp);
 				};
 			strategy.close();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*F�r JDBC speichert hier die Methode sowohl die Anzahl der Produkte,
