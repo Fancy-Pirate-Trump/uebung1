@@ -6,7 +6,7 @@
 	<persistence-unit name="openjpa">
 		<description>JPA Application Client</description>
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-		<class>Producer</class>
+		<class>application.Product</class>
 		<properties>
 			<property name="openjpa.ConnectionURL" value="jdbc:postgresql://java.is.uni-due.de/ws1011" />
 			<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver" />
@@ -14,6 +14,7 @@
 			<property name="openjpa.ConnectionPassword" value="ftpw10" />
 			<property name="openjpa.jdbc.SynchronizeMappings" value="false"/> 
 			<property name="openjpa.RuntimeUnenhancedClasses" value="supported"/> 
+			<property name="openjpa.MetaDataFactory" value="jpa(Types= application.Product.class.getName()  )"/>
 		</properties>
 	</persistence-unit>
 </persistence>
