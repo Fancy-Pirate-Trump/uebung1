@@ -1,6 +1,5 @@
 package application;
 
-import database.JDBCConnector;
 import gui.ControllerShop;
 import gui.ModelShop;
 import gui.ViewCustomer;
@@ -19,20 +18,26 @@ public class Main extends Application {
 			ViewCustomer viewCustomer = new ViewCustomer();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
-			
+
 			controllerShop.link(modelShop, viewShop);
-			
+
 			Scene sceneShop     = new Scene(viewShop);
-			sceneShop.getStylesheets().add(getClass().getResource("AlternativeCSS.css").toExternalForm());
+			sceneShop.getStylesheets().add(getClass().getResource("DunklesMetro.css").toExternalForm());
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
 
+
 			primaryStage.setScene(sceneShop);
+			secondaryStage.setScene(sceneCustomer);
+
+			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
+
+//			secondaryStage.show();
 			primaryStage.show();
 
-			secondaryStage.setScene(sceneCustomer);
-			secondaryStage.show();
-			secondaryStage.setX(primaryStage.getX()+400);
+			primaryStage.setResizable(false);
+
+			secondaryStage.setX(primaryStage.getX());
 
 		} catch(Exception e) {
 			e.printStackTrace();

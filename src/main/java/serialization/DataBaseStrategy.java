@@ -1,13 +1,14 @@
 package serialization;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import database.JDBCConnector;
 import fpt.com.Product;
-import gui.ModelShop;
-	//Für eine Begrenzung der Ergebnisse: Statement.setMaxRows(int maxRows);
+
+//Fï¿½r eine Begrenzung der Ergebnisse: Statement.setMaxRows(int maxRows);
 public class DataBaseStrategy extends SerializableStrategyClass{
 	private JDBCConnector jcon;
 	private long id;
@@ -19,9 +20,9 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 
 	}
 
-	/* wenn die höchste Id noch nicht erreicht ist wird ein neues
-	 * Produkt hinzugefügt und der Zähler einen höher gesetzt
-	 * sonst wird null ausgegeben, dann stoppt das Hinzufügen
+	/* wenn die hï¿½chste Id noch nicht erreicht ist wird ein neues
+	 * Produkt hinzugefï¿½gt und der Zï¿½hler einen hï¿½her gesetzt
+	 * sonst wird null ausgegeben, dann stoppt das Hinzufï¿½gen
 	 */
 
 	@Override
@@ -57,8 +58,8 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 		return "database";
 	}
 
-	/* Übergabe der höchsten Id und der Anzahl der Produkte
-	 * somit kann der Zähler laufen, der die Produkte einfügt
+	/* ï¿½bergabe der hï¿½chsten Id und der Anzahl der Produkte
+	 * somit kann der Zï¿½hler laufen, der die Produkte einfï¿½gt
 	 */
 
 	@Override
@@ -68,7 +69,7 @@ public class DataBaseStrategy extends SerializableStrategyClass{
 		this.count = (savedId-value)+1;
 	}
 
-	//übergabe der höchsten Id vom JDBC Connector
+	//ï¿½bergabe der hï¿½chsten Id vom JDBC Connector
 
 	@Override
 	public long giveId() {

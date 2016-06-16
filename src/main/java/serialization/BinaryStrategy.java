@@ -1,8 +1,5 @@
 package serialization;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
@@ -12,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 import fpt.com.Product;
-import fpt.com.SerializableStrategy;
 
 public class BinaryStrategy extends SerializableStrategyClass {
 	InputStream input;
@@ -55,7 +51,7 @@ public class BinaryStrategy extends SerializableStrategyClass {
 	@Override
 	public void giveValue(long value, long savedId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import fpt.com.Product;
-import fpt.com.SerializableStrategy;
 
 public class XMLStrategy extends SerializableStrategyClass {
 	InputStream input;
@@ -57,7 +56,7 @@ public class XMLStrategy extends SerializableStrategyClass {
 	@Override
 	public void giveValue(long value,long savedId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

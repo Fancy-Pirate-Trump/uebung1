@@ -5,26 +5,25 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 import javafx.beans.value.ObservableValue;
-import javax.persistence.*;
 
 /**
  * This interface is used in exercise one.
- * 
+ *
  * @author Jens Kapitza
- * 
+ *
  */
 @Entity()
 public interface Product extends Serializable {
 
 	/**
-	 * 
+	 *
 	 * @return The id for the product.
 	 */
 	long getId();
 
 	/**
 	 * set the id
-	 * 
+	 *
 	 * @param id
 	 *            the id for the product
 	 */
@@ -37,7 +36,7 @@ public interface Product extends Serializable {
 
 	/**
 	 * Alters the price of the product.
-	 * 
+	 *
 	 * @param price
 	 *            The new price
 	 */
@@ -50,7 +49,7 @@ public interface Product extends Serializable {
 
 	/**
 	 * Alters the quantity of the Product.
-	 * 
+	 *
 	 * @param quantity
 	 *            The new quantity of the Product
 	 */
@@ -63,12 +62,12 @@ public interface Product extends Serializable {
 
 	/**
 	 * set the name for the product
-	 * 
+	 *
 	 * @param name
 	 *            the product name
 	 */
 	void setName(String name);
-	
+
 	// new since JavaFX
 
 	ObservableValue<String> nameProperty();

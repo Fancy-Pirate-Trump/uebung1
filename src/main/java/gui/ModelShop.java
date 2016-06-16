@@ -2,16 +2,13 @@ package gui;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import application.ProductList;
 import fpt.com.Product;
-import fpt.com.SerializableStrategy;
 import javafx.collections.ModifiableObservableListBase;
-import serialization.IDGenerator;
-import serialization.IDOverflowException;
+
 import serialization.SerializableStrategyClass;
 
 public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
