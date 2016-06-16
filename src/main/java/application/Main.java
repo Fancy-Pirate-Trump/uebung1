@@ -21,8 +21,9 @@ public class Main extends Application {
 			ModelShop modelShop = new ModelShop();
 			
 			controllerShop.link(modelShop, viewShop);
-
+			
 			Scene sceneShop     = new Scene(viewShop);
+			sceneShop.getStylesheets().add(getClass().getResource("AlternativeCSS.css").toExternalForm());
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
 
