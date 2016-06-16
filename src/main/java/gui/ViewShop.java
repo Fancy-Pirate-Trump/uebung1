@@ -155,6 +155,8 @@ public class ViewShop extends HBox {
 				    	    if(!countField.getText().isEmpty()&&!priceField.getText().isEmpty()&&!nameField.getText().isEmpty())
 				    	   		add.fire();
 			       }
+			       if(t.getCode() == KeyCode.UP) countField.requestFocus();
+			       if(t.getCode() == KeyCode.DOWN) priceField.requestFocus();
 			   }
 		});
 		
@@ -168,7 +170,8 @@ public class ViewShop extends HBox {
 			    	    if(!countField.getText().isEmpty()&&!priceField.getText().isEmpty()&&!nameField.getText().isEmpty())
 		    	   		add.fire();
 			       }
-			    	   
+			       if(t.getCode() == KeyCode.UP) nameField.requestFocus();
+			       if(t.getCode() == KeyCode.DOWN) countField.requestFocus();
 			   }
 		});
 		
@@ -181,7 +184,9 @@ public class ViewShop extends HBox {
 			       
 			    	    if(!countField.getText().isEmpty()&&!priceField.getText().isEmpty()&&!nameField.getText().isEmpty())
 		    	   		add.fire();
-			       }   
+			       }
+			       if(t.getCode() == KeyCode.UP) priceField.requestFocus();
+			       if(t.getCode() == KeyCode.DOWN) nameField.requestFocus();
 			   }
 		});
 		
