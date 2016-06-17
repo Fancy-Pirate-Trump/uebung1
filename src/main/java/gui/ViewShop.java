@@ -1,5 +1,7 @@
 package gui;
 
+import com.sun.prism.paint.Color;
+
 import fpt.com.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +37,8 @@ public class ViewShop extends HBox {
 	public ViewShop() {
 
 		products = new ListView<Product>();		
+		products.setId("products");
+		
 		vBox = new VBox(2);
 		vBox.setPadding(new Insets(0,-8,-9,2));
 		
@@ -55,8 +59,11 @@ public class ViewShop extends HBox {
 		countlabel.setId("font");
 		
 		nameField = new TextField();
+		nameField.setPromptText("Produktname eingeben");
 		priceField = new DoubleTextField();
+		priceField.setPromptText("Preis eingeben");
 		countField = new NumberTextField();
+		countField.setPromptText("Anzahl eingeben");
 		buttonRow = new HBox(2);
 		optionRow = new HBox(2);
 		optionRow.setPrefHeight(36);
@@ -78,6 +85,7 @@ public class ViewShop extends HBox {
 		clear.setId("font-button");
 
 		strategySelection = new ComboBox<String>();
+		strategySelection.setPromptText("Strategie");
 		strategySelection.setId("font-optionRow");
 
 		borderPane.setTop(optionRow);
@@ -90,7 +98,7 @@ public class ViewShop extends HBox {
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
-
+		
 		products.setCellFactory(e -> {
 			ListCell<Product> cell = new ListCell<Product>() {
 				@Override
@@ -103,6 +111,8 @@ public class ViewShop extends HBox {
 					}
 				}
 			};
+			
+			cell.setId("cell");
 			return cell;
 		});
 

@@ -57,8 +57,8 @@ public class JPAStrategy extends SerializableStrategyClass{
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
 		// TODO Auto-generated method stub
-		entityManagerFac = Persistence.createEntityManagerFactory("openjpa", System.getProperties());
-		//entityManagerFac = getWithoutConfig();
+		//entityManagerFac = Persistence.createEntityManagerFactory("openjpa", System.getProperties());
+		entityManagerFac = getWithoutConfig();
 		entityManager = entityManagerFac.createEntityManager();
 		entityTransaction = entityManager.getTransaction();
 	}
