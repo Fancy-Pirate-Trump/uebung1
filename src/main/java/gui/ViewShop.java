@@ -3,6 +3,8 @@ package gui;
 import com.sun.prism.paint.Color;
 
 import fpt.com.Product;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +24,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class ViewShop extends HBox {
 	private ListView<Product> products;
@@ -31,7 +36,9 @@ public class ViewShop extends HBox {
 	private Button add, delete, save, load, clear;
 	private ComboBox strategySelection;
 	private BorderPane borderPane;
+	private Slider volumeSlider;
 	private ControllerShop cs;
+	private MediaPlayer mediaPlayer;
 
 
 	public ViewShop() {
@@ -41,6 +48,10 @@ public class ViewShop extends HBox {
 		
 		vBox = new VBox(2);
 		vBox.setPadding(new Insets(0,-8,-9,2));
+		
+		Media m = new Media(getClass().getResource("8Bit_GoT.mp3").toExternalForm());
+		mediaPlayer = new MediaPlayer(m);
+		mediaPlayer.play();
 		
 		Image gif = new Image("http://i.giphy.com/Ke21zZltvEbFm.gif");
 		ImageView view = new ImageView(gif);
@@ -83,7 +94,10 @@ public class ViewShop extends HBox {
 
 		clear = new Button("Clear");
 		clear.setId("font-button");
-
+		
+		volumeSlider = new Slider();
+		volumeSlider.setId("font-slider");
+		
 		strategySelection = new ComboBox<String>();
 		strategySelection.setPromptText("Strategie");
 		strategySelection.setId("font-optionRow");
@@ -94,7 +108,7 @@ public class ViewShop extends HBox {
 		this.getChildren().addAll(borderPane);
 		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow, view);
 		buttonRow.getChildren().addAll(add, delete, clear);
-		optionRow.getChildren().addAll( save, load, strategySelection);
+		optionRow.getChildren().addAll( save, load, strategySelection, volumeSlider);
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
@@ -223,6 +237,17 @@ public class ViewShop extends HBox {
 			       if(t.getCode() == KeyCode.UP) priceField.requestFocus();
 			       if(t.getCode() == KeyCode.DOWN) nameField.requestFocus();
 			   }
+		});
+		
+		volumeSlider.setValue(mediaPlayer.getVolume()*100);
+		volumeSlider.valueProperty().addListener(new InvalidationListener(){
+
+			@Override
+			public void invalidated(Observable observable) {
+				// TODO Auto-generated method stub
+				mediaPlayer.setVolume(volumeSlider.getValue()/100);
+			}
+			
 		});
 
 	}
