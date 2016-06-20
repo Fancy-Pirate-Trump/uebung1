@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -30,7 +31,7 @@ import javafx.scene.media.MediaPlayer;
 public class ViewShop extends HBox {
 	private ListView<Product> products;
 	private VBox vBox;
-	private Label nameLabel, priceLabel, countlabel;
+	private Label nameLabel, priceLabel, countlabel, volumeSliderLabel;
 	private TextField nameField, priceField, countField;
 	private HBox buttonRow, optionRow;
 	private Button add, delete, save, load, clear;
@@ -51,6 +52,8 @@ public class ViewShop extends HBox {
 		
 		Media m = new Media(getClass().getResource("8Bit_GoT.mp3").toExternalForm());
 		mediaPlayer = new MediaPlayer(m);
+		mediaPlayer.setVolume(0);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
 		
 		Image gif = new Image("http://i.giphy.com/Ke21zZltvEbFm.gif");
@@ -97,6 +100,9 @@ public class ViewShop extends HBox {
 		
 		volumeSlider = new Slider();
 		volumeSlider.setId("font-slider");
+		volumeSlider.setOrientation(Orientation.HORIZONTAL);
+		volumeSliderLabel = new Label("Volume");
+		volumeSliderLabel.setId("font-volume");
 		
 		strategySelection = new ComboBox<String>();
 		strategySelection.setPromptText("Strategie");
@@ -108,7 +114,7 @@ public class ViewShop extends HBox {
 		this.getChildren().addAll(borderPane);
 		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow, view);
 		buttonRow.getChildren().addAll(add, delete, clear);
-		optionRow.getChildren().addAll( save, load, strategySelection, volumeSlider);
+		optionRow.getChildren().addAll( save, load, strategySelection, volumeSliderLabel, volumeSlider);
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
