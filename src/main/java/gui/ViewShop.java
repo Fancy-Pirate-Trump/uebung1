@@ -56,7 +56,7 @@ public class ViewShop extends HBox {
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
 		
-		Image gif = new Image("http://i.giphy.com/Ke21zZltvEbFm.gif");
+		Image gif = new Image(getClass().getResource("kid.gif").toExternalForm());
 		ImageView view = new ImageView(gif);
 		view.setFitHeight(250);
 		view.setFitWidth(250);

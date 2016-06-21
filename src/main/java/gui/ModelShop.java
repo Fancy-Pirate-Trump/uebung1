@@ -17,6 +17,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	SerializableStrategyClass strategy;
 	private long sizeOfLastSave;
 	private long savedId;
+	private long time;
 
 	@Override
 	public Product get(int index) {
@@ -52,6 +53,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 	 * hinzugef�gt werden, die vorher eingegeben wurden
 	 */
 	public void load() {
+		time = System.currentTimeMillis();
 		File file = new File(strategy.getFilename());
 		try {
 			Product temp = null;
@@ -67,12 +69,15 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		time = System.currentTimeMillis() - time;
+		System.out.println("Das ganze dauerte : " + (float)time/1000 + " Sekunden.");
 	}
 
 	/*F�r JDBC speichert hier die Methode sowohl die Anzahl der Produkte,
 	 * als auch die h�chste Id, damit man die Liste vorher leeren kann.
 	 */
 	public void save() {
+		time = System.currentTimeMillis();
 		File file = new File(strategy.getFilename());
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
@@ -84,5 +89,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+		time = System.currentTimeMillis() - time;
+		System.out.println("Das ganze dauerte : " + (float)time/1000 + " Sekunden.");
 	}
 }

@@ -1,0 +1,274 @@
+.root{
+    -fx-background-color: #1d1d1d;
+}
+
+#font{
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+	-fx-font-size: 11pt;
+    -fx-text-fill: #66CD00;
+}
+
+#cell{
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: #66CD00;
+    -fx-font-size: 12pt;
+}
+
+#products{
+    -fx-background-color: #1d1d1d;
+}
+
+#products.scroll-bar{
+
+    -fx-background-color: #66CD00, #777777;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.333333em 0.5em 0.0em 0.0em;  /*4 6 0 0 */
+    -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
+}
+
+#font-slide{
+	
+	}
+
+#font-volume{
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-text-fill: #66CD00;
+}
+
+.header{
+    -fx-font-size: 42pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #66CD00;
+}
+
+.item-title{
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #66CD00;
+    -fx-opacity: 0.6;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Push Button                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.button {
+    -fx-padding: 6 22 5 22;
+    -fx-border-color: #66CD00;
+    -fx-border-width: 2;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #1d1d1d;
+
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #66CD00;
+
+}
+
+.button:hover{
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed
+{
+  -fx-background-color: #66CD00;
+  -fx-text-fill: #1d1d1d;
+}
+
+.button:focused
+{
+    -fx-border-color: #66CD00, #66CD00;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled
+{
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: #66CD00;
+}
+
+.button:default
+{
+    -fx-background-color: #66CD00;
+    -fx-text-fill: #66CD00;
+}
+
+.button:default:hover{
+    -fx-background-color: #66CD00;
+}
+
+
+
+/*******************************************************************************
+ *                                                                             *
+ * ScrollBar                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+.scroll-bar .thumb{
+    -fx-background-color: #66CD00;
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-padding: 4 8 4 8;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-color: #66CD00;
+}
+
+/* The following is not working. Maybe related to RT-10521*/
+.scroll-bar .thumb:pressed {
+    -fx-color: #1e1e1e;
+}
+
+
+.scroll-bar .track {
+     -fx-background-color: #4a4a4a;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.scroll-bar .track-background {
+     -fx-background-color: #4a4a4a;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: #4a4a4a;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+
+    -fx-padding: 0.25em; /* 3 */
+}
+
+.scroll-bar .increment-button:hover, .scroll-bar .decrement-button:hover  {
+    -fx-background-color: #66CD00;
+}
+
+.scroll-bar .increment-button:pressed, .scroll-bar .decrement-button:pressed {
+    -fx-background-color: #1e1e1e;
+}
+
+.scroll-bar:horizontal .increment-arrow {
+    -fx-background-color: #1e1e1e, #1e1e1e;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.5em 0.333333em 0.0em 0.0em; /* 6 4 0 0 */
+    -fx-shape: "M7.626,12.876L4.251,8.751H7.14L11,12.876L7.14,17H4.251L7.626,12.876z";
+}
+
+.scroll-bar:vertical .increment-arrow {
+    -fx-background-color: #1e1e1e, #1e1e1e;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.333333em 0.5em 0.0em 0.0em;  /*4 6 0 0 */
+    -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
+}
+
+.scroll-bar .increment-button:pressed .increment-arrow {
+    -fx-background-color: #66CD00, #66CD00;
+}
+
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-background-color: #1e1e1e, #1e1e1e;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.5em 0.333333em 0.0em 0.0em; /* 6 4 0 0 */
+    -fx-shape: "M11,17H8.111l-3.86-4.124l3.86-4.125H11l-3.375,4.125L11,17z";
+}
+
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #1e1e1e, #1e1e1e;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.333333em 0.5em 0.0em 0.0em; /* 4 6 0 0 */
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+}
+
+.scroll-bar .decrement-button:pressed .decrement-arrow {
+    -fx-background-color: #66CD00, #66CD00;
+}
+
+.scroll-bar:disabled {
+    -fx-opacity: 0.4;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ComboBox                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.combo-box-base  {
+    -fx-background-color: transparent, #66CD00, transparent, #1e1e1e;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 5; /* 2 */
+    -fx-pref-width: 86;
+}
+
+.combo-box-base  .list-cell{
+    -fx-text-fill: #66CD00;
+}
+
+.combo-box-base:hover {
+    -fx-background-color: transparent, #66CD00, transparent, #1e1e1e;
+
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+/* ------- OPEN BUTTON ------- */
+.combo-box-base .arrow-button {
+    -fx-background-color: transparent, transparent, #1e1e1e;
+}
+
+/* ------- ARROW* ------- */
+.combo-box-base .arrow {
+    -fx-padding: 0.333333em 0.333333em 0.333333em 0.333333em; /* 4 4 4 4 */
+    -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
+    -fx-background-color: transparent, #66CD00;
+}
+
+.combo-box-popup .list-view {
+    -fx-border-color: #66CD00;
+    -fx-background-color: #1e1e1e, -fx-control-inner-background;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0) , 8, 0.0 , 0 , 0 );
+    -fx-pref-width: 86;
+}
+
+.combo-box-popup .list-view .list-cell{
+	
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: #66CD00;
+}
+
+.combo-box-popup .list-view .list-cell:hover{
+	
+    -fx-background-color: #66CD00;
+    -fx-text-fill: #1d1d1d;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected{
+    -fx-background-color: #66CD00;
+    -fx-border-color: #66CD00;
+    -fx-text-fill: #1d1d1d;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-background-color: #66CD00;
+    -fx-border-color: #66CD00;
+    -fx-text-fill: #1d1d1d;
+    
+}
+
+.combo-box-popup .list-view .list-cell:filled:pressed, .combo-box-popup .list-view .list-cell:filled:selected:pressed
+{
+    -fx-border-color: #66CD00;
+    -fx-background-color: #66CD00;
+    -fx-text-fill: #1d1d1d;
+}
