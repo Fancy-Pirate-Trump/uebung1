@@ -32,3 +32,8 @@
     -fx-text-fill: #311c09;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
 }
+
+.slider .thumb {
+    -fx-background-image :url("Kappamate.gif");   
+    -fx-padding:8
+}
