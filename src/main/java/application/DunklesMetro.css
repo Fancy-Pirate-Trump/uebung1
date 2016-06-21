@@ -27,7 +27,7 @@
 }
 
 .slider .thumb {
-    -fx-background-image :url("Kappamate.gif");   
+    -fx-background-image :url("../../../src/main/java/application/Kappamate.gif");   
     -fx-padding:8
 }
 
