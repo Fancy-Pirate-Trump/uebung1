@@ -103,6 +103,8 @@ public class ViewShop extends HBox {
 		volumeSlider.setOrientation(Orientation.HORIZONTAL);
 		volumeSliderLabel = new Label("Volume");
 		volumeSliderLabel.setId("font-volume");
+		volumeSlider.setShowTickLabels(true);
+		volumeSlider.setShowTickMarks(true);
 		
 		strategySelection = new ComboBox<String>();
 		strategySelection.setPromptText("Strategie");
