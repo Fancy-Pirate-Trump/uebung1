@@ -5,12 +5,12 @@
 #font{
 	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 	-fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #FF0000;
 }
 
 #cell{
     -fx-background-color: #1d1d1d;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #FF0000;
     -fx-font-size: 12pt;
 }
 
@@ -20,32 +20,41 @@
 
 #products.scroll-bar{
 
-    -fx-background-color: #888888, #777777;
+    -fx-background-color: #FF0000, #777777;
     -fx-background-insets: 1 0 -1 0, 0;
     -fx-padding: 0.333333em 0.5em 0.0em 0.0em;  /*4 6 0 0 */
     -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
 }
 
+.slider .track{
+	-fx-background-color:#FF0000;
+}
+
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: #FF0000;
+}
+
 .slider .thumb {
-    -fx-background-image :url("../../../src/main/java/application/Kappamate.gif");   
+    -fx-background-image :url("../../../src/main/java/application/Kappamate.gif");    
     -fx-padding:8
 }
 
 #font-volume{
 	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #FF0000;
 }
 
 .header{
     -fx-font-size: 42pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: #FF0000;
 }
 
 .item-title{
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-text-fill: #FF0000;
     -fx-opacity: 0.6;
 }
 
@@ -57,7 +66,7 @@
 
 .button {
     -fx-padding: 6 22 5 22;
-    -fx-border-color: #e2e2e2;
+    -fx-border-color: #FF0000;
     -fx-border-width: 2;
 
     -fx-background-radius: 0;
@@ -66,7 +75,7 @@
 
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #FF0000;
 
 }
 
@@ -76,13 +85,13 @@
 
 .button:pressed, .button:default:hover:pressed
 {
-  -fx-background-color: white;
+  -fx-background-color: #FF0000;
   -fx-text-fill: #1d1d1d;
 }
 
 .button:focused
 {
-    -fx-border-color: white, white;
+    -fx-border-color: #FF0000, #FF0000;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -93,17 +102,17 @@
 {
     -fx-opacity: 0.4;
     -fx-background-color: #1d1d1d;
-    -fx-text-fill: white;
+    -fx-text-fill: #FF0000;
 }
 
 .button:default
 {
-    -fx-background-color: #008287;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #FF0000;
+    -fx-text-fill: #FF0000;
 }
 
 .button:default:hover{
-    -fx-background-color: #219297;
+    -fx-background-color: #FF0000;
 }
 
 
@@ -115,14 +124,14 @@
  ******************************************************************************/
 
 .scroll-bar .thumb{
-    -fx-background-color: #999999;
+    -fx-background-color: #FF0000;
     -fx-background-insets: 0;
     -fx-background-radius: 30;
     -fx-padding: 4 8 4 8;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-color: #cacaca;
+    -fx-color: #FF0000;
 }
 
 /* The following is not working. Maybe related to RT-10521*/
@@ -150,7 +159,7 @@
 }
 
 .scroll-bar .increment-button:hover, .scroll-bar .decrement-button:hover  {
-    -fx-background-color: #cacaca;
+    -fx-background-color: #FF0000;
 }
 
 .scroll-bar .increment-button:pressed, .scroll-bar .decrement-button:pressed {
@@ -172,7 +181,7 @@
 }
 
 .scroll-bar .increment-button:pressed .increment-arrow {
-    -fx-background-color: white, white;
+    -fx-background-color: #FF0000, #FF0000;
 }
 
 .scroll-bar:horizontal .decrement-arrow {
@@ -190,7 +199,7 @@
 }
 
 .scroll-bar .decrement-button:pressed .decrement-arrow {
-    -fx-background-color: white, white;
+    -fx-background-color: #FF0000, #FF0000;
 }
 
 .scroll-bar:disabled {
@@ -204,19 +213,19 @@
  ******************************************************************************/
 
 .combo-box-base  {
-    -fx-background-color: transparent, #e2e2e2, transparent, #1e1e1e;
+    -fx-background-color: transparent, #FF0000, transparent, #1e1e1e;
     -fx-background-radius: 0, 0, 0, 0;
     -fx-pref-width: 86;
     -fx-pref-height: 25pt;
-    -fx-padding: 4;
+    -fx-padding: 4 ;
 }
 
 .combo-box-base  .list-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: #FF0000;
 }
 
 .combo-box-base:hover {
-    -fx-background-color: transparent, white, transparent, #1e1e1e;
+    -fx-background-color: transparent, #FF0000, transparent, #1e1e1e;
 
 }
 
@@ -226,42 +235,51 @@
 
 /* ------- OPEN BUTTON ------- */
 .combo-box-base .arrow-button {
-    -fx-background-color: transparent,transparent, #1e1e1e;
+    -fx-background-color: transparent, transparent, #1e1e1e;
 }
 
 /* ------- ARROW* ------- */
 .combo-box-base .arrow {
     -fx-padding: 0.333333em 0.333333em 0.333333em 0.333333em; /* 4 4 4 4 */
     -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
-    -fx-background-color: transparent, #e2e2e2;
+    -fx-background-color: transparent, #FF0000;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: #4a4a4a, -fx-control-inner-background;
+    -fx-border-color: #FF0000;
+    -fx-background-color: #1e1e1e, -fx-control-inner-background;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0) , 8, 0.0 , 0 , 0 );
     -fx-pref-width: 86;
 }
 
 .combo-box-popup .list-view .list-cell{
-    -fx-background-color: #4a4a4a;
-    -fx-text-fill: white;
+	
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: #FF0000;
 }
 
 .combo-box-popup .list-view .list-cell:hover{
-    -fx-background-color: #dedede;
+	
+    -fx-background-color: #FF0000;
     -fx-text-fill: #1d1d1d;
 }
 
 .combo-box-popup .list-view .list-cell:filled:selected{
-    -fx-background-color: #55c4fe;
+    -fx-background-color: #FF0000;
+    -fx-border-color: #FF0000;
+    -fx-text-fill: #1d1d1d;
 }
 
 .combo-box-popup .list-view .list-cell:filled:selected:hover {
-    -fx-background-color: #6dcdff;
+    -fx-background-color: #FF0000;
+    -fx-border-color: #FF0000;
+    -fx-text-fill: #1d1d1d;
+    
 }
 
 .combo-box-popup .list-view .list-cell:filled:pressed, .combo-box-popup .list-view .list-cell:filled:selected:pressed
 {
-    -fx-background-color: #d3d3d3;
+    -fx-border-color: #FF0000;
+    -fx-background-color: #FF0000;
     -fx-text-fill: #1d1d1d;
 }

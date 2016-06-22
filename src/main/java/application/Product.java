@@ -16,21 +16,21 @@ import org.apache.openjpa.persistence.jdbc.*;
 @Entity()
 @Table(name = "products")
 public class Product implements fpt.com.Product, java.io.Externalizable {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "products_SEQ ")
-	
 	private long id;
+	
 	@Persistent
 	@Strategy ("fpt.com.db.StringPropertyValueHandler")
-	
 	private SimpleStringProperty name = new SimpleStringProperty();
+	
 	@Persistent
 	@Strategy ("fpt.com.db.DoublePropertyValueHandler")
-	
 	private SimpleDoubleProperty price = new SimpleDoubleProperty();
+	
 	@Persistent
 	@Strategy ("fpt.com.db.IntegerPropertyValueHandler")
-	
 	private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
 
 

@@ -70,20 +70,20 @@ public class JPAStrategy extends SerializableStrategyClass{
 	}
 
 	@Override
-	public void giveValue(long value, long savedId) {
+	public void setCount(long value, long savedId) {
 		// TODO Auto-generated method stub
 		this.id = savedId;
 		this.count = (savedId-value)+1;
 	}
 
 	@Override
-	public long giveId() {
+	public long getHighestId() {
 		// TODO Auto-generated method stub
 		entityTransaction.begin();
-		long l = (long) entityManager.createQuery("SELECT MAX(p.id) FROM Product p")
+		long id = (long) entityManager.createQuery("SELECT MAX(p.id) FROM Product p")
 													.getSingleResult();
 		entityTransaction.commit();
-		return l;
+		return id;
 	}
 	
 	public static EntityManagerFactory getWithoutConfig() {

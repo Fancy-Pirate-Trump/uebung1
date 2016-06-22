@@ -54,13 +54,13 @@ public class XMLStrategy extends SerializableStrategyClass {
 	}
 
 	@Override
-	public void giveValue(long value,long savedId) {
+	public void setCount(long value,long savedId) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public long giveId() {
+	public long getHighestId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

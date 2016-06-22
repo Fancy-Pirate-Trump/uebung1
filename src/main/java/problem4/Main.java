@@ -11,7 +11,7 @@ public class Main {
 		for(Cashpoint cp : cashpoints){
 			cp = new Cashpoint(id++);
 			queue.addCashpoint(cp);
-			cp.setTotal(balance);
+			cp.setBalance(balance);
 		}
 		a.run();
 

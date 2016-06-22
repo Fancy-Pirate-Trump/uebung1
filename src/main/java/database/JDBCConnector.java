@@ -18,17 +18,15 @@ public class JDBCConnector {
 	private String password = "ftpw10";
 	private long id;
 
-	public JDBCConnector(){
+	public JDBCConnector() {
 		try {
 
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection(url, userName ,password);
+			connection = DriverManager.getConnection(url, userName, password);
 			metaData = connection.getMetaData();
-		}
-		catch(ClassNotFoundException e){
-			System.out.println("Klasse nicht gefunden!");
-		}
-		catch(SQLException e){
+		} catch (ClassNotFoundException e) {
+			System.out.println("Treiber nicht gefunden!");
+		} catch (SQLException e) {
 			System.out.println("SQLException");
 		}
 	}
@@ -40,7 +38,7 @@ public class JDBCConnector {
 
 		catch (SQLException sqle) {
 			sqle.printStackTrace();
-			return "https://www.google.de/";
+			return null;
 		}
 	}
 
@@ -51,7 +49,7 @@ public class JDBCConnector {
 
 		catch (SQLException sqle) {
 			sqle.printStackTrace();
-			return "";
+			return null;
 		}
 	}
 
@@ -74,56 +72,54 @@ public class JDBCConnector {
 
 	}
 
-	public long insert(String name, double price, int quantity){
+	public long insert(String name, double price, int quantity) {
 
-			try(PreparedStatement statement = connection.prepareStatement(
-						"INSERT INTO products (name, price, quantity) VALUES(?, ?, ?)",
-						PreparedStatement.RETURN_GENERATED_KEYS);) {
-					statement.setString(1, name);
-					statement.setDouble(2, price);
-					statement.setInt(3, quantity);
-					id = statement.executeUpdate();
-						if(id !=0){
-						ResultSet result = statement.getGeneratedKeys();
-							if(result.next()){
-								id = result.getLong("id");
-							}
-						}
+		try (PreparedStatement statement = connection.prepareStatement(
+				"INSERT INTO products (name, price, quantity) VALUES(?, ?, ?)",
+				PreparedStatement.RETURN_GENERATED_KEYS);) {
+			statement.setString(1, name);
+			statement.setDouble(2, price);
+			statement.setInt(3, quantity);
+			id = statement.executeUpdate();
+			if (id != 0) {
+				ResultSet result = statement.getGeneratedKeys();
+				if (result.next()) {
+					id = result.getLong("id");
 				}
-				catch(SQLException e){
-					System.out.println("Hier ist ne SQLException");
-				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Hier ist ne SQLException");
+		}
 
 		return id;
 	}
 
-	public void insert(Product product){
+	public void insert(Product product) {
 		this.id = insert(product.getName(), product.getPrice(), product.getQuantity());
 	}
 
-
-	public Product read(long productId){
+	public Product read(long productId) {
 		Product product = null;
-		try(PreparedStatement statement = connection.prepareStatement(
-				"SELECT * FROM products WHERE id = "+ productId)) {
+		try (PreparedStatement statement = connection
+				.prepareStatement("SELECT * FROM products WHERE id = " + productId)) {
 			ResultSet result = statement.executeQuery();
-			if(result.next()){
-				product = new Product(result.getString("name"),
-								      result.getDouble("price"),
-								      result.getInt("quantity"));
+			if (result.next()) {
+				product = new Product(result.getString("name")
+									, result.getDouble("price")
+									, result.getInt("quantity"));
 
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return product;
 	}
 
-	public long getHighestId(){
+	public long getHighestId() {
 		return this.id;
 	}
 
-	public void close(){
+	public void close() {
 		try {
 			connection.close();
 		} catch (SQLException e) {

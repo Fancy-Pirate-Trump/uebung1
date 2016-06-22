@@ -24,7 +24,7 @@ public class Main extends Application {
 			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop     = new Scene(viewShop);
-			String[] css = {"AlternativeCSS.css", "DunklesMetro.css", "DunklesMetro2.css"};
+			String[] css = {"DunklesMetro2.css"};
 			Random random = new Random();
 			sceneShop.getStylesheets().add(getClass().getResource(css[random.nextInt(css.length)]).toExternalForm());
 			Scene sceneCustomer = new Scene(viewCustomer);

@@ -84,7 +84,7 @@ public class WaitingQueue {
 		if(cashpoints.size() < maxOpenCashpoints){
 			cashpoints.add(cp);
 		} else {
-			System.out.println("Es gibt bereits " + maxOpenCashpoints + "Kassen. Es kann keine weitere mehr erzeigt werden.");
+			System.out.println("Es gibt bereits " + maxOpenCashpoints + "Kassen. Es kann keine weitere mehr erzeugt werden.");
 		}
 	}
 

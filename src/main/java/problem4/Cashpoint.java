@@ -7,8 +7,8 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 	private Random rand = new Random();
 	private LinkedList<Customer> customers = new LinkedList<>();
 	private int id;
-	private int balance;
-	private Balance total;
+	private int myTotal;
+	private Balance balance;
 	private boolean isOpen;
 
 
@@ -55,9 +55,11 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 			}
 
 			Customer currentInLine = customers.remove();
-			balance += currentInLine.pay();
-			synchronized(total) {
-				System.out.println(total);
+			myTotal += currentInLine.pay();
+			synchronized(balance) {
+				balance.update();
+				balance.sort();
+				System.out.println(balance);
 			}
 			System.out.println("Kasse" + id + " Hat Kunden " + currentInLine +" bedient. " + getQueueLength() + " Kunden �brig.");
 		}
@@ -70,19 +72,19 @@ public class Cashpoint implements Runnable, Comparable<Cashpoint>{
 	}
 
 	public int compareTo(Cashpoint o) {
-		return o.balance - this.balance;
+		return o.myTotal - this.myTotal;
 	}
 
 	public String toString(){
 		String status = isOpen?"(offen)":"(geschlossen)";
-		return "Kasse " + getId() + " " + status +" hat " + balance + "� eingenommen.";
+		return "Kasse " + getId() + " " + status +" hat " + myTotal + "€ eingenommen.";
 	}
 
-	public int getBalance(){
-		return balance;
+	public int getMyTotal(){
+		return myTotal;
 	}
 
-	public void setTotal(Balance b){
-		total = b;
+	public void setBalance(Balance b){
+		balance = b;
 	}
 }

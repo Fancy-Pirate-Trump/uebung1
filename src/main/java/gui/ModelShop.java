@@ -59,7 +59,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			Product temp = null;
 			FileInputStream fis = new FileInputStream(file);
 			strategy.open(fis, null);
-			strategy.giveValue(sizeOfLastSave, savedId);
+			strategy.setCount(sizeOfLastSave, savedId);
 
 			//solange das Produkt aus readObject nicht null ist wird hinzugef�gt
 			while((temp = strategy.readObject()) != null){
@@ -83,7 +83,7 @@ public class ModelShop extends ModifiableObservableListBase<fpt.com.Product> {
 			FileOutputStream fos = new FileOutputStream(file);
 			strategy.open(null, fos);
 			for(Product prod: this) strategy.writeObject(prod);
-			savedId = strategy.giveId();
+			savedId = strategy.getHighestId();
 			sizeOfLastSave = this.size();
 			strategy.close();
 		} catch(IOException e){

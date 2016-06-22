@@ -215,8 +215,9 @@
 .combo-box-base  {
     -fx-background-color: transparent, #66CD00, transparent, #1e1e1e;
     -fx-background-radius: 0, 0, 0, 0;
-    -fx-padding: 5; /* 2 */
     -fx-pref-width: 86;
+    -fx-pref-height: 25pt;
+    -fx-padding: 4 ;
 }
 
 .combo-box-base  .list-cell{
