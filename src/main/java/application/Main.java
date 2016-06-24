@@ -8,6 +8,7 @@ import gui.ViewCustomer;
 import gui.ViewShop;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -33,6 +34,7 @@ public class Main extends Application {
 			secondaryStage.setScene(sceneCustomer);
 
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
+			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
 
 //			secondaryStage.show();
 			primaryStage.show();
