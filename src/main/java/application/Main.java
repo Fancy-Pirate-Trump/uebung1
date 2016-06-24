@@ -24,9 +24,7 @@ public class Main extends Application {
 			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop     = new Scene(viewShop);
-			String[] css = {"DunklesMetro2.css"};
-			Random random = new Random();
-			sceneShop.getStylesheets().add(getClass().getResource(css[random.nextInt(css.length)]).toExternalForm());
+			sceneShop.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
 

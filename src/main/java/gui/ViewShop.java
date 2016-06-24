@@ -44,34 +44,34 @@ public class ViewShop extends HBox {
 
 	public ViewShop() {
 
-		products = new ListView<Product>();		
+		products = new ListView<Product>();
 		products.setId("products");
-		
+
 		vBox = new VBox(2);
 		vBox.setPadding(new Insets(0,-8,-9,2));
-		
-		Media m = new Media(getClass().getResource("8Bit_GoT.mp3").toExternalForm());
+
+		Media m = new Media("http://a.pomf.cat/naozry.mp3");
 		mediaPlayer = new MediaPlayer(m);
 		mediaPlayer.setVolume(0);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
-		
-		Image gif = new Image(getClass().getResource("kid.gif").toExternalForm());
+
+		Image gif = new Image("http://a.pomf.cat/ykeqzq.gif");
 		ImageView view = new ImageView(gif);
 		view.setFitHeight(250);
 		view.setFitWidth(250);
 		view.setSmooth(true);
 		view.setCache(true);
-				
+
 		nameLabel = new Label(" Name:");
 		nameLabel.setId("font");
-		
+
 		priceLabel = new Label(" Price:");
 		priceLabel.setId("font");
-		
+
 		countlabel = new Label(" Count:");
 		countlabel.setId("font");
-		
+
 		nameField = new TextField();
 		nameField.setPromptText("Produktname eingeben");
 		priceField = new DoubleTextField();
@@ -82,7 +82,7 @@ public class ViewShop extends HBox {
 		optionRow = new HBox(2);
 		optionRow.setPrefHeight(36);
 		borderPane = new BorderPane();
-		
+
 		add = new Button("Add");
 		add.setId("font-button");
 
@@ -97,7 +97,7 @@ public class ViewShop extends HBox {
 
 		clear = new Button("Clear");
 		clear.setId("font-button");
-		
+
 		volumeSlider = new Slider();
 		volumeSlider.setId("font-slider");
 		volumeSlider.setOrientation(Orientation.HORIZONTAL);
@@ -105,7 +105,7 @@ public class ViewShop extends HBox {
 		volumeSliderLabel.setId("font-volume");
 		volumeSlider.setShowTickLabels(true);
 		volumeSlider.setShowTickMarks(true);
-		
+
 		strategySelection = new ComboBox<String>();
 		strategySelection.setPromptText("Strategie");
 		strategySelection.setId("font-optionRow");
@@ -120,7 +120,7 @@ public class ViewShop extends HBox {
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
-		
+
 		products.setCellFactory(e -> {
 			ListCell<Product> cell = new ListCell<Product>() {
 				@Override
@@ -133,7 +133,7 @@ public class ViewShop extends HBox {
 					}
 				}
 			};
-			
+
 			cell.setId("cell");
 			return cell;
 		});
@@ -246,7 +246,7 @@ public class ViewShop extends HBox {
 			       if(t.getCode() == KeyCode.DOWN) nameField.requestFocus();
 			   }
 		});
-		
+
 		volumeSlider.setValue(mediaPlayer.getVolume()*100);
 		volumeSlider.valueProperty().addListener(new InvalidationListener(){
 
@@ -255,7 +255,7 @@ public class ViewShop extends HBox {
 				// TODO Auto-generated method stub
 				mediaPlayer.setVolume(volumeSlider.getValue()/100);
 			}
-			
+
 		});
 
 	}
