@@ -2,7 +2,9 @@ package application;
 
 import java.util.Random;
 
+import gui.ControllerCustomer;
 import gui.ControllerShop;
+import gui.ModelCustomer;
 import gui.ModelShop;
 import gui.ViewCustomer;
 import gui.ViewShop;
@@ -37,11 +39,17 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
 
 //			secondaryStage.show();
-			primaryStage.show();
+//			primaryStage.show();
 
 			primaryStage.setResizable(false);
 
 			secondaryStage.setX(primaryStage.getX());
+			
+			ModelCustomer modelCustomer = new ModelCustomer();
+			ControllerCustomer controlCustomer = new ControllerCustomer();
+			controlCustomer.link(viewCustomer, modelCustomer);
+			modelCustomer.startDateService();
+			
 
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -15,6 +15,7 @@ public class ViewCustomer extends VBox{
 	private TableColumn quantCol;
 	private ListView list;
 	private Button buy;
+	private ControllerCustomer cc;
 
 	public ViewCustomer(){
 		super();
@@ -33,5 +34,9 @@ public class ViewCustomer extends VBox{
 		this.getChildren().add(buy);
 		table.setEditable(true);
 		table.getColumns().addAll(nameCol, priceCol, quantCol);
+	}
+
+	public void setCc(ControllerCustomer cc) {
+		this.cc = cc;
 	}
 }
