@@ -30,7 +30,7 @@ public class ModelCustomer {
 			e2.printStackTrace();
 		}
 		// Socket für den Klienten anlegen
-		try (DatagramSocket dSocket = new DatagramSocket(6667);) {
+		try (DatagramSocket dSocket = new DatagramSocket(5555);) {
 
 			try {
 				int i = 0;
@@ -42,7 +42,7 @@ public class ModelCustomer {
 
 					// Paket mit der Anfrage vorbereiten
 					DatagramPacket packet = new DatagramPacket(buffer,
-							buffer.length, ia, 3431);
+							buffer.length, ia, 6667);
 					// Paket versenden
 					dSocket.send(packet);
 
