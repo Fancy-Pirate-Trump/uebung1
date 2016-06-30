@@ -3,9 +3,10 @@ package gui;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
+import java.net.*;
 
 public class ModelCustomer {
+
 
 	public void startDateService() {
 		while (true) {
@@ -29,8 +30,10 @@ public class ModelCustomer {
 			String date = new String(dateBytes, "UTF-8");
 			System.out.println(date);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server offline?");
 		}
 
 	}
+
 }
+

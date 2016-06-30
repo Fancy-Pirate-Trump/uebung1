@@ -38,8 +38,8 @@ public class Main extends Application {
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
 
-//			secondaryStage.show();
-//			primaryStage.show();
+			secondaryStage.show();
+			primaryStage.show();
 
 			primaryStage.setResizable(false);
 
@@ -48,7 +48,18 @@ public class Main extends Application {
 			ModelCustomer modelCustomer = new ModelCustomer();
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			controlCustomer.link(viewCustomer, modelCustomer);
-			modelCustomer.startDateService();
+			
+			new Thread(new Runnable(){
+
+				@Override
+				public void run() {
+					modelCustomer.startDateService();
+					
+				}
+				
+				
+			}).start();
+			
 			
 
 		} catch(Exception e) {
