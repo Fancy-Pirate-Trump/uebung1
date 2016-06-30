@@ -36,12 +36,11 @@ public class TimeServer {
 						address, port, len, new String(data, 0, len));
 
 				// Nutzdaten in ein Stringobjekt übergeben
-				String da = new String(packet.getData());
+				String da = new String(data, 0, len);
 				// Kommandos sollen durch : getrennt werden
 				try (Scanner sc = new Scanner(da).useDelimiter(":")) {
 					// Erstes Kommando filtern
 					String keyword = sc.next();
-					keyword = keyword.substring(0, keyword.length()-1);
 					
 					if (keyword.equals("time")) {
 
