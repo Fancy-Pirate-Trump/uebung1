@@ -41,7 +41,8 @@ public class TimeServer {
 				try (Scanner sc = new Scanner(da).useDelimiter(":")) {
 					// Erstes Kommando filtern
 					String keyword = sc.next();
-
+					keyword = keyword.substring(0, keyword.length()-1);
+					
 					if (keyword.equals("time")) {
 
 						Date dt = new Date();
