@@ -9,10 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeServer {
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
-	
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+
 	public static void main(String[] args) {
-		
+
 
 		try (ServerSocket server = new ServerSocket(6667)) {
 
