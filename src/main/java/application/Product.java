@@ -1,13 +1,36 @@
 package application;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javax.persistence.*;
 
-public class Product implements fpt.com.Product {
+import org.apache.openjpa.persistence.*;
+import org.apache.openjpa.persistence.jdbc.*;
+
+
+@Entity()
+@Table(name = "products")
+public class Product implements fpt.com.Product, java.io.Externalizable {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "products_SEQ ")
 	private long id;
+	
+	@Persistent
+	@Strategy ("fpt.com.db.StringPropertyValueHandler")
 	private SimpleStringProperty name = new SimpleStringProperty();
+	
+	@Persistent
+	@Strategy ("fpt.com.db.DoublePropertyValueHandler")
 	private SimpleDoubleProperty price = new SimpleDoubleProperty();
+	
+	@Persistent
+	@Strategy ("fpt.com.db.IntegerPropertyValueHandler")
 	private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
 
 
@@ -22,7 +45,7 @@ public class Product implements fpt.com.Product {
 		setName(name);
 		setQuantity(quantity);
 	}
-
+	
 	@Override
 	public long getId() {
 		return id;
@@ -76,6 +99,33 @@ public class Product implements fpt.com.Product {
 	@Override
 	public SimpleIntegerProperty quantityProperty() {
 		return quantity;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeLong(getId());
+		out.writeObject(getName());
+		out.writeDouble(getPrice());
+		out.writeInt(getQuantity());
+
+
+	}
+
+	public void writeObject(ObjectOutput out) throws IOException{
+		writeExternal(out);
+	}
+
+	public void readObject(ObjectInput in) throws IOException, ClassNotFoundException{
+		readExternal(in);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		setId(in.readLong());
+		setName((String)in.readObject());
+		setPrice(in.readDouble());
+		setQuantity(in.readInt());
+
 	}
 
 }
