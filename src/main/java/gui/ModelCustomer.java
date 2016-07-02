@@ -8,20 +8,22 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ModelCustomer {
+	private String time;
 
-	public void startDateService() {
+	public String startDateService() {
 		while (true) {
-			askForTimeFromServer();
+			time = askForTimeFromServer();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return time;
 		}
 	}
 
-	private void askForTimeFromServer() {
+	private String askForTimeFromServer() {
 
 		InetAddress ia = null;
 		try {
@@ -33,8 +35,7 @@ public class ModelCustomer {
 		try (DatagramSocket dSocket = new DatagramSocket(5555);) {
 
 			try {
-				int i = 0;
-				while (i < 10) {
+				while (true) {
 					String command = "time";
 
 					byte buffer[] = null;
@@ -52,15 +53,14 @@ public class ModelCustomer {
 					// Auf die Antwort warten
 					dSocket.receive(packet);
 
-					System.out.println(new String(packet.getData(), 0, packet
-							.getLength()));
+					time = new String(packet.getData(), 0, packet
+							.getLength());
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-
-					i++;
+					return time;
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -69,5 +69,6 @@ public class ModelCustomer {
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
+		return time;
 	}
 }

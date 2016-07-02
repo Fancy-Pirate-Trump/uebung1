@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import server.TimeServer;
 
 
 public class Main extends Application {
@@ -20,9 +21,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			ViewShop     viewShop     = new ViewShop();
-			ViewCustomer viewCustomer = new ViewCustomer();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
+			ModelCustomer modelCustomer = new ModelCustomer();
+//			TimeServer.main(null);
+			ControllerCustomer controlCustomer = new ControllerCustomer();
+			ViewCustomer viewCustomer = new ViewCustomer();
+			controlCustomer.link(viewCustomer, modelCustomer);
+			controlCustomer.startService();
 
 			controllerShop.link(modelShop, viewShop);
 
@@ -37,7 +43,7 @@ public class Main extends Application {
 
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
-
+			
 //			secondaryStage.show();
 //			primaryStage.show();
 
@@ -45,10 +51,6 @@ public class Main extends Application {
 
 			secondaryStage.setX(primaryStage.getX());
 			
-			ModelCustomer modelCustomer = new ModelCustomer();
-			ControllerCustomer controlCustomer = new ControllerCustomer();
-			controlCustomer.link(viewCustomer, modelCustomer);
-			modelCustomer.startDateService();
 			
 
 		} catch(Exception e) {

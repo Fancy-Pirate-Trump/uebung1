@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,7 +16,9 @@ public class ViewCustomer extends VBox{
 	private TableColumn quantCol;
 	private ListView list;
 	private Button buy;
+	private Label timeLabel;
 	private ControllerCustomer cc;
+	private String time = "";
 
 	public ViewCustomer(){
 		super();
@@ -26,11 +29,13 @@ public class ViewCustomer extends VBox{
 		quantCol = new TableColumn("BuyCount");
 		list = new ListView();
 		buy = new Button("Buy");
+		timeLabel = new Label(time);
 
 		this.getChildren().add(split);
 		split.getChildren().add(list);
 		split.getChildren().add(table);
-
+		
+		this.getChildren().add(timeLabel);
 		this.getChildren().add(buy);
 		table.setEditable(true);
 		table.getColumns().addAll(nameCol, priceCol, quantCol);
@@ -38,5 +43,8 @@ public class ViewCustomer extends VBox{
 
 	public void setCc(ControllerCustomer cc) {
 		this.cc = cc;
+	}
+	public void setTime(String time){
+		this.time = time;
 	}
 }
