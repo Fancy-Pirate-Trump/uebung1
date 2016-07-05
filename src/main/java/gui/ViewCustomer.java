@@ -18,7 +18,6 @@ public class ViewCustomer extends VBox{
 	private Button buy;
 	private Label timeLabel;
 	private ControllerCustomer cc;
-	private String time = "";
 
 	public ViewCustomer(){
 		super();
@@ -29,12 +28,12 @@ public class ViewCustomer extends VBox{
 		quantCol = new TableColumn("BuyCount");
 		list = new ListView();
 		buy = new Button("Buy");
-		timeLabel = new Label(time);
+		timeLabel = new Label("jkljklsdfjkl");
 
 		this.getChildren().add(split);
 		split.getChildren().add(list);
 		split.getChildren().add(table);
-		
+
 		this.getChildren().add(timeLabel);
 		this.getChildren().add(buy);
 		table.setEditable(true);
@@ -45,6 +44,6 @@ public class ViewCustomer extends VBox{
 		this.cc = cc;
 	}
 	public void setTime(String time){
-		this.time = time;
+		 timeLabel.setText(time);
 	}
 }

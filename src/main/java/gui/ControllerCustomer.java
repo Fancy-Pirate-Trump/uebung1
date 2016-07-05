@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.application.Platform;
+
 public class ControllerCustomer {
 
 	ViewCustomer vc;
@@ -9,14 +11,10 @@ public class ControllerCustomer {
 		vc.setCc(this);
 		this.mc = mc;
 		this.vc = vc;
+
+		new Thread(new TimeGetter(vc)).start();;
 	}
 
-	public void startService() {
-		while(true){
-		String time = mc.startDateService();
-//		vc.setTime(time);
-		System.out.println(time);
-		}
-	}
+
 }
 

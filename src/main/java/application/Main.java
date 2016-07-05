@@ -9,34 +9,32 @@ import gui.ModelShop;
 import gui.ViewCustomer;
 import gui.ViewShop;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import server.TimeServer;
-
 
 public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ViewShop     viewShop     = new ViewShop();
+			ViewShop viewShop = new ViewShop();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
 			ModelCustomer modelCustomer = new ModelCustomer();
-//			TimeServer.main(null);
+			// TimeServer.main(null);
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			ViewCustomer viewCustomer = new ViewCustomer();
 			controlCustomer.link(viewCustomer, modelCustomer);
-			controlCustomer.startService();
 
 			controllerShop.link(modelShop, viewShop);
 
-			Scene sceneShop     = new Scene(viewShop);
+			Scene sceneShop = new Scene(viewShop);
 			sceneShop.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
-
 
 			primaryStage.setScene(sceneShop);
 			secondaryStage.setScene(sceneCustomer);
@@ -47,26 +45,13 @@ public class Main extends Application {
 			secondaryStage.show();
 			primaryStage.show();
 
-
 			primaryStage.setResizable(false);
 
 			secondaryStage.setX(primaryStage.getX());
 
-			new Thread(new Runnable(){
-
-				@Override
-				public void run() {
-					modelCustomer.startDateService();
-
-				}
 
 
-			}).start();
-
-
-
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
