@@ -24,7 +24,7 @@ public class Main extends Application {
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
 			ModelCustomer modelCustomer = new ModelCustomer();
-			// TimeServer.main(null);
+			new Thread(()->TimeServer.main(null)).start();
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			ViewCustomer viewCustomer = new ViewCustomer();
 			controlCustomer.link(viewCustomer, modelCustomer);
@@ -34,6 +34,7 @@ public class Main extends Application {
 			Scene sceneShop = new Scene(viewShop);
 			sceneShop.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Scene sceneCustomer = new Scene(viewCustomer);
+			sceneCustomer.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Stage secondaryStage = new Stage();
 
 			primaryStage.setScene(sceneShop);
@@ -41,9 +42,9 @@ public class Main extends Application {
 
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
-
+			
 			secondaryStage.show();
-			primaryStage.show();
+//			primaryStage.show();
 
 			primaryStage.setResizable(false);
 
