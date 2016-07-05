@@ -1,27 +1,21 @@
 package gui;
 
 import java.io.IOException;
-<<<<<<< HEAD
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.*;
-=======
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
->>>>>>> refs/remotes/origin/wtf
+
 
 public class ModelCustomer {
 	private String time;
 
-<<<<<<< HEAD
-
-	public void startDateService() {
-=======
 	public String startDateService() {
->>>>>>> refs/remotes/origin/wtf
+
 		while (true) {
 			time = askForTimeFromServer();
 			try {
@@ -34,19 +28,6 @@ public class ModelCustomer {
 		}
 	}
 
-<<<<<<< HEAD
-	private void askForTimeFromServer() {
-
-		try (Socket serverCon = new Socket("localhost", 6667);
-				InputStream in = serverCon.getInputStream();
-				OutputStream out = serverCon.getOutputStream()) {
-			byte[] dateBytes = new byte[1337];
-			in.read(dateBytes);
-			String date = new String(dateBytes, "UTF-8");
-			System.out.println(date);
-		} catch (IOException e) {
-			System.out.println("Server offline?");
-=======
 	private String askForTimeFromServer() {
 
 		InetAddress ia = null;
@@ -54,7 +35,6 @@ public class ModelCustomer {
 			ia = InetAddress.getByName("localhost");
 		} catch (UnknownHostException e2) {
 			e2.printStackTrace();
->>>>>>> refs/remotes/origin/wtf
 		}
 		// Socket für den Klienten anlegen
 		try (DatagramSocket dSocket = new DatagramSocket(5555);) {

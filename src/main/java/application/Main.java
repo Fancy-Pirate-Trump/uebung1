@@ -43,39 +43,28 @@ public class Main extends Application {
 
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
-<<<<<<< HEAD
 
 			secondaryStage.show();
 			primaryStage.show();
-=======
-			
-//			secondaryStage.show();
-//			primaryStage.show();
->>>>>>> refs/remotes/origin/wtf
+
 
 			primaryStage.setResizable(false);
 
 			secondaryStage.setX(primaryStage.getX());
-			
-<<<<<<< HEAD
-			ModelCustomer modelCustomer = new ModelCustomer();
-			ControllerCustomer controlCustomer = new ControllerCustomer();
-			controlCustomer.link(viewCustomer, modelCustomer);
-			
+
 			new Thread(new Runnable(){
 
 				@Override
 				public void run() {
 					modelCustomer.startDateService();
-					
+
 				}
-				
-				
+
+
 			}).start();
-			
-=======
->>>>>>> refs/remotes/origin/wtf
-			
+
+
+
 
 		} catch(Exception e) {
 			e.printStackTrace();

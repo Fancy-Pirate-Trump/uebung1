@@ -1,7 +1,7 @@
 package gui;
 
 public class ControllerCustomer {
-	
+
 	ViewCustomer vc;
 	ModelCustomer mc;
 

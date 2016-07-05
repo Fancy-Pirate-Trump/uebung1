@@ -9,13 +9,9 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class TimeServer {
-<<<<<<< HEAD
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
-=======
+
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
 
->>>>>>> refs/remotes/origin/wtf
 	public static void main(String[] args) {
 		try (DatagramSocket socket =  new DatagramSocket(6667);){
 			while (true) {
@@ -28,7 +24,7 @@ public class TimeServer {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			
+
 
 				// Daten auslesen
 				InetAddress address = packet.getAddress();
@@ -46,7 +42,7 @@ public class TimeServer {
 				try (Scanner sc = new Scanner(da).useDelimiter(":")) {
 					// Erstes Kommando filtern
 					String keyword = sc.next();
-					
+
 					if (keyword.equals("time")) {
 
 						Date dt = new Date();
