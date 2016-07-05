@@ -7,9 +7,16 @@ public class ControllerCustomer {
 
 	public void link(ViewCustomer vc, ModelCustomer mc) {
 		vc.setCc(this);
+		this.mc = mc;
 		this.vc = vc;
 	}
-	public void startService(){
-		mc.startDateService();
+
+	public void startService() {
+		while(true){
+		String time = mc.startDateService();
+//		vc.setTime(time);
+		System.out.println(time);
+		}
 	}
 }
+
