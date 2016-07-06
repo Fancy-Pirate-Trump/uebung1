@@ -13,7 +13,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import server.TimeServer;
+import timeServer.TimeServer;
 
 public class Main extends Application {
 
@@ -34,7 +34,6 @@ public class Main extends Application {
 			Scene sceneShop = new Scene(viewShop);
 			sceneShop.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Scene sceneCustomer = new Scene(viewCustomer);
-			sceneCustomer.getStylesheets().add("http://a.pomf.cat/mapggz.css");
 			Stage secondaryStage = new Stage();
 
 			primaryStage.setScene(sceneShop);
