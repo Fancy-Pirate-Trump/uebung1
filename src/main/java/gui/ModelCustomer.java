@@ -8,6 +8,20 @@ import java.net.Socket;
 import application.Order;
 
 public class ModelCustomer {
+	private InputStream in;
+	private OutputStream out;
+	private Socket serverCon;
+	
+	public ModelCustomer(){
+		try {
+			serverCon = new Socket("localhost", 6666);
+			in = serverCon.getInputStream();
+			out = serverCon.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public boolean login(String name, String password) {
 		if (name.equals("admin") && password.equals("admin"))
@@ -19,21 +33,14 @@ public class ModelCustomer {
 
 		// Verbindungsanfrage/Verbindungsaufbau
 		// Streams anlegen
-		try (Socket serverCon = new Socket("localhost", 6666);
-				InputStream in = serverCon.getInputStream();
-				OutputStream out = serverCon.getOutputStream()) {
 			// Zahlenschreiben schreiben
-			ObjectOutputStream oo = new ObjectOutputStream(out);
-			oo.writeObject(o);
-			out.flush();
-
-			// Ergebnis entgegennehmen
-			int result = in.read();
-
-			System.out.println(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+			try {
+				ObjectOutputStream oo = new ObjectOutputStream(out);
+				oo.writeObject(o);
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 }

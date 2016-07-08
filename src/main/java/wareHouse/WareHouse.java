@@ -10,33 +10,38 @@ import java.net.Socket;
 import application.Order;
 
 public class WareHouse {
+	private ServerSocket server;
+	Socket client;
+	static InputStream in;
+	static OutputStream out;
+
+	public WareHouse() {
+		try {
+			server = new ServerSocket(6666);
+			client = server.accept();
+			in = client.getInputStream();
+			out = client.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 
 		// ServerSocket erstellen
-		try (ServerSocket server = new ServerSocket(6666)) {
+		while (true) {
 
-			// Timeout nach 1 Minute
-			// server.setSoTimeout(60000);
-			while (true) {
-				try (Socket client = server.accept();
-						InputStream in = client.getInputStream();
-						OutputStream out = client.getOutputStream()) {
+			try {
+				ObjectInputStream oi = new ObjectInputStream(in);
+				Order order = (Order) oi.readObject();
+				out.flush();
+				System.out.println(order);
 
-					// Streams erstellen
-					ObjectInputStream oi = new ObjectInputStream(in);
-					Order order = (Order) oi.readObject();
-					out.flush();
-					System.out.println(order);
-
-				} catch (IOException | ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
-
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e2) {
-			e2.printStackTrace();
 		}
-
 	}
 }
+

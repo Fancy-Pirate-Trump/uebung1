@@ -32,9 +32,9 @@ public class TimeServer {
 				int len = packet.getLength();
 				byte[] data = packet.getData();
 
-				System.out.printf(
-						"Anfrage von %s vom Port %d mit der Länge %d:%n%s%n",
-						address, port, len, new String(data, 0, len));
+//				System.out.printf(
+//						"Anfrage von %s vom Port %d mit der Länge %d:%n%s%n",
+//						address, port, len, new String(data, 0, len));
 
 				// Nutzdaten in ein Stringobjekt übergeben
 				String da = new String(data, 0, len);

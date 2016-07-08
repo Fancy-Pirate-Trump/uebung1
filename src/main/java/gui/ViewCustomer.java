@@ -1,13 +1,16 @@
 package gui;
 
+import application.Order;
+import application.Product;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -16,24 +19,26 @@ import javafx.stage.Stage;
 
 public class ViewCustomer extends VBox{
 	private HBox split;
-	private TableView table;
+	private ListView<Product> table;
 	private TableColumn nameCol;
 	private TableColumn priceCol;
 	private TableColumn quantCol;
-	private ListView list;
-	private Button buy, enter;
+	private ListView<fpt.com.Product> list;
+	private Button buy, enter, select;
 	private Label timeLabel, passwordLabel, nameLabel;
 	private ControllerCustomer cc;
 	private Stage loginStage;
 	private Scene loginScene;
 	private VBox loginBox,login;
 	private BorderPane borderPane;
-	private TextField password, name;
+	private TextField name;
+	private PasswordField password;
+	private Order order;
 
 	public ViewCustomer(){
 		super();
 		split = new HBox();
-		table = new TableView();
+		table = new	ListView();
 		nameCol = new TableColumn("Name");
 		priceCol = new TableColumn("Price");
 		quantCol = new TableColumn("BuyCount");
@@ -45,13 +50,15 @@ public class ViewCustomer extends VBox{
 		loginStage = new Stage();
 		loginScene = new Scene(loginBox);
 		login = new VBox();
-		password = new TextField();
+		password = new PasswordField();
 		password.setPromptText("Password");
 		name = new TextField();
 		name.setPromptText("Username");
 		passwordLabel = new Label("Password");
 		nameLabel = new Label("Name");
 		enter = new Button("Enter");
+		select = new Button("Select");
+		order = new Order();
 
 		login.getChildren().addAll(nameLabel,name,passwordLabel,password, enter);
 		borderPane.setCenter(login);
@@ -63,11 +70,13 @@ public class ViewCustomer extends VBox{
 		split.getChildren().add(list);
 		split.getChildren().add(table);
 
-		list.getItems().add(timeLabel);
+		this.getChildren().add(timeLabel);
 
 		this.getChildren().add(buy);
+		this.getChildren().add(select);
+		//mache VBox unten
 		table.setEditable(true);
-		table.getColumns().addAll(nameCol, priceCol, quantCol);
+//		table.getColumns().addAll(nameCol, priceCol, quantCol);
 
 
 
@@ -83,8 +92,7 @@ public class ViewCustomer extends VBox{
 		enter.setOnAction((s)->{
 				boolean success = cc.login(name.getText(),password.getText());
 				if(success){
-					System.out.println("Blub");
-				//cc.buy;
+					cc.buy(order);
 					loginStage.close();
 				}
 				else{
@@ -92,6 +100,50 @@ public class ViewCustomer extends VBox{
 					name.setText("");
 				}
 		});
+
+		select.setOnAction((s)->{
+			Product listProduct = (Product) list.getSelectionModel().getSelectedItem();
+			Product tableProduct = new Product(listProduct.getName(), listProduct.getPrice(), 1);
+			order.add(tableProduct);
+			table.getItems().add(tableProduct);
+			//Verändere Quantity wenn es das schon gibt.
+			
+		});
+
+		list.setCellFactory(e -> {
+			ListCell<fpt.com.Product> cell = new ListCell<fpt.com.Product>() {
+				@Override
+				protected void updateItem(fpt.com.Product myObject, boolean b) {
+					super.updateItem(myObject, myObject == null || b);
+					if (myObject != null) {
+						setText(myObject.getName() + " | " + myObject.getPrice() + " € | " + myObject.getQuantity());
+					} else {
+						setText("");
+					}
+				}
+			};
+
+			cell.setId("cell");
+			return cell;
+		});
+		
+		table.setCellFactory(e -> {
+			ListCell<Product> cell = new ListCell<Product>() {
+				@Override
+				protected void updateItem(Product myObject, boolean b) {
+					super.updateItem(myObject, myObject == null || b);
+					if (myObject != null) {
+						setText(myObject.getName() + " | " + myObject.getPrice() + " €");
+					} else {
+						setText("");
+					}
+				}
+			};
+
+			cell.setId("cell");
+			return cell;
+		});
+		
 	}
 
 	public void setCc(ControllerCustomer cc) {
@@ -99,5 +151,8 @@ public class ViewCustomer extends VBox{
 	}
 	public void setTime(String time){
 		 timeLabel.setText(time);
+	}
+	public void bindData(ModelShop model) {
+		list.setItems(model);
 	}
 }

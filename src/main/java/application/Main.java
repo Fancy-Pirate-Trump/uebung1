@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import timeServer.TimeServer;
+import wareHouse.WareHouse;
 
 public class Main extends Application {
 
@@ -23,11 +24,15 @@ public class Main extends Application {
 			ViewShop viewShop = new ViewShop();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
-			ModelCustomer modelCustomer = new ModelCustomer();
 			new Thread(()->TimeServer.main(null)).start();
+			new Thread(()->{
+				WareHouse wareHouse = new WareHouse();
+				wareHouse.main(null);}).start();
+			
+			ModelCustomer modelCustomer = new ModelCustomer();
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			ViewCustomer viewCustomer = new ViewCustomer();
-			controlCustomer.link(viewCustomer, modelCustomer);
+			controlCustomer.link(viewCustomer, modelCustomer, modelShop);
 
 			controllerShop.link(modelShop, viewShop);
 
@@ -43,11 +48,10 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
 			
 			secondaryStage.show();
-//			primaryStage.show();
+			primaryStage.show();
 
 			primaryStage.setResizable(false);
-
-			secondaryStage.setX(primaryStage.getX());
+			secondaryStage.setX(primaryStage.getX()+40);
 
 
 

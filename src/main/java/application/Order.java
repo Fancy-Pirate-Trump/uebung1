@@ -21,5 +21,17 @@ public class Order extends ProductList implements fpt.com.Order {
 		}
 		return quant;
 	}
+	
+	@Override
+	public String toString(){
+		String s = "";
+		s += "================================================================================\n";
+		for(Product p : this){
+			s += p.getName() + "\t" + p.getPrice() + "\t"+ p.getQuantity() + "\n" ;
+		}
+		s += "================================================================================\n";
+		s += "Gesamtanzahl: " + getQuantity() + "\n" + "Gesamtwert: " + getSum();
+		return s;
+	}
 
 }
