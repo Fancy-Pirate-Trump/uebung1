@@ -1,0 +1,22 @@
+Welche Methoden sind blockierende Aufrufe bei der Netzwerkkommunikation?
+
+Wie sieht eine gültige Methodensignatur in RMI aus?
+	Seit java 1.7:
+	public void someMethod() throws Exception {}
+	Vor java 1.7:
+	public void someMethod() throws RemoteException {}
+
+Was ist der Unterschied zu bisherigen Methodensignaturen (ohne RMI)?
+	Methoden müssen eine RemoteException werfen können
+
+Wie wird ein Objekt bei der Registry angemeldet?
+	Naming.bind(Name, ObjectReferenz);
+
+Wie kann eine Referenz auf ein Objekt der Registry geholt werden?
+	Naming.lookup(Name)
+
+Was ist der Unterschied zwischen bind und rebind?
+	bind schaut ob der name schon belegt ist und wirft eine AlreadyBoundException wenn es so ist
+	rebind ersetzt bestehende Namen ohne exception
+
+Wofür ist das Remote Interface?
