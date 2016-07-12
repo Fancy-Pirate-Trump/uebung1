@@ -90,15 +90,9 @@ public class ViewCustomer extends VBox{
 
 			});
 		enter.setOnAction((s)->{
-				boolean success = cc.login(name.getText(),password.getText());
-				if(success){
-					cc.buy(order);
-					loginStage.close();
-				}
-				else{
-					password.setText("");
-					name.setText("");
-				}
+			order.setName(name.getText());
+			order.setPassword(password.getText());
+			cc.buy(order);
 		});
 
 		select.setOnAction((s)->{
@@ -107,7 +101,7 @@ public class ViewCustomer extends VBox{
 			order.add(tableProduct);
 			table.getItems().add(tableProduct);
 			//Verändere Quantity wenn es das schon gibt.
-			
+
 		});
 
 		list.setCellFactory(e -> {
@@ -126,7 +120,7 @@ public class ViewCustomer extends VBox{
 			cell.setId("cell");
 			return cell;
 		});
-		
+
 		table.setCellFactory(e -> {
 			ListCell<Product> cell = new ListCell<Product>() {
 				@Override
@@ -143,7 +137,7 @@ public class ViewCustomer extends VBox{
 			cell.setId("cell");
 			return cell;
 		});
-		
+
 	}
 
 	public void setCc(ControllerCustomer cc) {

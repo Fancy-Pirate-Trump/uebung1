@@ -16,10 +16,7 @@ public class ControllerCustomer {
 		new Thread(new TimeGetter(vc)).start();;
 	}
 
-	public boolean login(String name, String password){
-		return mc.login(name, password);
-	}
-	
+
 	public void buy(Order order){
 		mc.buy(order);
 	}
