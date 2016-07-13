@@ -1,6 +1,7 @@
 package chat;
 
 import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -11,10 +12,11 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 	String name;
 	public ChatClient(String name) throws RemoteException {
 		try {
-			server = (ChatService) Naming.lookup("localhost/chat");
+			server = (ChatService) Naming.lookup("//localhost/chat");
+			Naming.bind(name, this);
 			this.name = name;
 			server.login(name);
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+		} catch (MalformedURLException | RemoteException | NotBoundException | AlreadyBoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -33,7 +35,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 	}
 
 	public void sendToServer(String msg)  throws RemoteException {
-		server.send(msg);
+		server.send(getName()+": "+msg);
 	}
 
 }
