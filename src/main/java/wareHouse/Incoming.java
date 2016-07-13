@@ -5,19 +5,17 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import application.Order;
 
-public class Incoming implements Runnable{
+public class Incoming implements Runnable {
+
+	private ObjectInputStream ois;
+	private Order order;
+	private InputStream input;
 
 	public Incoming(InputStream input) {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(input);
-			Order order = (Order) ois.readObject();
-			if (login(order)) {
-				WareHouse.addOrder(order);
-			} else {
-				WareHouse.rejectOrder(order);
-			}
+			ois = new ObjectInputStream(this.input =input);
 
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -26,8 +24,19 @@ public class Incoming implements Runnable{
 
 	@Override
 	public void run() {
-
-
+		while (true) {
+			try {
+				order = (Order) ois.readObject();
+			} catch (IOException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (login(order)) {
+				WareHouse.addOrder(order);
+			} else {
+				WareHouse.rejectOrder(order);
+			}
+		}
 	}
 
 	public boolean login(Order order) {

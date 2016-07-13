@@ -93,6 +93,7 @@ public class ViewCustomer extends VBox{
 			order.setName(name.getText());
 			order.setPassword(password.getText());
 			cc.buy(order);
+			loginStage.close();
 		});
 
 		select.setOnAction((s)->{
