@@ -9,7 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ChatClient extends UnicastRemoteObject implements ClientService {
 	MsgBuffer messages = new MsgBuffer();
-	
+
 	public MsgBuffer getMessages() {
 		return messages;
 	}
@@ -33,6 +33,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 	@Override
 	public void send(String msg){
 		messages.add(msg);
+		System.out.println(msg);
 
 	}
 
@@ -44,7 +45,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 	public void sendToServer(String msg)  throws RemoteException {
 		server.send(getName()+": "+msg);
 	}
-	
-	
+
+
 
 }
