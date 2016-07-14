@@ -8,11 +8,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ChatClient extends UnicastRemoteObject implements ClientService {
+	private final String serverAddress = "//localhost/";
 	ChatService server;
 	String name;
 	public ChatClient(String name) throws RemoteException {
 		try {
-			server = (ChatService) Naming.lookup("//localhost/chat");
+			server = (ChatService) Naming.lookup(serverAddress+"chat");
 			Naming.bind(name, this);
 			this.name = name;
 			server.login(name);
