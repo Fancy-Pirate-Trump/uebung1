@@ -8,6 +8,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ChatClient extends UnicastRemoteObject implements ClientService {
+	MsgBuffer messages = new MsgBuffer();
+	
+	public MsgBuffer getMessages() {
+		return messages;
+	}
+
 	private final String serverAddress = "//localhost/";
 	ChatService server;
 	String name;
@@ -26,7 +32,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 
 	@Override
 	public void send(String msg){
-		System.out.println(msg);
+		messages.add(msg);
 
 	}
 
@@ -38,5 +44,7 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 	public void sendToServer(String msg)  throws RemoteException {
 		server.send(getName()+": "+msg);
 	}
+	
+	
 
 }
