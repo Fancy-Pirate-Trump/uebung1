@@ -49,7 +49,7 @@ public class Order extends ProductList implements fpt.com.Order {
 			s += p.getName() + "\t" + p.getPrice() + "\t"+ p.getQuantity() + "\n" ;
 		}
 		s += "================================================================================\n";
-		s += "Gesamtanzahl: " + getQuantity() + "\n" + "Gesamtwert: " + getSum();
+		s += "Gesamtanzahl: " + getQuantity() + "\n" + "Gesamtwert: " + getSum() +"\n";
 		return s;
 	}
 

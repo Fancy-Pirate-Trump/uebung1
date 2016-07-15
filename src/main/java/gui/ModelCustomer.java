@@ -23,11 +23,7 @@ public class ModelCustomer {
 		}
 	}
 
-	public boolean login(String name, String password) {
-		if (name.equals("admin") && password.equals("admin"))
-			return true;
-		return false;
-	}
+
 
 	public void buy(Order o) {
 
