@@ -32,7 +32,7 @@ public class Main extends Application {
 			ModelCustomer modelCustomer = new ModelCustomer();
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			ViewCustomer viewCustomer = new ViewCustomer();
-			controlCustomer.link(viewCustomer, modelCustomer, modelShop);
+			controlCustomer.link(viewCustomer, modelCustomer, modelShop, viewShop);
 
 			controllerShop.link(modelShop, viewShop);
 

@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ViewCustomer extends VBox{
+public class ViewCustomer extends VBox {
 	private HBox split;
 	private ListView<Product> table;
 	private TableColumn nameCol;
@@ -29,16 +29,16 @@ public class ViewCustomer extends VBox{
 	private ControllerCustomer cc;
 	private Stage loginStage;
 	private Scene loginScene;
-	private VBox loginBox,login;
+	private VBox loginBox, login;
 	private BorderPane borderPane;
 	private TextField name;
 	private PasswordField password;
 	private Order order;
 
-	public ViewCustomer(){
+	public ViewCustomer() {
 		super();
 		split = new HBox();
-		table = new	ListView();
+		table = new ListView();
 		nameCol = new TableColumn("Name");
 		priceCol = new TableColumn("Price");
 		quantCol = new TableColumn("BuyCount");
@@ -60,10 +60,9 @@ public class ViewCustomer extends VBox{
 		select = new Button("Select");
 		order = new Order();
 
-		login.getChildren().addAll(nameLabel,name,passwordLabel,password, enter);
+		login.getChildren().addAll(nameLabel, name, passwordLabel, password, enter);
 		borderPane.setCenter(login);
 		loginBox.getChildren().add(borderPane);
-
 
 		this.getChildren().add(split);
 
@@ -74,11 +73,9 @@ public class ViewCustomer extends VBox{
 
 		this.getChildren().add(buy);
 		this.getChildren().add(select);
-		//mache VBox unten
+		// mache VBox unten
 		table.setEditable(true);
-//		table.getColumns().addAll(nameCol, priceCol, quantCol);
-
-
+		// table.getColumns().addAll(nameCol, priceCol, quantCol);
 
 		buy.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -88,20 +85,28 @@ public class ViewCustomer extends VBox{
 				loginStage.show();
 			}
 
-			});
-		enter.setOnAction((s)->{
+		});
+		enter.setOnAction((s) -> {
 			order.setName(name.getText());
 			order.setPassword(password.getText());
 			cc.buy(order);
 			loginStage.close();
+			order=new Order();
+			table.getItems().removeAll();
+			table.refresh();
 		});
 
-		select.setOnAction((s)->{
+		select.setOnAction((s) -> {
 			Product listProduct = (Product) list.getSelectionModel().getSelectedItem();
-			Product tableProduct = new Product(listProduct.getName(), listProduct.getPrice(), 1);
-			order.add(tableProduct);
-			table.getItems().add(tableProduct);
-			//Verändere Quantity wenn es das schon gibt.
+			if (listProduct.getQuantity() >= 1) {
+				Product tableProduct = new Product(listProduct.getName(), listProduct.getPrice(), 1);
+				order.add(tableProduct);
+				table.getItems().add(tableProduct);
+				// Verändere Quantity wenn es das schon gibt
+				listProduct.setQuantity(listProduct.getQuantity() - 1);
+				list.refresh();
+				cc.vs.products.refresh();
+			}
 
 		});
 
@@ -144,9 +149,11 @@ public class ViewCustomer extends VBox{
 	public void setCc(ControllerCustomer cc) {
 		this.cc = cc;
 	}
-	public void setTime(String time){
-		 timeLabel.setText(time);
+
+	public void setTime(String time) {
+		timeLabel.setText(time);
 	}
+
 	public void bindData(ModelShop model) {
 		list.setItems(model);
 	}

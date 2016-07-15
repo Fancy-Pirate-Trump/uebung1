@@ -11,12 +11,14 @@ public class ModelCustomer {
 	private InputStream in;
 	private OutputStream out;
 	private Socket serverCon;
-	
+	private ObjectOutputStream oo;
+
 	public ModelCustomer(){
 		try {
 			serverCon = new Socket("localhost", 6666);
 			in = serverCon.getInputStream();
 			out = serverCon.getOutputStream();
+			oo = new ObjectOutputStream(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,7 +33,7 @@ public class ModelCustomer {
 		// Streams anlegen
 			// Zahlenschreiben schreiben
 			try {
-				ObjectOutputStream oo = new ObjectOutputStream(out);
+				System.err.println(o);
 				oo.writeObject(o);
 				out.flush();
 			} catch (IOException e) {

@@ -13,7 +13,7 @@ public class Incoming implements Runnable {
 
 	public Incoming(InputStream input) {
 		try {
-			ois = new ObjectInputStream(this.input =input);
+			ois = new ObjectInputStream(this.input = input);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -27,6 +27,9 @@ public class Incoming implements Runnable {
 		while (true) {
 			try {
 				order = (Order) ois.readObject();
+				for (fpt.com.Product p:order){
+					System.out.println(p.getName());
+				}
 			} catch (IOException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

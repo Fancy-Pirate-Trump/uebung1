@@ -29,7 +29,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class ViewShop extends HBox {
-	private ListView<Product> products;
+	public ListView<Product> products;
 	private VBox vBox;
 	private Label nameLabel, priceLabel, countlabel, volumeSliderLabel;
 	private TextField nameField, priceField, countField;
