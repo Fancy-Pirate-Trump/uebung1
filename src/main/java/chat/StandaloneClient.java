@@ -70,8 +70,8 @@ public class StandaloneClient extends Application{
 
 			try {
 				client.sendToServer(writeField.getText());
-				String message = client.getCurrentMessage();
-				chatMessages.getItems().add(message);
+				
+//				chatMessages.getItems().add(message);
 			} catch (RemoteException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
