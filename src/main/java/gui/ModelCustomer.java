@@ -33,7 +33,6 @@ public class ModelCustomer {
 		// Streams anlegen
 			// Zahlenschreiben schreiben
 			try {
-				System.err.println(o);
 				oo.writeObject(o);
 				out.flush();
 			} catch (IOException e) {

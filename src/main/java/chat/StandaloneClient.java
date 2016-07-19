@@ -70,6 +70,7 @@ public class StandaloneClient extends BorderPane{
 
 			try {
 				client.sendToServer(writeField.getText());
+				writeField.setText("");
 			} catch (RemoteException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
