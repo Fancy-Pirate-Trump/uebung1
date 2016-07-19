@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StandaloneClient extends Application{
+public class StandaloneClient implements Runnable{
 	static Scanner scanner;
 	private ChatClient client;
 	private HBox chat;
@@ -26,7 +26,6 @@ public class StandaloneClient extends Application{
 	private TextField name, writeField;
 	private ListView<String> chatMessages;
 	
-	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		chat = new HBox();
@@ -70,8 +69,7 @@ public class StandaloneClient extends Application{
 
 			try {
 				client.sendToServer(writeField.getText());
-				
-//				chatMessages.getItems().add(message);
+				chatMessages.setItems(client.getMessages());
 			} catch (RemoteException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
@@ -97,7 +95,12 @@ public class StandaloneClient extends Application{
 		});
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	public void run() {
+		try {
+			start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

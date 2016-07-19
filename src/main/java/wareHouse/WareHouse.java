@@ -2,9 +2,11 @@ package wareHouse;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import application.Order;
+import chat.ChatServer;
 
 public class WareHouse {
 	static private ServerSocket server;
@@ -15,6 +17,7 @@ public class WareHouse {
 	public static void main(String[] args) {
 		try {
 			server = new ServerSocket(6666);
+			new ChatServer();
 			while(true) {
 				new Connection(server.accept());
 			}

@@ -2,6 +2,7 @@ package gui;
 
 import com.sun.prism.paint.Color;
 
+import chat.StandaloneClient;
 import fpt.com.Product;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -34,7 +35,7 @@ public class ViewShop extends HBox {
 	private Label nameLabel, priceLabel, countlabel, volumeSliderLabel;
 	private TextField nameField, priceField, countField;
 	private HBox buttonRow, optionRow;
-	private Button add, delete, save, load, clear;
+	private Button add, delete, save, load, clear, chat;
 	private ComboBox strategySelection;
 	private BorderPane borderPane;
 	private Slider volumeSlider;
@@ -97,6 +98,9 @@ public class ViewShop extends HBox {
 
 		clear = new Button("Clear");
 		clear.setId("font-button");
+		
+		chat = new Button("Open Chat");
+		chat.setId("font-button");
 
 		volumeSlider = new Slider();
 		volumeSlider.setId("font-slider");
@@ -116,7 +120,7 @@ public class ViewShop extends HBox {
 		this.getChildren().addAll(borderPane);
 		vBox.getChildren().addAll(nameLabel, nameField, priceLabel, priceField, countlabel, countField, buttonRow, view);
 		buttonRow.getChildren().addAll(add, delete, clear);
-		optionRow.getChildren().addAll( save, load, strategySelection, volumeSliderLabel, volumeSlider);
+		optionRow.getChildren().addAll( save, load, strategySelection, volumeSliderLabel, volumeSlider, chat);
 
 		ObservableList<String> strategies = FXCollections.observableArrayList("Binary", "XML", "XStream", "DataBase", "JPAStrategy");
 		strategySelection.setItems(strategies);
@@ -256,6 +260,10 @@ public class ViewShop extends HBox {
 				mediaPlayer.setVolume(volumeSlider.getValue()/100);
 			}
 
+		});
+		
+		chat.setOnAction((f)->{
+			new Thread(new StandaloneClient()).start();
 		});
 
 	}
