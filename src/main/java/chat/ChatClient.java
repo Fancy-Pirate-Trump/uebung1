@@ -7,6 +7,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import javafx.application.Platform;
+
 public class ChatClient extends UnicastRemoteObject implements ClientService {
 	MsgBuffer messages = new MsgBuffer();
 
@@ -32,9 +34,9 @@ public class ChatClient extends UnicastRemoteObject implements ClientService {
 
 	@Override
 	public void send(String msg){
+		Platform.runLater(()->{
 		messages.add(msg);
-		System.out.println(msg);
-
+		});
 	}
 
 	@Override
