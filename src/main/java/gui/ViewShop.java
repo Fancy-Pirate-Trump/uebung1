@@ -263,7 +263,12 @@ public class ViewShop extends HBox {
 		});
 		
 		chat.setOnAction((f)->{
-			new Thread(new StandaloneClient()).start();
+			try {
+				new StandaloneClient();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 
 	}

@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StandaloneClient implements Runnable{
+public class StandaloneClient extends BorderPane{
 	static Scanner scanner;
 	private ChatClient client;
 	private HBox chat;
@@ -26,7 +26,7 @@ public class StandaloneClient implements Runnable{
 	private TextField name, writeField;
 	private ListView<String> chatMessages;
 	
-	public void start(Stage primaryStage) throws Exception {
+	public StandaloneClient() throws Exception {
 		// TODO Auto-generated method stub
 		chat = new HBox();
 		BPane = new BorderPane();
@@ -56,6 +56,7 @@ public class StandaloneClient implements Runnable{
 		
 		
 		Scene sceneLogin = new Scene(login);
+		Stage primaryStage = new Stage();
 		primaryStage.setScene(sceneLogin);
 		
 		Scene sceneChat = new Scene(chat);
@@ -93,14 +94,5 @@ public class StandaloneClient implements Runnable{
 				
 			}
 		});
-	}
-	
-	public void run() {
-		try {
-			start(new Stage());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
