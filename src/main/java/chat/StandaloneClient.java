@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class StandaloneClient extends BorderPane{
-	static Scanner scanner;
+
 	private ChatClient client;
 	private HBox chat;
 	private BorderPane BPane;
@@ -70,7 +70,6 @@ public class StandaloneClient extends BorderPane{
 
 			try {
 				client.sendToServer(writeField.getText());
-				chatMessages.setItems(client.getMessages());
 			} catch (RemoteException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
@@ -86,6 +85,7 @@ public class StandaloneClient extends BorderPane{
 					client = null;
 				try {
 					client = new ChatClient(localName);
+					chatMessages.setItems(client.getMessages());
 				} catch (RemoteException ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
