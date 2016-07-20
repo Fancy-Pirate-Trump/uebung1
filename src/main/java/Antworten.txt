@@ -1,4 +1,11 @@
 Welche Methoden sind blockierende Aufrufe bei der Netzwerkkommunikation?
+- socket.read()
+- socket.write(integerZahl)
+Da es die Methode nicht gibt!
+
+Die beiden anderen sind blockierend, da  ohne
+einen Thread das Programm immer wartet bis eine
+Methode beendet wurde EinsElf !!!1
 
 Wie sieht eine gültige Methodensignatur in RMI aus?
 	Seit java 1.7:
@@ -10,7 +17,7 @@ Was ist der Unterschied zu bisherigen Methodensignaturen (ohne RMI)?
 	Methoden müssen eine RemoteException werfen können
 
 Wie wird ein Objekt bei der Registry angemeldet?
-	Naming.bind(Name, ObjectReferenz);
+	Naming.(re)bind(Name, ObjectReferenz);
 
 Wie kann eine Referenz auf ein Objekt der Registry geholt werden?
 	Naming.lookup(Name)
@@ -20,3 +27,5 @@ Was ist der Unterschied zwischen bind und rebind?
 	rebind ersetzt bestehende Namen ohne exception
 
 Wofür ist das Remote Interface?
+Das interface garantiert, dass das Remote Object alle Methoden zur verfügung stellt,
+um damit arbeiten zu können.
