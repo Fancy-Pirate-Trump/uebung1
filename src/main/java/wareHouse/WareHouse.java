@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import application.Order;
 import chat.ChatServer;
+import timeServer.TimeServer;
 
 public class WareHouse {
 	static private ServerSocket server;
@@ -15,6 +16,7 @@ public class WareHouse {
 
 
 	public static void main(String[] args) {
+		new Thread(()->TimeServer.main(null)).start();
 		try {
 			server = new ServerSocket(6666);
 			new ChatServer();

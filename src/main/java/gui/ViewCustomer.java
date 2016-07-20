@@ -83,6 +83,8 @@ public class ViewCustomer extends VBox {
 			public void handle(ActionEvent event) {
 				loginStage.setScene(loginScene);
 				loginStage.show();
+				name.setText("");
+				password.setText("");
 			}
 
 		});
@@ -93,6 +95,7 @@ public class ViewCustomer extends VBox {
 			loginStage.close();
 			order=new Order();
 			table.getItems().removeAll();
+			table.getItems().clear();
 			table.refresh();
 		});
 

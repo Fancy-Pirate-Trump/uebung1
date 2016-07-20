@@ -24,11 +24,7 @@ public class Main extends Application {
 			ViewShop viewShop = new ViewShop();
 			ControllerShop controllerShop = new ControllerShop();
 			ModelShop modelShop = new ModelShop();
-			new Thread(()->TimeServer.main(null)).start();
-			new Thread(()->{
-				WareHouse wareHouse = new WareHouse();
-				wareHouse.main(null);}).start();
-			
+
 			ModelCustomer modelCustomer = new ModelCustomer();
 			ControllerCustomer controlCustomer = new ControllerCustomer();
 			ViewCustomer viewCustomer = new ViewCustomer();
