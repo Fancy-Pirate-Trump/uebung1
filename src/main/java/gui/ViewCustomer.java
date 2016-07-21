@@ -12,6 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -88,6 +90,25 @@ public class ViewCustomer extends VBox {
 			}
 
 		});
+
+		name.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			   @Override
+			   public void handle(KeyEvent t) {
+			       if (t.getCode() == KeyCode.ENTER) {
+			    	   enter.fire();
+			       }
+			   }
+		});
+
+		password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			   @Override
+			   public void handle(KeyEvent t) {
+			       if (t.getCode() == KeyCode.ENTER) {
+			    	   enter.fire();
+			       }
+			   }
+		});
+
 		enter.setOnAction((s) -> {
 			order.setName(name.getText());
 			order.setPassword(password.getText());

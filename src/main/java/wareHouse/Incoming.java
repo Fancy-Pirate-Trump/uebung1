@@ -31,8 +31,8 @@ public class Incoming implements Runnable {
 					System.out.println(p.getName());
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Verbindung wurde getrennt.");
+				break;
 			}
 			if (login(order)) {
 				WareHouse.addOrder(order);

@@ -8,7 +8,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 
 public class TimeGetter implements Runnable{
 

@@ -1,7 +1,5 @@
 package application;
 
-import java.util.Random;
-
 import gui.ControllerCustomer;
 import gui.ControllerShop;
 import gui.ModelCustomer;
@@ -9,12 +7,9 @@ import gui.ModelShop;
 import gui.ViewCustomer;
 import gui.ViewShop;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import timeServer.TimeServer;
-import wareHouse.WareHouse;
 
 public class Main extends Application {
 
@@ -33,7 +28,7 @@ public class Main extends Application {
 			controllerShop.link(modelShop, viewShop);
 
 			Scene sceneShop = new Scene(viewShop);
-			sceneShop.getStylesheets().add("http://a.pomf.cat/mapggz.css");
+			sceneShop.getStylesheets().add("http://a.cuntflaps.me/stuqq.css");
 			Scene sceneCustomer = new Scene(viewCustomer);
 			Stage secondaryStage = new Stage();
 
@@ -41,8 +36,8 @@ public class Main extends Application {
 			secondaryStage.setScene(sceneCustomer);
 
 			primaryStage.setTitle("( ͡° ͜ʖ ͡°)");
-			primaryStage.getIcons().add(new Image("http://a.pomf.cat/rulhzl.png"));
-			
+			primaryStage.getIcons().add(new Image("http://vgy.me/6btQvE.png"));
+
 			secondaryStage.show();
 			primaryStage.show();
 

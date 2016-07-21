@@ -1,7 +1,5 @@
 package gui;
 
-import com.sun.prism.paint.Color;
-
 import chat.StandaloneClient;
 import fpt.com.Product;
 import javafx.beans.InvalidationListener;
@@ -51,13 +49,13 @@ public class ViewShop extends HBox {
 		vBox = new VBox(2);
 		vBox.setPadding(new Insets(0,-8,-9,2));
 
-		Media m = new Media("http://a.pomf.cat/naozry.mp3");
+		Media m = new Media("http://a.cuntflaps.me/hcajdb.mp3");
 		mediaPlayer = new MediaPlayer(m);
 		mediaPlayer.setVolume(0);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
 
-		Image gif = new Image("http://a.pomf.cat/ykeqzq.gif");
+		Image gif = new Image("http://vgy.me/AMDoiS.gif");
 		ImageView view = new ImageView(gif);
 		view.setFitHeight(250);
 		view.setFitWidth(250);
@@ -98,7 +96,7 @@ public class ViewShop extends HBox {
 
 		clear = new Button("Clear");
 		clear.setId("font-button");
-		
+
 		chat = new Button("Open Chat");
 		chat.setId("font-button");
 
@@ -261,7 +259,7 @@ public class ViewShop extends HBox {
 			}
 
 		});
-		
+
 		chat.setOnAction((f)->{
 			try {
 				new StandaloneClient();
